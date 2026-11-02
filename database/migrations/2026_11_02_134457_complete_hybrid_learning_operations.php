@@ -57,8 +57,8 @@ return new class extends Migration
             $t->unsignedInteger('content_version');
             $t->json('criteria_snapshot')->nullable();
             $t->unsignedInteger('version')->default(1);
-            $t->timestamp('first_opened_at');
-            $t->timestamp('last_opened_at');
+            $t->timestamp('first_opened_at')->useCurrent();
+            $t->timestamp('last_opened_at')->useCurrent();
             $t->timestamp('completed_at')->nullable();
             $t->timestamps();
             $t->unique(['student_id', 'target_type', 'target_key'], 'progress_student_target_unique');

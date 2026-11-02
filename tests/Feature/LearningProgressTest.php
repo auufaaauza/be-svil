@@ -10,11 +10,37 @@ use App\Models\Material;
 use App\Models\MaterialAttempt;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class LearningProgressTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function test_opened_timestamps_default_on_insert_and_do_not_change_on_unrelated_updates(): void
+    {
+        $class = Classroom::factory()->create();
+        $student = User::factory()->create(['school_id' => $class->school_id]);
+        $id = DB::table('learning_progress')->insertGetId([
+            'student_id' => $student->id,
+            'classroom_id' => $class->id,
+            'target_type' => 'material',
+            'target_key' => 'timestamp-default-test',
+            'content_version' => 1,
+        ]);
+        $progress = DB::table('learning_progress')->find($id);
+        $this->assertGreaterThan(0, strtotime($progress->first_opened_at));
+        $this->assertSame($progress->first_opened_at, $progress->last_opened_at);
+        $this->assertNull($progress->completed_at);
+
+        $opened = '2020-01-01 08:00:00';
+        DB::table('learning_progress')->where('id', $id)->update(['first_opened_at' => $opened, 'last_opened_at' => $opened]);
+        DB::table('learning_progress')->where('id', $id)->update(['status' => 'completed', 'completed_at' => now()]);
+        $progress = DB::table('learning_progress')->find($id);
+        $this->assertSame($opened, $progress->first_opened_at);
+        $this->assertSame($opened, $progress->last_opened_at);
+        $this->assertNotNull($progress->completed_at);
+    }
 
     public function test_material_completion_is_individual_versioned_and_required_by_the_lesson(): void
     {
