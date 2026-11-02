@@ -32,7 +32,7 @@ class StudentReviewController extends Controller
         $works = GroupWork::whereIn('learning_group_id', $groups->pluck('id'))->get(['id', 'learning_group_id', 'topic', 'status']);
         $notes = LearningNote::where('classroom_id', $class)->get(['student_id', 'topic', 'phase', 'reviewed_at']);
         $reflections = DB::table('individual_reflections')->where('classroom_id', $class)->get(['student_id', 'topic', 'reviewed_at']);
-        $students = User::where('role', Role::Student)->whereHas('classrooms', fn ($q) => $q->whereKey($class))->orderBy('name')->paginate(50);
+        $students = User::where('role', Role::Student)->whereIn('id', DB::table('classroom_user')->where('classroom_id', $class)->select('user_id'))->orderBy('name')->paginate(50);
         $students->through(function ($student) use ($groups, $works, $notes, $reflections) {
             $group = $groups->first(fn ($g) => $g->users->contains('id', $student->id));
             $summary = [];
@@ -43,7 +43,7 @@ class StudentReviewController extends Controller
                 $summary[] = ['topic' => $topic, 'notes_filled' => $personal->count(), 'notes_reviewed' => $personal->whereNotNull('reviewed_at')->count(), 'group_status' => $work?->status ?? 'not_started', 'reflection_filled' => (bool) $reflection, 'reflection_reviewed' => (bool) $reflection?->reviewed_at];
             }
 
-return ['id' => $student->id, 'name' => $student->name, 'username' => $student->username, 'group' => $group ? ['id' => $group->id, 'name' => $group->name] : null, 'lkpd' => $summary];
+            return ['id' => $student->id, 'name' => $student->name, 'username' => $student->username, 'group' => $group ? ['id' => $group->id, 'name' => $group->name] : null, 'lkpd' => $summary];
         });
 
         return response()->json($students);
@@ -52,12 +52,12 @@ return ['id' => $student->id, 'name' => $student->name, 'username' => $student->
     public function show(Request $r, User $student): JsonResponse
     {
         $class = $this->classroom($r);
-        abort_unless($student->role === Role::Student && $student->canAccessClassroom($class), 403);
+        abort_unless($student->role === Role::Student && DB::table('classroom_user')->where('classroom_id', $class)->where('user_id', $student->id)->exists(), 403);
         $group = LearningGroup::where('classroom_id', $class)->whereHas('users', fn ($q) => $q->whereKey($student->id))->with('users:id,name')->first();
         $notes = LearningNote::where('classroom_id', $class)->where('student_id', $student->id)->orderBy('topic')->orderBy('phase')->get()->map(fn ($n) => [...$n->toArray(), 'content_hash' => hash('sha256', $n->content)]);
         $reflections = DB::table('individual_reflections')->where('classroom_id', $class)->where('student_id', $student->id)->get()->map(fn ($n) => [...(array) $n, 'answers' => json_decode($n->answers, true), 'schema_snapshot' => json_decode($n->schema_snapshot, true)]);
-        $works = $group ? GroupWork::where('learning_group_id', $group->id)->orderBy('topic')->get()->map(fn ($w) => $w->summary()) : [];
+        $works = GroupWork::whereHas('group', fn ($q) => $q->where('classroom_id', $class))->where(fn ($q) => $q->whereJsonContains('member_ids', $student->id)->when($group, fn ($q) => $q->orWhere('learning_group_id', $group->id)))->with('group:id,name')->orderBy('topic')->get()->map(fn ($w) => [...$w->summary(), 'groupName' => $w->group->name]);
 
-        return response()->json(['data' => ['student' => ['id' => $student->id, 'name' => $student->name, 'username' => $student->username], 'classroom_id' => $class, 'group' => $group, 'notes' => $notes, 'reflections' => $reflections, 'works' => $works, 'modules' => LearningModule::orderBy('topic')->get(['id', 'topic', 'title']), 'submissions' => AssignmentSubmission::whereHas('assignment', fn ($q) => $q->where('classroom_id', $class))->whereJsonContains('member_ids', $student->id)->with('assignment:id,title,classroom_id')->latest()->get(), 'assessment_attempts' => AssessmentAttempt::whereHas('assessment', fn ($q) => $q->where('classroom_id', $class))->where('student_id',$student->id)->latest()->get()]]);
+        return response()->json(['data' => ['student' => ['id' => $student->id, 'name' => $student->name, 'username' => $student->username], 'classroom_id' => $class, 'group' => $group, 'notes' => $notes, 'reflections' => $reflections, 'works' => $works, 'modules' => LearningModule::orderBy('topic')->get(['id', 'topic', 'title']), 'submissions' => AssignmentSubmission::whereHas('assignment', fn ($q) => $q->where('classroom_id', $class))->whereJsonContains('member_ids', $student->id)->with('assignment:id,title,classroom_id')->latest()->get(), 'assessment_attempts' => AssessmentAttempt::whereHas('assessment', fn ($q) => $q->where('classroom_id', $class))->where('student_id', $student->id)->latest()->get()]]);
     }
 }

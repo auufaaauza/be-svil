@@ -12,11 +12,11 @@ class GroupWork extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['learning_group_id', 'topic', 'answers', 'status', 'version', 'feedback', 'product_scores', 'presentation_scores', 'reviewed_by', 'submitted_at', 'reviewed_at', 'schema_snapshot', 'module_version'];
+    protected $fillable = ['learning_group_id', 'topic', 'answers', 'status', 'version', 'feedback', 'product_scores', 'presentation_scores', 'reviewed_by', 'submitted_at', 'reviewed_at', 'schema_snapshot', 'module_version', 'member_ids'];
 
     protected function casts(): array
     {
-        return ['topic' => 'integer', 'version' => 'integer', 'answers' => 'array', 'product_scores' => 'array', 'presentation_scores' => 'array', 'submitted_at' => 'datetime', 'reviewed_at' => 'datetime', 'schema_snapshot' => 'array', 'module_version' => 'integer'];
+        return ['topic' => 'integer', 'version' => 'integer', 'answers' => 'array', 'product_scores' => 'array', 'presentation_scores' => 'array', 'submitted_at' => 'datetime', 'reviewed_at' => 'datetime', 'schema_snapshot' => 'array', 'module_version' => 'integer', 'member_ids' => 'array'];
     }
 
     public function group(): BelongsTo
@@ -26,7 +26,7 @@ class GroupWork extends Model
 
     public function recordRevision(User $actor): void
     {
-        DB::table('group_work_revisions')->insert(['group_work_id' => $this->id, 'actor_id' => $actor->id, 'version' => $this->version, 'snapshot' => json_encode([...$this->attributesToArray(), 'rubric_reference' => LkpdSchema::guidance(), 'member_ids' => $this->group->users()->pluck('users.id')->all()], JSON_THROW_ON_ERROR), 'created_at' => now()]);
+        DB::table('group_work_revisions')->insert(['group_work_id' => $this->id, 'actor_id' => $actor->id, 'version' => $this->version, 'snapshot' => json_encode([...$this->attributesToArray(), 'rubric_reference' => LkpdSchema::guidance(), 'member_ids' => $this->member_ids ?? $this->group->users()->pluck('users.id')->all()], JSON_THROW_ON_ERROR), 'created_at' => now()]);
     }
 
     public function summary(): array

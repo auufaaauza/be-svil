@@ -37,19 +37,22 @@ class ConsolidateMigrations extends Command
         '2026_11_01_191615_add_custom_topic_label_to_materials',
     ];
 
+    private array $followups = [];
+
     public function handle(): int
     {
         try {
             $files = array_keys($this->laravel['migrator']->getMigrationFiles(database_path('migrations')));
-            if (! $this->sameNames($files, self::BASELINE) || ! Schema::hasTable('migrations')) {
-                throw new LogicException('Perintah ini hanya untuk baseline prarilis 10 migrasi. Instalasi kosong cukup menjalankan migrate.');
+            $this->followups = array_values(array_diff($files, self::BASELINE));
+            if (array_diff(self::BASELINE, $files) || ! Schema::hasTable('migrations')) {
+                throw new LogicException('Perintah ini hanya untuk baseline prarilis lengkap. Instalasi kosong cukup menjalankan migrate.');
             }
 
             $this->assertSchema();
             $rows = DB::table('migrations')->orderBy('id')->get()->map(fn (object $row): array => (array) $row)->all();
             $this->assertHistory($rows);
 
-            if ($this->sameNames(array_column($rows, 'migration'), self::BASELINE)) {
+            if ($this->sameNames(array_values(array_diff(array_column($rows, 'migration'), $this->followups)), self::BASELINE)) {
                 $this->info('Riwayat sudah menggunakan baseline gabungan; tidak ada perubahan.');
 
                 return self::SUCCESS;
@@ -94,7 +97,7 @@ class ConsolidateMigrations extends Command
 
     private function assertHistory(array $rows): void
     {
-        $names = array_column($rows, 'migration');
+        $names = array_values(array_diff(array_column($rows, 'migration'), $this->followups));
         if (! $this->sameNames($names, self::BASELINE) && ! $this->sameNames($names, [...self::BASELINE, ...self::MERGED])) {
             throw new LogicException('Riwayat belum lengkap atau memuat migrasi lain. Konsolidasi dibatalkan; jangan menghapus atau menandai migrasi yang belum dijalankan.');
         }

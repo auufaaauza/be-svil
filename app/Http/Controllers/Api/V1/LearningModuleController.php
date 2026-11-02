@@ -7,14 +7,20 @@ use App\Http\Requests\UpdateLearningModuleRequest;
 use App\Http\Resources\LearningModuleResource;
 use App\Models\LearningModule;
 use App\Role;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class LearningModuleController extends Controller
 {
     public function index(Request $request): AnonymousResourceCollection
     {
+        if ($request->filled('classroom_id')) {
+            abort_unless($request->user()->canAccessClassroom($request->integer('classroom_id')), 403);
+        }
+
         return LearningModuleResource::collection(LearningModule::with(['uploader', 'editor'])->when($request->user()->role === Role::Student, fn ($q) => $q->where('status', 'published')->when(! $request->user()->canUseSvil(), fn ($q) => $q->whereRaw('1=0')))->orderBy('topic')->paginate(20));
     }
 
@@ -22,7 +28,20 @@ class LearningModuleController extends Controller
     {
         abort_if($request->user()->role === Role::Student && ($module->status !== 'published' || ! $request->user()->canUseSvil()), 403);
 
+        if ($request->filled('classroom_id')) {
+            abort_unless($request->user()->canAccessClassroom($request->integer('classroom_id')), 403);
+        }
+
         return new LearningModuleResource($module->load(['uploader', 'editor']));
+    }
+
+    public function videoInfo(Request $r, int $topic): JsonResponse
+    {
+        $r->validate(['classroom_id' => ['required', 'integer', Rule::in($r->user()->accessibleClassrooms()->pluck('id')->all())]]);
+        abort_unless($r->user()->canUseSvil(), 403);
+        $module = LearningModule::where('topic', $topic)->when($r->user()->role === Role::Student, fn ($q) => $q->where('status', 'published'))->firstOrFail();
+
+        return response()->json(['data' => ['title' => $module->title, ...$module->mediaFor($r->integer('classroom_id'))]]);
     }
 
     public function update(UpdateLearningModuleRequest $request, LearningModule $module): LearningModuleResource
@@ -30,7 +49,7 @@ class LearningModuleController extends Controller
         $saved = DB::transaction(function () use ($request, $module) {
             $module = LearningModule::whereKey($module->id)->lockForUpdate()->firstOrFail();
             abort_if($module->version !== $request->integer('version'), 409, 'LKPD sudah diperbarui. Muat versi terbaru sebelum menyunting.');
-            $module->update([...$request->safe()->except('version'), 'version' => $module->version + 1, 'updated_by' => $request->user()->id]);
+            $module->update([...$request->safe()->except(['version', 'youtube_url']), 'version' => $module->version + 1, 'updated_by' => $request->user()->id]);
             $module->recordRevision();
 
             return $module;

@@ -12,11 +12,11 @@ class Assignment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['classroom_id', 'course_lesson_id', 'created_by', 'title', 'instructions', 'kind', 'submission_mode', 'status', 'due_at', 'max_score', 'rubric', 'version'];
+    protected $fillable = ['classroom_id', 'course_lesson_id', 'created_by', 'title', 'instructions', 'kind', 'submission_mode', 'status', 'due_at', 'max_score', 'rubric', 'version', 'allow_late', 'allow_revisions', 'lock_after_review', 'max_submissions'];
 
     protected function casts(): array
     {
-        return ['due_at' => 'datetime', 'rubric' => 'array', 'version' => 'integer', 'max_score' => 'float'];
+        return ['due_at' => 'datetime', 'rubric' => 'array', 'version' => 'integer', 'max_score' => 'float', 'allow_late' => 'boolean', 'allow_revisions' => 'boolean', 'lock_after_review' => 'boolean'];
     }
 
     public function lesson(): BelongsTo

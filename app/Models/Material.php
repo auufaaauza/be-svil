@@ -13,7 +13,7 @@ class Material extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $fillable = ['classroom_id', 'teacher_id', 'title', 'content', 'topic', 'status', 'version', 'image_path', 'image_alt', 'question', 'kind', 'subject', 'attachment_path', 'attachment_name', 'attachment_size', 'updated_by', 'course_lesson_id', 'topic_label', 'attachment_mime'];
+    protected $fillable = ['classroom_id', 'teacher_id', 'title', 'content', 'topic', 'status', 'version', 'image_path', 'image_alt', 'question', 'kind', 'subject', 'attachment_path', 'attachment_name', 'attachment_size', 'updated_by', 'course_lesson_id', 'topic_label', 'attachment_mime', 'youtube_video_id', 'video_caption', 'audio_url'];
 
     protected $hidden = ['question', 'image_path', 'attachment_path'];
 

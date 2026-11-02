@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaveAssignmentRequest;
+use App\Learning\LearningNotifier;
 use App\Models\Assignment;
 use App\Models\AssignmentSubmission;
 use App\Models\CourseLesson;
@@ -21,14 +22,65 @@ class AssignmentController extends Controller
 {
     public function index(Request $r): JsonResponse
     {
-        return response()->json(Assignment::visibleTo($r->user())->with('lesson:id,title,course_id')->when($r->integer('lesson_id'), fn ($q) => $q->where('course_lesson_id', $r->integer('lesson_id')))->when($r->integer('classroom_id'), fn ($q) => $q->where('classroom_id', $r->integer('classroom_id')))->latest()->paginate(30));
+        $rows = Assignment::visibleTo($r->user())->with('lesson:id,title,course_id')->when($r->integer('lesson_id'), fn ($q) => $q->where('course_lesson_id', $r->integer('lesson_id')))->when($r->integer('classroom_id'), fn ($q) => $q->where('classroom_id', $r->integer('classroom_id')))->latest()->paginate(30);
+        $rows->through(fn ($a) => $this->presentAssignment($a, $r->user()));
+
+        return response()->json($rows);
     }
 
     public function show(Request $r, Assignment $assignment): JsonResponse
     {
         abort_unless($assignment->canView($r->user()), 403);
 
-        return response()->json(['data' => $assignment->load('lesson:id,title,course_id')]);
+        return response()->json(['data' => $this->presentAssignment($assignment->load('lesson:id,title,course_id'), $r->user())]);
+    }
+
+    private function owner(Assignment $assignment, User $student): string
+    {
+        if ($assignment->submission_mode === 'individual') {
+            return 'student:'.$student->id;
+        }
+        $group = LearningGroup::where('classroom_id', $assignment->classroom_id)->whereHas('users', fn ($q) => $q->whereKey($student->id))->first();
+
+        return 'group:'.($group?->id ?? 0);
+    }
+
+    private function presentAssignment(Assignment $assignment, User $user): array
+    {
+        $extension = $user->role === Role::Student ? DB::table('assignment_reopenings')->where('assignment_id', $assignment->id)->where('owner_key', $this->owner($assignment, $user))->where('valid_until', '>', now())->first() : null;
+
+        return [...$assignment->toArray(), 'reopened_until' => $extension?->valid_until];
+    }
+
+    public function reopenings(Request $r, Assignment $assignment): JsonResponse
+    {
+        abort_unless($r->user()->role !== Role::Student && $r->user()->canAccessClassroom($assignment->classroom_id), 403);
+
+        return response()->json(['data' => DB::table('assignment_reopenings')->where('assignment_id', $assignment->id)->get()]);
+    }
+
+    public function reopen(Request $r, Assignment $assignment): JsonResponse
+    {
+        abort_unless($r->user()->role !== Role::Student && $r->user()->canAccessClassroom($assignment->classroom_id), 403);
+        $data = $r->validate(['student_id' => ['required', 'integer'], 'version' => ['required', 'integer', 'min:0'], 'valid_until' => ['required', 'date', 'after:now'], 'extra_submissions' => ['required', 'integer', 'between:1,10'], 'reason' => ['required', 'string', 'max:3000']]);
+        $student = User::findOrFail($data['student_id']);
+        abort_unless($student->role === Role::Student && $student->canAccessClassroom($assignment->classroom_id), 422, 'Pilih siswa aktif pada kelas tugas.');
+        $owner = $this->owner($assignment, $student);
+        abort_if($owner === 'group:0', 422, 'Siswa belum memiliki kelompok.');
+        $row = DB::transaction(function () use ($r, $assignment, $data, $owner) {
+            Assignment::whereKey($assignment->id)->lockForUpdate()->firstOrFail();
+            $keys = ['assignment_id' => $assignment->id, 'owner_key' => $owner];
+            $old = DB::table('assignment_reopenings')->where($keys)->first();
+            abort_if(($old?->version ?? 0) !== $data['version'], 409, 'Izin pengumpulan berubah. Muat ulang.');
+            $count = AssignmentSubmission::where($keys)->value('submission_count') ?? 0;
+            DB::table('assignment_reopenings')->updateOrInsert($keys, ['valid_until' => $data['valid_until'], 'allowed_total' => $count + $data['extra_submissions'], 'reason' => $data['reason'], 'recorded_by' => $r->user()->id, 'version' => ($old?->version ?? 0) + 1, 'created_at' => $old?->created_at ?? now(), 'updated_at' => now()]);
+            LearningNotifier::audit($r->user()->id, 'assignment_reopened', 'assignment', $assignment->id, ['owner_key' => $owner, 'valid_until' => $data['valid_until'], 'reason' => $data['reason']]);
+
+            return DB::table('assignment_reopenings')->where($keys)->first();
+        });
+        LearningNotifier::send([$student->id], 'reopened', 'Pengumpulan tugas dibuka kembali', $assignment->title, '/siswa/belajar?kegiatan=task', 'reopen:'.$row->id.':'.$row->version, $assignment->classroom_id);
+
+        return response()->json(['data' => $row]);
     }
 
     public function store(SaveAssignmentRequest $r): JsonResponse
@@ -89,17 +141,31 @@ class AssignmentController extends Controller
 
                     return $existing;
                 }
-                abort_unless($targetAssignment->status === 'published' && $targetAssignment->lesson->status === 'open' && $targetAssignment->lesson->course->status === 'published', 422, 'Pengumpulan tugas belum dibuka atau sudah ditutup.');
                 $submission = AssignmentSubmission::where('assignment_id', $assignment->id)->where('owner_key', $owner)->first();
+                $reopening = DB::table('assignment_reopenings')->where('assignment_id', $assignment->id)->where('owner_key', $owner)->where('valid_until', '>', now())->first();
+                abort_unless(($targetAssignment->status === 'published' || ($targetAssignment->status === 'closed' && $reopening)) && ($targetAssignment->lesson->status === 'open' || ($targetAssignment->lesson->status === 'closed' && $reopening)) && $targetAssignment->lesson->course->status === 'published', 422, 'Pengumpulan belum dibuka atau sudah ditutup.');
+                $count = $submission?->submission_count ?? 0;
+                $allowed = $reopening?->allowed_total ?? $targetAssignment->max_submissions;
+                abort_if($allowed !== null && $count >= $allowed, 422, 'Batas pengumpulan sudah tercapai. Minta guru membuka kembali bila perlu.');
+                abort_if($submission?->status === 'reviewed' && $targetAssignment->lock_after_review && ! $reopening, 422, 'Tugas sudah dinilai dan dikunci. Minta izin guru untuk memperbaikinya.');
+                abort_if($count > 0 && ! $targetAssignment->allow_revisions && $submission?->status !== 'needs_revision' && ! $reopening, 422, 'Revisi tugas belum diizinkan.');
+                if ($group && $submission) {
+                    $frozen = $submission->member_ids;
+                    $current = $members;
+                    sort($frozen);
+                    sort($current);
+                    abort_if($frozen !== $current, 422, 'Susunan kelompok sudah berubah. Gunakan kelompok baru agar hasil lama tetap terjaga.');
+                }
                 abort_if($staff && $submission?->source === 'online', 422, 'Jawaban daring diperbaiki oleh siswa. Gunakan tinjauan untuk memberi umpan balik.');
                 abort_if(($submission?->version ?? 0) !== $data['version'], 409, 'Jawaban sudah berubah. Muat versi terbaru.');
                 $submitted = $staff && isset($data['submitted_at']) ? Carbon::parse($data['submitted_at']) : now();
+                abort_if($targetAssignment->due_at && $submitted->gt($targetAssignment->due_at) && ! $targetAssignment->allow_late && ! $reopening, 422, 'Batas pengumpulan sudah lewat. Minta guru membuka kembali.');
                 if ($r->hasFile('file')) {
                     $newPath = $r->file('file')->store('submissions', 'local');
                     abort_unless($newPath, 500, 'Berkas belum tersimpan.');
                 }
                 $submission ??= new AssignmentSubmission(['assignment_id' => $assignment->id, 'owner_key' => $owner]);
-                $values = ['student_id' => $student->id, 'learning_group_id' => $group?->id, 'member_ids' => $members, 'content' => $data['content'], 'source' => $staff ? 'offline' : 'online', 'offline_evidence' => $staff ? $data['offline_evidence'] : null, 'recorded_by' => $r->user()->id, 'status' => $data['status'], 'version' => ($submission->version ?? 0) + 1, 'assignment_snapshot' => $submission->assignment_snapshot ?? $targetAssignment->only(['title', 'instructions', 'max_score', 'rubric', 'version', 'due_at', 'kind']), 'submitted_at' => $submitted, 'is_late' => $targetAssignment->due_at ? $submitted->gt($targetAssignment->due_at) : false, 'share_with_class' => $r->boolean('share_with_class'), 'gallery_published' => false, 'score' => null, 'rubric_scores' => null, 'feedback' => null, 'reviewed_by' => null, 'reviewed_at' => null];
+                $values = ['student_id' => $student->id, 'learning_group_id' => $group?->id, 'member_ids' => $submission->member_ids ?? $members, 'submission_count' => $count + ($data['status'] === 'submitted' ? 1 : 0), 'content' => $data['content'], 'source' => $staff ? 'offline' : 'online', 'offline_evidence' => $staff ? $data['offline_evidence'] : null, 'recorded_by' => $r->user()->id, 'status' => $data['status'], 'version' => ($submission->version ?? 0) + 1, 'assignment_snapshot' => $submission->assignment_snapshot ?? $targetAssignment->only(['title', 'instructions', 'max_score', 'rubric', 'version', 'due_at', 'kind']), 'submitted_at' => $submitted, 'is_late' => $targetAssignment->due_at ? $submitted->gt($targetAssignment->due_at) : false, 'share_with_class' => $r->boolean('share_with_class'), 'gallery_published' => false, 'score' => null, 'rubric_scores' => null, 'feedback' => null, 'reviewed_by' => null, 'reviewed_at' => null];
                 if ($newPath) {
                     $values += ['file_path' => $newPath, 'file_name' => basename($r->file('file')->getClientOriginalName()), 'file_mime' => $r->file('file')->getMimeType(), 'file_size' => $r->file('file')->getSize()];
                 } elseif ($r->boolean('remove_file')) {
@@ -198,7 +264,7 @@ class AssignmentController extends Controller
         $submission = AssignmentSubmission::findOrFail($row->assignment_submission_id);
         abort_unless($r->user()->role !== Role::Student && $r->user()->canAccessClassroom($submission->assignment->classroom_id), 403);
         $data = $r->validate(['is_hidden' => ['required', 'boolean']]);
-        DB::table('project_comments')->where('id',$comment)->update([...$data, 'moderated_by' => $r->user()->id, 'updated_at' => now()]);
+        DB::table('project_comments')->where('id', $comment)->update([...$data, 'moderated_by' => $r->user()->id, 'updated_at' => now()]);
 
         return response()->json(['message' => 'Moderasi tersimpan.']);
     }

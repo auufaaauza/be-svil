@@ -24,7 +24,7 @@ class GroupWorkController extends Controller
         $module = LearningModule::where('topic', $topic)->firstOrFail();
         abort_if($request->user()->role === Role::Student && $module->status !== 'published' && ! $work, 403);
 
-        return response()->json(['data' => $work?->summary(), 'fields' => $work?->schema_snapshot ?? $module->fields, 'module' => ['title' => $module->title, 'instructions' => $module->instructions, 'version' => $work?->module_version ?? $module->version], 'rubrics' => LkpdSchema::rubrics(), 'guidance' => LkpdSchema::guidance()]);
+        return response()->json(['data' => $work?->summary(), 'fields' => $work?->schema_snapshot ?? $module->fields, 'module' => [...$module->mediaFor($group->classroom_id), 'title' => $module->title, 'instructions' => $module->instructions, 'version' => $work?->module_version ?? $module->version], 'rubrics' => LkpdSchema::rubrics(), 'guidance' => LkpdSchema::guidance()]);
     }
 
     public function store(SaveGroupWorkRequest $request, LearningGroup $group, int $topic): JsonResponse
@@ -33,11 +33,13 @@ class GroupWorkController extends Controller
             LearningGroup::whereKey($group->id)->lockForUpdate()->firstOrFail();
             $work = GroupWork::where('learning_group_id', $group->id)->where('topic', $topic)->first();
             abort_if(($work?->version ?? 0) !== $request->integer('version'), 409, 'LKPD telah berubah. Muat ulang sebelum melanjutkan.');
+            abort_if($work?->member_ids && ! in_array($request->user()->id, $work->member_ids, true), 422, 'Anggota LKPD ini sudah dibekukan. Gunakan kelompok baru untuk kegiatan baru.');
             $version = ($work?->version ?? 0) + 1;
             $work ??= new GroupWork(['learning_group_id' => $group->id, 'topic' => $topic]);
             if (! $work->schema_snapshot) {
                 $work->fill(['schema_snapshot' => $request->moduleSchema()['fields'], 'module_version' => $request->moduleSchema()['version']]);
             }
+            $work->member_ids ??= $group->users()->pluck('users.id')->all();
             $work->fill(['answers' => $request->validated('answers'), 'status' => $request->validated('status'), 'version' => $version, 'feedback' => null, 'product_scores' => null, 'presentation_scores' => null, 'reviewed_by' => null, 'reviewed_at' => null, 'submitted_at' => $request->input('status') === 'submitted' ? now() : null]);
             $work->save();
             $work->recordRevision($request->user());

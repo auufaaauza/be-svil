@@ -12,7 +12,7 @@ class AssignmentSubmission extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['assignment_id', 'owner_key', 'student_id', 'learning_group_id', 'member_ids', 'content', 'file_path', 'file_name', 'file_mime', 'file_size', 'source', 'offline_evidence', 'recorded_by', 'status', 'version', 'assignment_snapshot', 'submitted_at', 'is_late', 'share_with_class', 'gallery_published', 'score', 'rubric_scores', 'feedback', 'reviewed_by', 'reviewed_at'];
+    protected $fillable = ['assignment_id', 'owner_key', 'student_id', 'learning_group_id', 'member_ids', 'content', 'file_path', 'file_name', 'file_mime', 'file_size', 'source', 'offline_evidence', 'recorded_by', 'status', 'version', 'assignment_snapshot', 'submitted_at', 'is_late', 'share_with_class', 'gallery_published', 'score', 'rubric_scores', 'feedback', 'reviewed_by', 'reviewed_at', 'submission_count'];
 
     protected $hidden = ['file_path'];
 

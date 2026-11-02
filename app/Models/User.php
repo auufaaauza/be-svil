@@ -42,7 +42,7 @@ class User extends Authenticatable
 
     protected function casts(): array
     {
-        return ['email_verified_at' => 'datetime', 'password' => 'hashed', 'role' => Role::class, 'is_active' => 'boolean'];
+        return ['email_verified_at' => 'datetime', 'password' => 'hashed', 'role' => Role::class, 'is_active' => 'boolean', 'must_change_password' => 'boolean', 'profile_version' => 'integer'];
     }
 
     public function school(): BelongsTo
@@ -52,7 +52,7 @@ class User extends Authenticatable
 
     public function classrooms(): BelongsToMany
     {
-        return $this->belongsToMany(Classroom::class)->withTimestamps();
+        return $this->belongsToMany(Classroom::class)->wherePivot('is_active', true)->withPivot('is_active')->withTimestamps();
     }
 
     public function accessibleClassrooms(): Builder

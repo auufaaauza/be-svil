@@ -21,7 +21,7 @@ class MigrationConsolidationTest extends TestCase
     public function test_fresh_baseline_and_rollback_create_the_same_complete_schema(): void
     {
         $expected = $this->schema();
-        $this->assertSame(10, DB::table('migrations')->count());
+        $this->assertSame(count(ConsolidateMigrations::BASELINE) + count($this->followups()), DB::table('migrations')->count());
         $this->assertTrue(Schema::hasColumns('materials', ['topic_label', 'attachment_mime', 'course_lesson_id']));
         $this->assertTrue(Schema::hasColumns('group_works', ['schema_snapshot', 'module_version']));
         $this->assertTrue(Schema::hasTable('action_followups'));
@@ -48,12 +48,12 @@ class MigrationConsolidationTest extends TestCase
         $historyBefore = DB::table('migrations')->orderBy('id')->get()->toArray();
 
         $this->artisan('svil:consolidate-migrations')->assertSuccessful();
-        $this->assertSame(16, DB::table('migrations')->count());
+        $this->assertSame(count(ConsolidateMigrations::BASELINE) + count(ConsolidateMigrations::MERGED) + count($this->followups()), DB::table('migrations')->count());
         $this->assertCount(0, Storage::disk('local')->allFiles('migration-history'));
         $this->artisan('svil:consolidate-migrations', ['--apply' => true])->assertSuccessful();
 
-        $this->assertSame(10, DB::table('migrations')->count());
-        $this->assertSame([1], DB::table('migrations')->distinct()->pluck('batch')->all());
+        $this->assertSame(count(ConsolidateMigrations::BASELINE) + count($this->followups()), DB::table('migrations')->count());
+        $this->assertSame([1], DB::table('migrations')->whereIn('migration', ConsolidateMigrations::BASELINE)->distinct()->pluck('batch')->all());
         $this->assertSame($schemaBefore, $this->schema());
         $this->assertSame($dataBefore, $this->data());
         $this->assertSame($note->content, $note->fresh()->content);
@@ -82,16 +82,21 @@ class MigrationConsolidationTest extends TestCase
         $this->legacyHistory();
         Schema::table('materials', fn (Blueprint $table) => $table->dropColumn('topic_label'));
         $this->artisan('svil:consolidate-migrations', ['--apply' => true])->assertFailed();
-        $this->assertSame(16, DB::table('migrations')->count());
+        $this->assertSame(count(ConsolidateMigrations::BASELINE) + count(ConsolidateMigrations::MERGED) + count($this->followups()), DB::table('migrations')->count());
         $this->assertCount(0, Storage::disk('local')->allFiles('migration-history'));
     }
 
     private function legacyHistory(): void
     {
         DB::table('migrations')->delete();
-        foreach ([...ConsolidateMigrations::BASELINE, ...ConsolidateMigrations::MERGED] as $index => $name) {
+        foreach ([...ConsolidateMigrations::BASELINE, ...ConsolidateMigrations::MERGED, ...$this->followups()] as $index => $name) {
             DB::table('migrations')->insert(['migration' => $name, 'batch' => $index + 1]);
         }
+    }
+
+    private function followups(): array
+    {
+        return array_values(array_diff(array_keys($this->app['migrator']->getMigrationFiles(database_path('migrations'))), ConsolidateMigrations::BASELINE));
     }
 
     private function schema(): array

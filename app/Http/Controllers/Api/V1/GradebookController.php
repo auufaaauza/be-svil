@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Role;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -25,7 +26,7 @@ class GradebookController extends Controller
         $class = $r->integer('classroom_id');
         $course = $r->integer('course_id');
         $staff = $r->user()->role !== Role::Student;
-        $students = User::where('role', Role::Student)->whereHas('classrooms', fn ($q) => $q->whereKey($class))->when(! $staff, fn ($q) => $q->whereKey($r->user()->id))->orderBy('name')->get();
+        $students = User::where('role', Role::Student)->whereIn('id', DB::table('classroom_user')->where('classroom_id', $class)->select('user_id'))->when(! $staff, fn ($q) => $q->whereKey($r->user()->id))->orderBy('name')->get();
         $tasks = Assignment::query()->when(! $staff, fn ($q) => $q->visibleTo($r->user()))->where('classroom_id', $class)->whereIn('status', ['published', 'closed'])->when($course, fn ($q) => $q->whereHas('lesson', fn ($q) => $q->where('course_id', $course)))->get();
         $assessments = Assessment::query()->when(! $staff, fn ($q) => $q->visibleTo($r->user()))->where('classroom_id', $class)->where('purpose', '!=', 'research')->whereIn('status', ['published', 'closed'])->when($course, fn ($q) => $q->whereHas('lesson', fn ($q) => $q->where('course_id', $course)))->get();
         $submissions = AssignmentSubmission::whereIn('assignment_id', $tasks->pluck('id'))->get();
@@ -46,7 +47,7 @@ class GradebookController extends Controller
             });
             $studentGroups = $groups->filter(fn ($g) => $g->users->contains('id', $student->id))->pluck('id');
 
-            return ['student_id' => $student->id, 'participant_code' => 'P-'.$student->id, 'name' => $student->name, 'assignments' => $taskRows->values(), 'assessments' => $testRows->values(), 'group_work' => $works->whereIn('learning_group_id', $studentGroups)->map(fn ($w) => $w->summary())->values(), 'observations' => $observations->where('student_id', $student->id)->values(), 'progress' => ['tasks_assigned' => $taskRows->count(), 'tasks_submitted' => $taskRows->whereNotIn('status', ['missing', 'draft'])->count(), 'tasks_reviewed' => $taskRows->where('status', 'reviewed')->count(), 'assessments_assigned' => $testRows->count(), 'assessments_submitted' => $testRows->where('status', '!=', 'missing')->count(), 'assessments_graded' => $testRows->where('status', 'graded')->count()]];
+            return ['student_id' => $student->id, 'participant_code' => 'P-'.$student->id, 'name' => $student->name, 'assignments' => $taskRows->values(), 'assessments' => $testRows->values(), 'group_work' => $works->filter(fn ($w) => $w->member_ids ? in_array($student->id, $w->member_ids, true) : $studentGroups->contains($w->learning_group_id))->map(fn ($w) => $w->summary())->values(), 'observations' => $observations->where('student_id', $student->id)->values(), 'progress' => ['tasks_assigned' => $taskRows->count(), 'tasks_submitted' => $taskRows->whereNotIn('status', ['missing', 'draft'])->count(), 'tasks_reviewed' => $taskRows->where('status', 'reviewed')->count(), 'assessments_assigned' => $testRows->count(), 'assessments_submitted' => $testRows->where('status', '!=', 'missing')->count(), 'assessments_graded' => $testRows->where('status', 'graded')->count()]];
         });
 
         return ['classroom_id' => $class, 'course_id' => $course ?: null, 'policy' => 'Tugas dan asesmen dilaporkan terpisah. Asesmen memakai percobaan terakhir yang sudah dikirim. Progres menunjukkan bukti pengumpulan/tinjauan, bukan kesimpulan efektivitas atau karakter.', 'students' => $rows->values()];

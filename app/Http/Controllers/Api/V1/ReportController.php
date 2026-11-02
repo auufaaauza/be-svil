@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Models\ActionPlan;
+use App\Models\Assessment;
+use App\Models\AssessmentAttempt;
+use App\Models\Assignment;
+use App\Models\AssignmentSubmission;
+use App\Models\Course;
 use App\Models\Discussion;
 use App\Models\GroupWork;
 use App\Models\LearningGroup;
@@ -12,6 +17,7 @@ use App\Models\LearningNote;
 use App\Models\Material;
 use App\Models\MaterialAttempt;
 use App\Models\Observation;
+use App\Models\ResearchInstrument;
 use App\Models\School;
 use App\Models\User;
 use App\Role;
@@ -49,7 +55,15 @@ class ReportController extends Controller
             'actionJournals' => DB::table('action_journals')->whereIn('action_plan_id', clone $plans)->count(),
             'verifiedActions' => ActionPlan::whereIn('learning_group_id', clone $groups)->whereNotNull('verified_at')->count(),
             'observations' => Observation::whereIn('classroom_id', $classes)->count(),
-            'researchInstrumentsReady' => false,
+            'researchInstrumentsReady' => ResearchInstrument::where('status', 'approved')->whereIn('research_study_id', DB::table('research_enrollments')->whereIn('classroom_id', $classes)->select('research_study_id'))->exists(),
+            'courses' => Course::whereIn('classroom_id', $classes)->count(),
+            'assignments' => Assignment::whereIn('classroom_id', $classes)->count(),
+            'assessments' => Assessment::whereIn('classroom_id', $classes)->count(),
+            'pendingSubmissions' => AssignmentSubmission::whereHas('assignment', fn ($q) => $q->whereIn('classroom_id', $classes))->where('status', 'submitted')->count(),
+            'pendingAssessmentReviews' => AssessmentAttempt::whereHas('assessment', fn ($q) => $q->whereIn('classroom_id', $classes))->where('status', 'pending_review')->count(),
+            'pendingReflections' => DB::table('individual_reflections')->whereIn('classroom_id', $classes)->whereNull('reviewed_at')->count(),
+            'completedMaterials' => DB::table('learning_progress')->whereIn('classroom_id', $classes)->where('target_type', 'material')->where('status', 'completed')->count(),
+            'completedLessons' => DB::table('learning_progress')->whereIn('classroom_id', $classes)->where('target_type', 'lesson')->where('status', 'completed')->count(),
             'learningModules' => LearningModule::where('status', 'published')->count(),
             'quizzes' => Material::whereIn('classroom_id', $classes)->where('kind', 'quiz')->count(),
             'draftMaterials' => Material::whereIn('classroom_id', $classes)->where('status', 'draft')->count(),

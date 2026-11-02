@@ -13,7 +13,12 @@ class Classroom extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['school_id', 'name', 'academic_year'];
+    protected $fillable = ['school_id', 'name', 'academic_year', 'version', 'archived_at'];
+
+    protected function casts(): array
+    {
+        return ['archived_at' => 'datetime', 'version' => 'integer'];
+    }
 
     protected static function booted(): void
     {
@@ -29,7 +34,7 @@ class Classroom extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->withTimestamps();
+        return $this->belongsToMany(User::class)->wherePivot('is_active', true)->withPivot('is_active')->withTimestamps();
     }
 
     public function learningGroups(): HasMany

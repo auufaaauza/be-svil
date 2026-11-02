@@ -11,11 +11,11 @@ class CourseLesson extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['course_id', 'course_chapter_id', 'title', 'objective', 'position', 'scheduled_on', 'mode', 'status', 'version'];
+    protected $fillable = ['course_id', 'course_chapter_id', 'title', 'objective', 'position', 'scheduled_on', 'mode', 'status', 'version', 'completion_rule', 'minimum_score'];
 
     protected function casts(): array
     {
-        return ['version' => 'integer', 'scheduled_on' => 'date:Y-m-d'];
+        return ['version' => 'integer', 'minimum_score' => 'float', 'scheduled_on' => 'date:Y-m-d'];
     }
 
     public function course(): BelongsTo

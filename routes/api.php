@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AccountController;
 use App\Http\Controllers\Api\V1\ActionPlanController;
 use App\Http\Controllers\Api\V1\AssessmentController;
 use App\Http\Controllers\Api\V1\AssignmentController;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\CalendarController;
 use App\Http\Controllers\Api\V1\ClassroomController;
 use App\Http\Controllers\Api\V1\CourseController;
 use App\Http\Controllers\Api\V1\DiscussionController;
@@ -13,14 +15,17 @@ use App\Http\Controllers\Api\V1\GroupWorkController;
 use App\Http\Controllers\Api\V1\LearningGroupController;
 use App\Http\Controllers\Api\V1\LearningModuleController;
 use App\Http\Controllers\Api\V1\LearningNoteController;
+use App\Http\Controllers\Api\V1\LearningProgressController;
 use App\Http\Controllers\Api\V1\MaterialAttemptController;
 use App\Http\Controllers\Api\V1\MaterialController;
+use App\Http\Controllers\Api\V1\NotificationController;
 use App\Http\Controllers\Api\V1\ObservationController;
 use App\Http\Controllers\Api\V1\ReflectionController;
 use App\Http\Controllers\Api\V1\ReportController;
 use App\Http\Controllers\Api\V1\ResearchController;
 use App\Http\Controllers\Api\V1\RosterController;
 use App\Http\Controllers\Api\V1\SchoolController;
+use App\Http\Controllers\Api\V1\SchoolOperationsController;
 use App\Http\Controllers\Api\V1\StudentReviewController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Learning\LkpdSchema;
@@ -29,7 +34,19 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     Route::post('auth/login', [AuthController::class, 'login'])->middleware('throttle:login');
     Route::post('auth/register', [AuthController::class, 'register'])->middleware('throttle:registration');
-    Route::middleware(['auth:sanctum', 'active', 'throttle:api'])->group(function () {
+    Route::middleware(['auth:sanctum', 'active', 'throttle:api', 'classroom.writable'])->group(function () {
+        Route::put('account/password', [AccountController::class, 'password'])->middleware('throttle:credentials');
+        Route::put('account/profile', [AccountController::class, 'profile']);
+        Route::get('notifications', [NotificationController::class, 'index']);
+        Route::put('notifications/read', [NotificationController::class, 'read']);
+        Route::get('learning-history', [LearningProgressController::class, 'history']);
+        Route::get('learning-overview', [LearningProgressController::class, 'overview']);
+        Route::get('learning-progress', [LearningProgressController::class, 'index']);
+        Route::get('materials/{material}/progress', [LearningProgressController::class, 'material']);
+        Route::get('course-lessons/{lesson}/progress', [LearningProgressController::class, 'lesson']);
+        Route::get('calendar', [CalendarController::class, 'index']);
+        Route::get('attendance-summary', [CalendarController::class, 'attendance']);
+        Route::get('attendance-summary.csv', [CalendarController::class, 'csv']);
         Route::get('reflections/schema', [ReflectionController::class, 'schema']);
         Route::get('reflections', [ReflectionController::class, 'index']);
         Route::get('followups', [FollowupController::class, 'index']);
@@ -63,6 +80,7 @@ Route::prefix('v1')->group(function () {
         Route::get('groups/{group}/work/{topic}', [GroupWorkController::class, 'show'])->where('topic', '[0-3]');
         Route::get('groups/{group}/action', [ActionPlanController::class, 'show']);
         Route::get('materials', [MaterialController::class, 'index']);
+        Route::get('learning-modules/videos/{topic}', [LearningModuleController::class, 'videoInfo'])->where('topic', '[0-3]');
         Route::get('learning-modules', [LearningModuleController::class, 'index']);
         Route::get('learning-modules/{module}', [LearningModuleController::class, 'show']);
         Route::get('materials/{material}', [MaterialController::class, 'show']);
@@ -79,6 +97,8 @@ Route::prefix('v1')->group(function () {
         Route::get('attempts', [MaterialAttemptController::class, 'index']);
         Route::get('observations', [ObservationController::class, 'index']);
         Route::middleware('role:student')->group(function () {
+            Route::put('materials/{material}/progress', [LearningProgressController::class, 'saveMaterial']);
+            Route::put('course-lessons/{lesson}/progress', [LearningProgressController::class, 'saveLesson']);
             Route::put('reflections', [ReflectionController::class, 'store']);
             Route::post('assessments/{assessment}/start', [AssessmentController::class, 'start']);
             Route::put('assessment-attempts/{attempt}/draft', [AssessmentController::class, 'draft']);
@@ -90,6 +110,8 @@ Route::prefix('v1')->group(function () {
             Route::post('materials/{material}/attempts', [MaterialAttemptController::class, 'store'])->middleware('throttle:attempts');
         });
         Route::middleware('role:teacher,admin')->group(function () {
+            Route::put('groups/{group}', [SchoolOperationsController::class, 'group']);
+            Route::put('learning-modules/{module}/video', [SchoolOperationsController::class, 'moduleVideo']);
             Route::get('student-reviews', [StudentReviewController::class, 'index']);
             Route::get('student-reviews/{student}', [StudentReviewController::class, 'show']);
             Route::put('reflections/{reflection}/review', [ReflectionController::class, 'review']);
@@ -105,6 +127,8 @@ Route::prefix('v1')->group(function () {
             Route::put('course-lessons/{lesson}', [CourseController::class, 'updateLesson']);
             Route::post('course-lessons/{lesson}/records', [CourseController::class, 'record']);
             Route::post('announcements', [CourseController::class, 'announce']);
+            Route::get('assignments/{assignment}/reopenings', [AssignmentController::class, 'reopenings']);
+            Route::put('assignments/{assignment}/reopen', [AssignmentController::class, 'reopen']);
             Route::post('assignments', [AssignmentController::class, 'store']);
             Route::put('assignments/{assignment}', [AssignmentController::class, 'update']);
             Route::put('submissions/{submission}/review', [AssignmentController::class, 'review']);
@@ -134,6 +158,12 @@ Route::prefix('v1')->group(function () {
             Route::get('reports/learning.csv', [ReportController::class, 'learning']);
         });
         Route::middleware('role:admin')->group(function () {
+            Route::put('users/{user}/profile', [AccountController::class, 'profile']);
+            Route::put('users/{user}/password', [AccountController::class, 'reset'])->middleware('throttle:credentials');
+            Route::put('classrooms/{classroom}', [SchoolOperationsController::class, 'classroom']);
+            Route::post('classrooms/{classroom}/rotate-code', [SchoolOperationsController::class, 'rotateCode']);
+            Route::post('classrooms/{classroom}/members/{user}', [SchoolOperationsController::class, 'membership']);
+            Route::post('classrooms/{classroom}/rollover', [SchoolOperationsController::class, 'rollover']);
             Route::post('roster/import', [RosterController::class, 'import']);
             Route::post('research-studies', [ResearchController::class, 'createStudy']);
             Route::put('research-studies/{study}', [ResearchController::class, 'updateStudy']);

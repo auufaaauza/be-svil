@@ -33,7 +33,7 @@ class AuthController extends Controller
     public function register(RegisterRequest $request): UserResource
     {
         $user = DB::transaction(function () use ($request) {
-            $classroom = Classroom::where('join_code', $request->validated('class_code'))->lockForUpdate()->firstOrFail();
+            $classroom = Classroom::whereNull('archived_at')->where('join_code', $request->validated('class_code'))->lockForUpdate()->firstOrFail();
             $user = User::create([
                 ...$request->safe()->only(['name', 'username', 'email', 'password']),
                 'role' => Role::Student, 'school_id' => $classroom->school_id, 'is_active' => true,

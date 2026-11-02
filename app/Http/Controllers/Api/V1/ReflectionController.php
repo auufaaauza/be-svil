@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Learning\LearningNotifier;
 use App\Models\User;
 use App\Role;
 use Illuminate\Http\JsonResponse;
@@ -82,6 +83,8 @@ class ReflectionController extends Controller
 
             return $row;
         });
+
+        LearningNotifier::send([$row->student_id], 'feedback', 'Gurumu membalas cerita pribadimu', 'Baca apresiasi dan dukungan dari gurumu.', '/siswa/cerita', 'reflection:'.$row->id.':'.$row->version, $row->classroom_id);
 
         return response()->json(['data' => $row]);
     }

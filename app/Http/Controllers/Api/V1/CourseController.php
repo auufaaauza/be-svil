@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaveCourseRequest;
+use App\Learning\LearningNotifier;
 use App\Models\Course;
 use App\Models\CourseChapter;
 use App\Models\CourseLesson;
@@ -69,7 +70,7 @@ class CourseController extends Controller
 
     private function lessonData(Request $r, bool $updating = false): array
     {
-        return $r->validate(['title' => ['required', 'string', 'max:180'], 'objective' => ['required', 'string', 'max:3000'], 'position' => ['required', 'integer', 'between:1,1000'], 'mode' => ['required', 'in:online,offline,blended'], 'status' => ['required', 'in:draft,open,closed'], 'scheduled_on' => ['nullable', 'date_format:Y-m-d'], 'version' => [$updating ? 'required' : 'nullable', 'integer', 'min:1']]);
+        return $r->validate(['completion_rule' => ['sometimes', 'in:manual,materials,activities,all'], 'minimum_score' => ['nullable', 'numeric', 'between:0,100'], 'title' => ['required', 'string', 'max:180'], 'objective' => ['required', 'string', 'max:3000'], 'position' => ['required', 'integer', 'between:1,1000'], 'mode' => ['required', 'in:online,offline,blended'], 'status' => ['required', 'in:draft,open,closed'], 'scheduled_on' => ['nullable', 'date_format:Y-m-d'], 'version' => [$updating ? 'required' : 'nullable', 'integer', 'min:1']]);
     }
 
     public function lesson(Request $r, CourseChapter $chapter): JsonResponse
@@ -106,7 +107,7 @@ class CourseController extends Controller
                 }
             }
 
-return $copy;
+            return $copy;
         });
 
         return response()->json(['data' => $new, 'message' => 'Struktur mapel, bab dan pertemuan disalin sebagai draf. Hasil siswa tidak disalin.'], 201);
@@ -149,6 +150,8 @@ return $copy;
         $data = $r->validate(['classroom_id' => ['required', 'integer', Rule::exists('classrooms', 'id')->whereIn('id', $r->user()->accessibleClassrooms()->pluck('id'))], 'title' => ['required', 'string', 'max:180'], 'content' => ['required', 'string', 'max:5000']]);
         $id = DB::table('school_announcements')->insertGetId([...$data, 'author_id' => $r->user()->id, 'created_at' => now(), 'updated_at' => now()]);
 
-        return response()->json(['data' => ['id' => $id]],201);
+        LearningNotifier::send(LearningNotifier::members($data['classroom_id']), 'announcement', $data['title'], 'Ada pengumuman baru dari gurumu.', '/siswa', 'announcement:'.$id, $data['classroom_id']);
+
+        return response()->json(['data' => ['id' => $id]], 201);
     }
 }

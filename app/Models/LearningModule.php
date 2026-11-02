@@ -11,11 +11,18 @@ class LearningModule extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['topic', 'title', 'description', 'instructions', 'fields', 'source_text', 'source_document', 'source_hash', 'status', 'version', 'uploaded_by', 'updated_by'];
+    protected $fillable = ['topic', 'title', 'description', 'instructions', 'fields', 'source_text', 'source_document', 'source_hash', 'status', 'version', 'uploaded_by', 'updated_by', 'youtube_video_id', 'video_caption'];
 
     protected function casts(): array
     {
         return ['fields' => 'array', 'topic' => 'integer', 'version' => 'integer'];
+    }
+
+    public function mediaFor(?int $classroom): array
+    {
+        $override = $classroom ? DB::table('module_class_media')->where('learning_module_id', $this->id)->where('classroom_id', $classroom)->first() : null;
+
+        return ['videoId' => $override ? $override->youtube_video_id : $this->youtube_video_id, 'videoCaption' => $override ? $override->video_caption : $this->video_caption, 'videoVersion' => $override?->version ?? 0, 'videoOverride' => (bool) $override];
     }
 
     public function uploader(): BelongsTo

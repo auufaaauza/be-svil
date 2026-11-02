@@ -19,7 +19,7 @@ class StoreGroupRequest extends FormRequest
             'classroom_id' => ['required', 'integer', Rule::exists('classrooms', 'id')->whereIn('id', $this->user()->accessibleClassrooms()->pluck('id'))],
             'name' => ['required', 'string', 'max:80', Rule::unique('learning_groups')->where('classroom_id', $this->input('classroom_id'))],
             'student_ids' => ['required', 'array', 'min:1', 'max:10'],
-            'student_ids.*' => ['required', 'integer', 'distinct', Rule::exists('classroom_user', 'user_id')->where('classroom_id', $this->input('classroom_id')), Rule::exists('users', 'id')->where('role', 'student')->where('is_active', true)],
+            'student_ids.*' => ['required', 'integer', 'distinct', Rule::exists('classroom_user', 'user_id')->where('classroom_id', $this->input('classroom_id'))->where('is_active', true), Rule::exists('users', 'id')->where('role', 'student')->where('is_active', true)],
         ];
     }
 }

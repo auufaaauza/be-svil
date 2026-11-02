@@ -71,7 +71,7 @@ class MaterialController extends Controller
                     $oldPath = $target->image_path;
                     $oldAttachment = $target->attachment_path;
                 }
-                $values = $request->safe()->except(['image', 'remove_image', 'version', 'attachment', 'remove_attachment']);
+                $values = $request->safe()->except(['image', 'remove_image', 'version', 'attachment', 'remove_attachment', 'youtube_url']);
                 $target->fill($values);
                 if (! $material) {
                     $target->teacher_id = $request->user()->id;

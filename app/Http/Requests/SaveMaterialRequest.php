@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Learning\YouTubeVideo;
 use App\Models\Course;
 use App\Models\Material;
 use Illuminate\Foundation\Http\FormRequest;
@@ -18,6 +19,9 @@ class SaveMaterialRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
+        if ($this->exists('youtube_url')) {
+            $this->merge(['youtube_video_id' => YouTubeVideo::id($this->input('youtube_url'))]);
+        }
         if ($this->filled('topic')) {
             $this->merge(['topic_label' => null]);
         }
@@ -30,6 +34,7 @@ class SaveMaterialRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'youtube_url' => ['nullable', 'string', 'max:2048'], 'youtube_video_id' => ['nullable', 'string', 'regex:/^[A-Za-z0-9_-]{11}$/D'], 'video_caption' => ['nullable', 'string', 'max:3000'], 'audio_url' => ['nullable', 'url:https', 'max:2048', 'not_regex:~^https://[^/]*@~i'],
             'classroom_id' => ['required', 'integer', Rule::exists('classrooms', 'id')->whereIn('id', $this->user()->accessibleClassrooms()->pluck('id'))],
             'title' => ['required', 'string', 'max:100'],
             'content' => ['required', 'string', 'max:8000'],

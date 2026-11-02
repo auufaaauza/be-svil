@@ -10,7 +10,7 @@ class AssignClassroomRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->role === Role::Admin;
+        return $this->user()->role === Role::Admin && ! $this->route('classroom')->archived_at;
     }
 
     public function rules(): array

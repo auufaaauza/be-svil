@@ -12,7 +12,12 @@ class LearningGroup extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['classroom_id', 'name'];
+    protected $fillable = ['classroom_id', 'name', 'version', 'archived_at'];
+
+    protected function casts(): array
+    {
+        return ['version' => 'integer', 'archived_at' => 'datetime'];
+    }
 
     public function classroom(): BelongsTo
     {
@@ -21,7 +26,7 @@ class LearningGroup extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->withTimestamps();
+        return $this->belongsToMany(User::class)->wherePivot('is_active', true)->withPivot('is_active')->withTimestamps();
     }
 
     public function canView(User $user): bool
@@ -32,6 +37,6 @@ class LearningGroup extends Model
 
     public function canContribute(User $user): bool
     {
-        return $user->role === Role::Student && $this->canView($user);
+        return $user->role === Role::Student && ! $this->archived_at && $this->canView($user);
     }
 }

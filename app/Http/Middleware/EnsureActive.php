@@ -12,6 +12,8 @@ class EnsureActive
     {
         abort_unless($request->user()?->is_active, 403, 'Akun ini tidak aktif.');
 
+        abort_if($request->user()->must_change_password && ! in_array($request->method(), ['GET', 'HEAD', 'OPTIONS'], true) && ! $request->is('api/v1/account/password', 'api/v1/auth/logout'), 423, 'Ganti kata sandi awalmu melalui pengaturan akun sebelum melanjutkan.');
+
         return $next($request);
     }
 }
