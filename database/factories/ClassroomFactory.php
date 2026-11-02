@@ -1,0 +1,16 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Classroom;
+use App\Models\School;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/** @extends Factory<Classroom> */
+class ClassroomFactory extends Factory
+{
+    public function definition(): array
+    {
+        return ['school_id' => School::factory(), 'name' => fake()->unique()->bothify('V-??'), 'academic_year' => '2026/2027'];
+    }
+}

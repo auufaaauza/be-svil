@@ -1,0 +1,139 @@
+{
+  "title": "Tes Sumatif IPAS · Di Mana Indonesia Berada?",
+  "reference": "RPPM_IPAS_Kelas_V_Kurikulum_Cinta_Value_Inquiry.docx · Lampiran B",
+  "purpose": "summative",
+  "max_score": 74,
+  "notice": "Tes sumatif modul. Penggunaan sebagai instrumen penelitian memerlukan pengesahan blueprint dan peneliti.",
+  "questions": [
+    {
+      "id": "rppm_1",
+      "type": "choice",
+      "prompt": "Letak geografis Indonesia berada di antara …",
+      "options": [
+        "Asia dan Australia serta Hindia dan Pasifik",
+        "Eropa dan Afrika serta Arktik dan Atlantik",
+        "Asia dan Amerika serta Arktik dan Hindia",
+        "Australia dan Eropa serta Atlantik dan Pasifik"
+      ],
+      "correctIndex": 0,
+      "visualTopic": 0,
+      "points": 6
+    },
+    {
+      "id": "rppm_2",
+      "type": "choice",
+      "prompt": "Warna biru dalam peta fisik umumnya menunjukkan …",
+      "options": [
+        "dataran tinggi",
+        "wilayah perairan",
+        "permukiman",
+        "hutan"
+      ],
+      "correctIndex": 1,
+      "visualTopic": 0,
+      "points": 6
+    },
+    {
+      "id": "rppm_3",
+      "type": "choice",
+      "prompt": "Komponen peta yang menjelaskan simbol atau warna ialah …",
+      "options": [
+        "legenda",
+        "judul",
+        "garis tepi",
+        "indeks"
+      ],
+      "correctIndex": 0,
+      "visualTopic": 0,
+      "points": 6
+    },
+    {
+      "id": "rppm_4",
+      "type": "choice",
+      "prompt": "Garis khatulistiwa berkaitan erat dengan …",
+      "options": [
+        "iklim kutub",
+        "musim salju sepanjang tahun",
+        "iklim tropis",
+        "tidak adanya hujan"
+      ],
+      "correctIndex": 2,
+      "visualTopic": 1,
+      "points": 6
+    },
+    {
+      "id": "rppm_5",
+      "type": "choice",
+      "prompt": "Julukan Zamrud Khatulistiwa berkaitan dengan …",
+      "options": [
+        "banyaknya gurun",
+        "kehijauan hutan tropis",
+        "semua wilayah bersalju",
+        "tidak adanya tumbuhan"
+      ],
+      "correctIndex": 1,
+      "visualTopic": 1,
+      "points": 6
+    },
+    {
+      "id": "rppm_6",
+      "type": "choice",
+      "prompt": "Pekerjaan yang paling berkaitan dengan pemanfaatan hasil laut adalah …",
+      "options": [
+        "nelayan",
+        "penjahit",
+        "petani sawah",
+        "pengrajin gerabah"
+      ],
+      "correctIndex": 0,
+      "visualTopic": 2,
+      "points": 6
+    },
+    {
+      "id": "rppm_7",
+      "type": "choice",
+      "prompt": "Contoh warisan budaya bahari Indonesia adalah …",
+      "options": [
+        "kapal pinisi",
+        "kereta bawah tanah",
+        "pesawat luar angkasa",
+        "lift"
+      ],
+      "correctIndex": 0,
+      "visualTopic": 2,
+      "points": 6
+    },
+    {
+      "id": "rppm_8",
+      "type": "choice",
+      "prompt": "Pilihan paling bertanggung jawab ketika wisata pantai menghasilkan sampah adalah …",
+      "options": [
+        "membiarkan sampah mengalir ke laut",
+        "membakar seluruh sampah di pantai",
+        "menutup akses semua warga tanpa musyawarah",
+        "menyiapkan pemilahan sampah, edukasi, dan aturan bersama"
+      ],
+      "correctIndex": 3,
+      "visualTopic": 3,
+      "points": 6
+    },
+    {
+      "id": "rppm_9",
+      "type": "text",
+      "prompt": "Jelaskan dua hubungan antara kondisi geografis Indonesia dan pekerjaan atau budaya masyarakat. Sertakan masing-masing satu contoh nyata.",
+      "options": [],
+      "points": 13,
+      "visualTopic": 2,
+      "modelAnswer": "Hubungan pertama benar (4), contoh relevan (2), hubungan kedua benar (4), contoh relevan (2), runtut (1)."
+    },
+    {
+      "id": "rppm_10",
+      "type": "text",
+      "prompt": "Sebuah kawasan hutan dekat desa akan dibuka untuk usaha yang menjanjikan lapangan kerja tetapi berisiko merusak habitat dan sungai. Jelaskan dua manfaat/risiko berbeda, siapa yang terdampak, serta keputusan dan dua tindakan perlindungan yang kamu usulkan.",
+      "options": [],
+      "points": 13,
+      "visualTopic": 1,
+      "modelAnswer": "Manfaat/risiko (4), pihak terdampak (2), keputusan beralasan (3), dua tindakan realistis (4)."
+    }
+  ]
+}

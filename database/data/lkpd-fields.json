@@ -1,0 +1,794 @@
+[
+  [
+    {
+      "key": "island_1",
+      "label": "Pulau 1",
+      "hint": "Tuliskan nama objek dan bukti atau sumber penemuannya pada peta.",
+      "phase": 1,
+      "source": "LKPD-1.docx · D · Tabel pengamatan peta"
+    },
+    {
+      "key": "island_2",
+      "label": "Pulau 2",
+      "hint": "Tuliskan nama objek dan bukti atau sumber penemuannya pada peta.",
+      "phase": 1,
+      "source": "LKPD-1.docx · D · Tabel pengamatan peta"
+    },
+    {
+      "key": "island_3",
+      "label": "Pulau 3",
+      "hint": "Tuliskan nama objek dan bukti atau sumber penemuannya pada peta.",
+      "phase": 1,
+      "source": "LKPD-1.docx · D · Tabel pengamatan peta"
+    },
+    {
+      "key": "island_4",
+      "label": "Pulau 4",
+      "hint": "Tuliskan nama objek dan bukti atau sumber penemuannya pada peta.",
+      "phase": 1,
+      "source": "LKPD-1.docx · D · Tabel pengamatan peta"
+    },
+    {
+      "key": "sea_1",
+      "label": "Laut atau selat 1",
+      "hint": "Tuliskan nama objek dan bukti atau sumber penemuannya pada peta.",
+      "phase": 1,
+      "source": "LKPD-1.docx · D · Tabel pengamatan peta"
+    },
+    {
+      "key": "sea_2",
+      "label": "Laut atau selat 2",
+      "hint": "Tuliskan nama objek dan bukti atau sumber penemuannya pada peta.",
+      "phase": 1,
+      "source": "LKPD-1.docx · D · Tabel pengamatan peta"
+    },
+    {
+      "key": "ocean_1",
+      "label": "Samudra 1",
+      "hint": "Tuliskan nama objek dan bukti atau sumber penemuannya pada peta.",
+      "phase": 1,
+      "source": "LKPD-1.docx · D · Tabel pengamatan peta"
+    },
+    {
+      "key": "ocean_2",
+      "label": "Samudra 2",
+      "hint": "Tuliskan nama objek dan bukti atau sumber penemuannya pada peta.",
+      "phase": 1,
+      "source": "LKPD-1.docx · D · Tabel pengamatan peta"
+    },
+    {
+      "key": "continent_1",
+      "label": "Benua 1",
+      "hint": "Tuliskan nama objek dan bukti atau sumber penemuannya pada peta.",
+      "phase": 1,
+      "source": "LKPD-1.docx · D · Tabel pengamatan peta"
+    },
+    {
+      "key": "continent_2",
+      "label": "Benua 2",
+      "hint": "Tuliskan nama objek dan bukti atau sumber penemuannya pada peta.",
+      "phase": 1,
+      "source": "LKPD-1.docx · D · Tabel pengamatan peta"
+    },
+    {
+      "key": "direction_1",
+      "label": "Arah mata angin 1",
+      "hint": "Tuliskan nama objek dan bukti atau sumber penemuannya pada peta.",
+      "phase": 1,
+      "source": "LKPD-1.docx · D · Tabel pengamatan peta"
+    },
+    {
+      "key": "direction_2",
+      "label": "Arah mata angin 2",
+      "hint": "Tuliskan nama objek dan bukti atau sumber penemuannya pada peta.",
+      "phase": 1,
+      "source": "LKPD-1.docx · D · Tabel pengamatan peta"
+    },
+    {
+      "key": "direction_3",
+      "label": "Arah mata angin 3",
+      "hint": "Tuliskan nama objek dan bukti atau sumber penemuannya pada peta.",
+      "phase": 1,
+      "source": "LKPD-1.docx · D · Tabel pengamatan peta"
+    },
+    {
+      "key": "direction_4",
+      "label": "Arah mata angin 4",
+      "hint": "Tuliskan nama objek dan bukti atau sumber penemuannya pada peta.",
+      "phase": 1,
+      "source": "LKPD-1.docx · D · Tabel pengamatan peta"
+    },
+    {
+      "key": "archipelago_reason",
+      "label": "Mengapa Indonesia disebut negara kepulauan?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 1,
+      "source": "D · Ayo Berpikir"
+    },
+    {
+      "key": "sea_connection",
+      "label": "Apakah laut memisahkan atau menghubungkan pulau?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 1,
+      "source": "D · Ayo Berpikir"
+    },
+    {
+      "key": "pride",
+      "label": "Apa yang membuat kelompokmu bangga terhadap Indonesia?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 1,
+      "source": "D · Ayo Berpikir"
+    },
+    {
+      "key": "benefit_1",
+      "label": "Manfaat transportasi laut 1",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "E · Studi kasus kapal"
+    },
+    {
+      "key": "benefit_2",
+      "label": "Manfaat transportasi laut 2",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "E · Studi kasus kapal"
+    },
+    {
+      "key": "risk_1",
+      "label": "Risiko lingkungan akibat kapal 1",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "E · Studi kasus kapal"
+    },
+    {
+      "key": "risk_2",
+      "label": "Risiko lingkungan akibat kapal 2",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "E · Studi kasus kapal"
+    },
+    {
+      "key": "solution_1",
+      "label": "Solusi transportasi laut ramah lingkungan 1",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "E · Studi kasus kapal"
+    },
+    {
+      "key": "solution_2",
+      "label": "Solusi transportasi laut ramah lingkungan 2",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "E · Studi kasus kapal"
+    },
+    {
+      "key": "ferry_manager",
+      "label": "Apa tindakanmu sebagai pengelola kapal feri?",
+      "hint": "Jaga kenyamanan penumpang sekaligus kebersihan laut.",
+      "phase": 2,
+      "source": "E · Tantangan"
+    },
+    {
+      "key": "decision",
+      "label": "Solusi utama apa yang kalian pilih?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 3,
+      "source": "F · Keputusan kelompok"
+    },
+    {
+      "key": "decision_reason",
+      "label": "Mengapa memilih solusi tersebut?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 3,
+      "source": "F · Keputusan kelompok"
+    },
+    {
+      "key": "love_value",
+      "label": "Nilai cinta apa yang terkait dengan keputusan kalian?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 3,
+      "source": "F · Keputusan kelompok"
+    },
+    {
+      "key": "promise",
+      "label": "Apa janji kecil kelompok untuk menjaga laut?",
+      "hint": "Tulis satu tindakan nyata yang aman dan bisa dilakukan.",
+      "phase": 4,
+      "source": "G · Janji kecil penjaga laut"
+    }
+  ],
+  [
+    {
+      "key": "area",
+      "label": "Daerah atau kasus yang diteliti",
+      "hint": "Lengkapi hasil penyelidikan berdasarkan buku, peta atau bacaan guru.",
+      "phase": 1,
+      "source": "LKPD_2.docx · D · Tabel penyelidikan"
+    },
+    {
+      "key": "nature",
+      "label": "Kondisi alam daerah",
+      "hint": "Lengkapi hasil penyelidikan berdasarkan buku, peta atau bacaan guru.",
+      "phase": 1,
+      "source": "LKPD_2.docx · D · Tabel penyelidikan"
+    },
+    {
+      "key": "climate",
+      "label": "Iklim dan ciri karakteristiknya",
+      "hint": "Lengkapi hasil penyelidikan berdasarkan buku, peta atau bacaan guru.",
+      "phase": 1,
+      "source": "LKPD_2.docx · D · Tabel penyelidikan"
+    },
+    {
+      "key": "jobs",
+      "label": "Mata pencaharian masyarakat",
+      "hint": "Lengkapi hasil penyelidikan berdasarkan buku, peta atau bacaan guru.",
+      "phase": 1,
+      "source": "LKPD_2.docx · D · Tabel penyelidikan"
+    },
+    {
+      "key": "facts",
+      "label": "Fakta menarik dari sumber",
+      "hint": "Lengkapi hasil penyelidikan berdasarkan buku, peta atau bacaan guru.",
+      "phase": 1,
+      "source": "LKPD_2.docx · D · Tabel penyelidikan"
+    },
+    {
+      "key": "sources",
+      "label": "Sumber informasi yang digunakan",
+      "hint": "Lengkapi hasil penyelidikan berdasarkan buku, peta atau bacaan guru.",
+      "phase": 1,
+      "source": "LKPD_2.docx · D · Tabel penyelidikan"
+    },
+    {
+      "key": "emerald_reason",
+      "label": "Mengapa Indonesia disebut Zamrud Khatulistiwa?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 1,
+      "source": "D · Ayo Berpikir"
+    },
+    {
+      "key": "nature_jobs",
+      "label": "Bagaimana kondisi alam memengaruhi pekerjaan masyarakat?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 1,
+      "source": "D · Ayo Berpikir"
+    },
+    {
+      "key": "forest_loss",
+      "label": "Apa yang terjadi jika hutan rusak atau berkurang?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 1,
+      "source": "D · Ayo Berpikir"
+    },
+    {
+      "key": "benefits",
+      "label": "Manfaat pengolahan lahan atau hutan",
+      "hint": "Pertimbangkan ekonomi dan kebutuhan manusia.",
+      "phase": 2,
+      "source": "E · Dilema lahan dan hutan"
+    },
+    {
+      "key": "risks",
+      "label": "Risiko kerusakan lingkungan",
+      "hint": "Pertimbangkan tanah, air, hutan dan bencana.",
+      "phase": 2,
+      "source": "E · Dilema lahan dan hutan"
+    },
+    {
+      "key": "affected",
+      "label": "Siapa atau makhluk hidup apa yang terdampak?",
+      "hint": "Termasuk masyarakat dan generasi mendatang.",
+      "phase": 2,
+      "source": "E · Dilema lahan dan hutan"
+    },
+    {
+      "key": "responsible_choice",
+      "label": "Pilihan pemanfaatan yang paling bertanggung jawab",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "E · Dilema lahan dan hutan"
+    },
+    {
+      "key": "decision",
+      "label": "Keputusan jika menjadi pemimpin desa",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "E · Dilema lahan dan hutan"
+    },
+    {
+      "key": "decision_reason",
+      "label": "Alasan keputusan kelompok",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "E · Dilema lahan dan hutan"
+    },
+    {
+      "key": "gratitude",
+      "label": "Apa karunia alam yang paling kalian syukuri?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 3,
+      "source": "F.1 · Refleksi syukur kelompok"
+    },
+    {
+      "key": "gratitude_benefit",
+      "label": "Mengapa kekayaan alam tersebut bermanfaat?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 3,
+      "source": "F.1 · Refleksi syukur kelompok"
+    },
+    {
+      "key": "action",
+      "label": "Apa aksi nyata kelompokmu?",
+      "hint": "Rencanakan tindakan aman dan sesuai kemampuan bersama pendamping.",
+      "phase": 4,
+      "source": "F.2–3 · Aksi dan janji"
+    },
+    {
+      "key": "action_when",
+      "label": "Kapan aksi dilakukan?",
+      "hint": "Rencanakan tindakan aman dan sesuai kemampuan bersama pendamping.",
+      "phase": 4,
+      "source": "F.2–3 · Aksi dan janji"
+    },
+    {
+      "key": "action_where",
+      "label": "Di mana aksi dilakukan?",
+      "hint": "Rencanakan tindakan aman dan sesuai kemampuan bersama pendamping.",
+      "phase": 4,
+      "source": "F.2–3 · Aksi dan janji"
+    },
+    {
+      "key": "action_who",
+      "label": "Siapa yang ikut melaksanakan?",
+      "hint": "Rencanakan tindakan aman dan sesuai kemampuan bersama pendamping.",
+      "phase": 4,
+      "source": "F.2–3 · Aksi dan janji"
+    },
+    {
+      "key": "action_evidence",
+      "label": "Bagaimana mengetahui aksi telah terlaksana?",
+      "hint": "Rencanakan tindakan aman dan sesuai kemampuan bersama pendamping.",
+      "phase": 4,
+      "source": "F.2–3 · Aksi dan janji"
+    },
+    {
+      "key": "promise",
+      "label": "Apa janji Sahabat Hutan kelompokmu?",
+      "hint": "Rencanakan tindakan aman dan sesuai kemampuan bersama pendamping.",
+      "phase": 4,
+      "source": "F.2–3 · Aksi dan janji"
+    }
+  ],
+  [
+    {
+      "key": "traits_1",
+      "label": "Ciri wilayah 1",
+      "hint": "Bandingkan wilayah MARITIM dan AGRARIS; tuliskan jawaban untuk keduanya.",
+      "phase": 1,
+      "source": "LKPD_3.docx · D · Tabel perbandingan"
+    },
+    {
+      "key": "traits_2",
+      "label": "Ciri wilayah 2",
+      "hint": "Bandingkan wilayah MARITIM dan AGRARIS; tuliskan jawaban untuk keduanya.",
+      "phase": 1,
+      "source": "LKPD_3.docx · D · Tabel perbandingan"
+    },
+    {
+      "key": "jobs_1",
+      "label": "Contoh pekerjaan 1",
+      "hint": "Bandingkan wilayah MARITIM dan AGRARIS; tuliskan jawaban untuk keduanya.",
+      "phase": 1,
+      "source": "LKPD_3.docx · D · Tabel perbandingan"
+    },
+    {
+      "key": "jobs_2",
+      "label": "Contoh pekerjaan 2",
+      "hint": "Bandingkan wilayah MARITIM dan AGRARIS; tuliskan jawaban untuk keduanya.",
+      "phase": 1,
+      "source": "LKPD_3.docx · D · Tabel perbandingan"
+    },
+    {
+      "key": "products_1",
+      "label": "Hasil alam atau produk 1",
+      "hint": "Bandingkan wilayah MARITIM dan AGRARIS; tuliskan jawaban untuk keduanya.",
+      "phase": 1,
+      "source": "LKPD_3.docx · D · Tabel perbandingan"
+    },
+    {
+      "key": "products_2",
+      "label": "Hasil alam atau produk 2",
+      "hint": "Bandingkan wilayah MARITIM dan AGRARIS; tuliskan jawaban untuk keduanya.",
+      "phase": 1,
+      "source": "LKPD_3.docx · D · Tabel perbandingan"
+    },
+    {
+      "key": "maritime_agrarian",
+      "label": "Mengapa Indonesia disebut negara maritim sekaligus agraris?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 1,
+      "source": "D · Ayo Berpikir"
+    },
+    {
+      "key": "geography_jobs",
+      "label": "Bagaimana alam memengaruhi pekerjaan petani dan nelayan?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 1,
+      "source": "D · Ayo Berpikir"
+    },
+    {
+      "key": "respect",
+      "label": "Mengapa kita perlu menghargai pekerjaan petani dan nelayan?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 1,
+      "source": "D · Ayo Berpikir"
+    },
+    {
+      "key": "source_1_type",
+      "label": "Jenis sumber 1",
+      "hint": "Buku, video, wawancara atau artikel.",
+      "phase": 1,
+      "source": "E · Temuan sumber/wawancara 1"
+    },
+    {
+      "key": "source_1_reference",
+      "label": "Judul sumber atau inisial narasumber 1",
+      "hint": "Cukup inisial/peran; hindari alamat dan nomor telepon.",
+      "phase": 1,
+      "source": "E · Temuan sumber/wawancara 1"
+    },
+    {
+      "key": "source_1_topic",
+      "label": "Pekerjaan atau topik yang dibahas 1",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 1,
+      "source": "E · Temuan sumber/wawancara 1"
+    },
+    {
+      "key": "source_1_summary",
+      "label": "Ringkasan informasi penting 1",
+      "hint": "Bedakan temuan faktual dan pendapat.",
+      "phase": 1,
+      "source": "E · Temuan sumber/wawancara 1"
+    },
+    {
+      "key": "source_1_appreciation",
+      "label": "Hal yang membuat kalian menghargai pekerjaan itu 1",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 1,
+      "source": "E · Temuan sumber/wawancara 1"
+    },
+    {
+      "key": "source_2_type",
+      "label": "Jenis sumber 2",
+      "hint": "Buku, video, wawancara atau artikel.",
+      "phase": 1,
+      "source": "E · Temuan sumber/wawancara 2"
+    },
+    {
+      "key": "source_2_reference",
+      "label": "Judul sumber atau inisial narasumber 2",
+      "hint": "Cukup inisial/peran; hindari alamat dan nomor telepon.",
+      "phase": 1,
+      "source": "E · Temuan sumber/wawancara 2"
+    },
+    {
+      "key": "source_2_topic",
+      "label": "Pekerjaan atau topik yang dibahas 2",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 1,
+      "source": "E · Temuan sumber/wawancara 2"
+    },
+    {
+      "key": "source_2_summary",
+      "label": "Ringkasan informasi penting 2",
+      "hint": "Bedakan temuan faktual dan pendapat.",
+      "phase": 1,
+      "source": "E · Temuan sumber/wawancara 2"
+    },
+    {
+      "key": "source_2_appreciation",
+      "label": "Hal yang membuat kalian menghargai pekerjaan itu 2",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 1,
+      "source": "E · Temuan sumber/wawancara 2"
+    },
+    {
+      "key": "shared_challenges",
+      "label": "Apa persamaan tantangan petani dan nelayan?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 1,
+      "source": "E · Pertanyaan penyelidikan"
+    },
+    {
+      "key": "argument_1",
+      "label": "Argumen mendukung pariwisata",
+      "hint": "Sertakan alasan, manfaat dan bukti sumber.",
+      "phase": 2,
+      "source": "F · Analisis dilema"
+    },
+    {
+      "key": "argument_2",
+      "label": "Argumen melindungi petani, nelayan dan pangan",
+      "hint": "Sertakan alasan dan bukti sumber.",
+      "phase": 2,
+      "source": "F · Analisis dilema"
+    },
+    {
+      "key": "farmer_impact",
+      "label": "Dampak bagi petani jika masalah tidak dikelola adil",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "F · Analisis dilema"
+    },
+    {
+      "key": "fisher_impact",
+      "label": "Dampak bagi nelayan jika masalah tidak dikelola adil",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "F · Analisis dilema"
+    },
+    {
+      "key": "environment_impact",
+      "label": "Dampak bagi lingkungan dan masyarakat",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "F · Analisis dilema"
+    },
+    {
+      "key": "fair_solution",
+      "label": "Apa solusi jalan tengah yang adil?",
+      "hint": "Jelaskan manfaat bagi semua pihak.",
+      "phase": 2,
+      "source": "F · Analisis dilema"
+    },
+    {
+      "key": "decision",
+      "label": "Apa keputusanmu jika menjadi pemimpin daerah?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "F · Analisis dilema"
+    },
+    {
+      "key": "decision_reason",
+      "label": "Apa alasan keputusan kelompok?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "F · Analisis dilema"
+    },
+    {
+      "key": "involved",
+      "label": "Siapa yang perlu dilibatkan?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "F · Analisis dilema"
+    },
+    {
+      "key": "empathy_action",
+      "label": "Sikap cinta tanah air dan empati apa yang akan kalian tunjukkan?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 3,
+      "source": "G.1 · Refleksi kelompok"
+    },
+    {
+      "key": "gratitude",
+      "label": "Mengapa kalian bersyukur atas hasil bumi dan laut?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 3,
+      "source": "G.1 · Refleksi kelompok"
+    },
+    {
+      "key": "moving_story",
+      "label": "Hal apa yang paling menyentuh hati dari perjuangan petani dan nelayan?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 3,
+      "source": "G.1 · Refleksi kelompok"
+    },
+    {
+      "key": "action",
+      "label": "Tindakan menghargai pahlawan pangan yang dipilih",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 4,
+      "source": "G.2–3 · Aksi dan janji"
+    },
+    {
+      "key": "action_when",
+      "label": "Waktu pelaksanaan",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 4,
+      "source": "G.2–3 · Aksi dan janji"
+    },
+    {
+      "key": "action_where",
+      "label": "Tempat pelaksanaan",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 4,
+      "source": "G.2–3 · Aksi dan janji"
+    },
+    {
+      "key": "action_roles",
+      "label": "Pembagian tugas anggota",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 4,
+      "source": "G.2–3 · Aksi dan janji"
+    },
+    {
+      "key": "action_evidence",
+      "label": "Bukti aksi telah dilakukan",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 4,
+      "source": "G.2–3 · Aksi dan janji"
+    },
+    {
+      "key": "promise",
+      "label": "Janji Pahlawan Pangan Cilik",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 4,
+      "source": "G.2–3 · Aksi dan janji"
+    }
+  ],
+  [
+    {
+      "key": "topic",
+      "label": "Topik aksi yang kelompokmu pilih",
+      "hint": "Pilih persoalan yang dekat dengan kehidupan sehari-hari.",
+      "phase": 1,
+      "source": "LKPD_4.docx · D.1"
+    },
+    {
+      "key": "fact_1",
+      "label": "Fakta geografis 1 dan sumbernya",
+      "hint": "Tuliskan fakta yang dapat diperiksa, judul bacaan/halaman atau sumber peta.",
+      "phase": 1,
+      "source": "D.2 · Fakta terverifikasi"
+    },
+    {
+      "key": "fact_2",
+      "label": "Fakta geografis 2 dan sumbernya",
+      "hint": "Tuliskan fakta yang dapat diperiksa, judul bacaan/halaman atau sumber peta.",
+      "phase": 1,
+      "source": "D.2 · Fakta terverifikasi"
+    },
+    {
+      "key": "fact_3",
+      "label": "Fakta geografis 3 dan sumbernya",
+      "hint": "Tuliskan fakta yang dapat diperiksa, judul bacaan/halaman atau sumber peta.",
+      "phase": 1,
+      "source": "D.2 · Fakta terverifikasi"
+    },
+    {
+      "key": "love_connection",
+      "label": "Mengapa topik ini penting untuk menjaga kekayaan Indonesia?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 1,
+      "source": "D.3"
+    },
+    {
+      "key": "problem",
+      "label": "Masalah lingkungan atau budaya yang ingin diatasi",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "E · Analisis isu dan pilihan aksi"
+    },
+    {
+      "key": "location",
+      "label": "Lokasi masalah",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "E · Analisis isu dan pilihan aksi"
+    },
+    {
+      "key": "affected",
+      "label": "Siapa atau apa yang terdampak?",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "E · Analisis isu dan pilihan aksi"
+    },
+    {
+      "key": "alternative_a",
+      "label": "Pilihan aksi A dan manfaatnya",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "E · Analisis isu dan pilihan aksi"
+    },
+    {
+      "key": "alternative_b",
+      "label": "Pilihan aksi B dan manfaatnya",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 2,
+      "source": "E · Analisis isu dan pilihan aksi"
+    },
+    {
+      "key": "comparison",
+      "label": "Bandingkan aksi A dan B",
+      "hint": "Nilai keduanya: aman, mudah, biaya, manfaat, kerja kelompok, dan bukti yang dapat dicatat.",
+      "phase": 2,
+      "source": "E · Analisis isu dan pilihan aksi"
+    },
+    {
+      "key": "decision",
+      "label": "Aksi terbaik yang dipilih dan alasannya",
+      "hint": "Jelaskan berdasarkan pengamatan dan diskusi bersama.",
+      "phase": 3,
+      "source": "E.4 · Keputusan"
+    },
+    {
+      "key": "values",
+      "label": "Nilai cinta yang ingin diwujudkan",
+      "hint": "Cinta tanah air/lingkungan, syukur, gotong royong, tanggung jawab atau penghargaan sesama.",
+      "phase": 3,
+      "source": "E.4 · Keputusan"
+    },
+    {
+      "key": "plan_title",
+      "label": "Nama aksi terpilih",
+      "hint": "Lengkapi matriks rencana. Setelah disepakati, catat pelaksanaan di Aksiku.",
+      "phase": 4,
+      "source": "F · Matriks rencana aksi"
+    },
+    {
+      "key": "plan_date",
+      "label": "Tanggal pelaksanaan atau waktu mulai",
+      "hint": "Lengkapi matriks rencana. Setelah disepakati, catat pelaksanaan di Aksiku.",
+      "phase": 4,
+      "source": "F · Matriks rencana aksi"
+    },
+    {
+      "key": "plan_location",
+      "label": "Lokasi pelaksanaan",
+      "hint": "Lengkapi matriks rencana. Setelah disepakati, catat pelaksanaan di Aksiku.",
+      "phase": 4,
+      "source": "F · Matriks rencana aksi"
+    },
+    {
+      "key": "plan_roles",
+      "label": "Penanggung jawab dan pembagian tugas",
+      "hint": "Lengkapi matriks rencana. Setelah disepakati, catat pelaksanaan di Aksiku.",
+      "phase": 4,
+      "source": "F · Matriks rencana aksi"
+    },
+    {
+      "key": "plan_tools",
+      "label": "Alat dan bahan",
+      "hint": "Lengkapi matriks rencana. Setelah disepakati, catat pelaksanaan di Aksiku.",
+      "phase": 4,
+      "source": "F · Matriks rencana aksi"
+    },
+    {
+      "key": "plan_steps",
+      "label": "Langkah-langkah pelaksanaan",
+      "hint": "Lengkapi matriks rencana. Setelah disepakati, catat pelaksanaan di Aksiku.",
+      "phase": 4,
+      "source": "F · Matriks rencana aksi"
+    },
+    {
+      "key": "plan_indicator",
+      "label": "Indikator keberhasilan",
+      "hint": "Lengkapi matriks rencana. Setelah disepakati, catat pelaksanaan di Aksiku.",
+      "phase": 4,
+      "source": "F · Matriks rencana aksi"
+    },
+    {
+      "key": "plan_evidence",
+      "label": "Cara mencatat bukti",
+      "hint": "Lengkapi matriks rencana. Setelah disepakati, catat pelaksanaan di Aksiku.",
+      "phase": 4,
+      "source": "F · Matriks rencana aksi"
+    },
+    {
+      "key": "plan_beneficiaries",
+      "label": "Pihak yang akan terbantu",
+      "hint": "Lengkapi matriks rencana. Setelah disepakati, catat pelaksanaan di Aksiku.",
+      "phase": 4,
+      "source": "F · Matriks rencana aksi"
+    },
+    {
+      "key": "implementation_check",
+      "label": "Cek pelaksanaan kelompok",
+      "hint": "Catat keadaan sebenarnya: rencana bersama, tugas dibagi, dilakukan aman, bukti dicatat, hasil dibahas, siap disampaikan ke guru. Jurnal dicatat di Aksiku.",
+      "phase": 4,
+      "source": "F · Cek pelaksanaan"
+    }
+  ]
+]
