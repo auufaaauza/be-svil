@@ -9,7 +9,6 @@ use App\Models\Assignment;
 use App\Models\AssignmentSubmission;
 use App\Models\CourseLesson;
 use App\Models\Discussion;
-use App\Models\GroupWork;
 use App\Models\LearningNote;
 use App\Models\Material;
 use App\Models\MaterialAttempt;
@@ -25,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        foreach ([Material::class, MaterialAttempt::class, Assignment::class, Assessment::class, AssignmentSubmission::class, AssessmentAttempt::class, CourseLesson::class, Discussion::class, LearningNote::class, GroupWork::class] as $model) {
+        foreach ([Material::class, MaterialAttempt::class, Assignment::class, Assessment::class, AssignmentSubmission::class, AssessmentAttempt::class, CourseLesson::class, Discussion::class, LearningNote::class] as $model) {
             $model::saved(fn ($record) => LearningNotifier::observe($record));
         }
         RateLimiter::for('login', function (Request $request) {

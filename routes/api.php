@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\V1\FollowupController;
 use App\Http\Controllers\Api\V1\GradebookController;
 use App\Http\Controllers\Api\V1\GroupWorkController;
 use App\Http\Controllers\Api\V1\LearningGroupController;
+use App\Http\Controllers\Api\V1\LearningModuleContentController;
 use App\Http\Controllers\Api\V1\LearningModuleController;
 use App\Http\Controllers\Api\V1\LearningNoteController;
 use App\Http\Controllers\Api\V1\LearningProgressController;
@@ -28,6 +29,7 @@ use App\Http\Controllers\Api\V1\SchoolController;
 use App\Http\Controllers\Api\V1\SchoolOperationsController;
 use App\Http\Controllers\Api\V1\StudentReviewController;
 use App\Http\Controllers\Api\V1\UserController;
+use App\Http\Controllers\Api\V1\WorkspaceDataController;
 use App\Learning\LkpdSchema;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +37,9 @@ Route::prefix('v1')->group(function () {
     Route::post('auth/login', [AuthController::class, 'login'])->middleware('throttle:login');
     Route::post('auth/register', [AuthController::class, 'register'])->middleware('throttle:registration');
     Route::middleware(['auth:sanctum', 'active', 'throttle:api', 'classroom.writable'])->group(function () {
+        Route::get('session-bootstrap', [WorkspaceDataController::class, 'session']);
+        Route::get('class-board', [WorkspaceDataController::class, 'classroom']);
+        Route::get('reflection-workspace', [WorkspaceDataController::class, 'reflection']);
         Route::put('account/password', [AccountController::class, 'password'])->middleware('throttle:credentials');
         Route::put('account/profile', [AccountController::class, 'profile']);
         Route::get('notifications', [NotificationController::class, 'index']);
@@ -83,6 +88,8 @@ Route::prefix('v1')->group(function () {
         Route::get('learning-modules/videos/{topic}', [LearningModuleController::class, 'videoInfo'])->where('topic', '[0-3]');
         Route::get('learning-modules', [LearningModuleController::class, 'index']);
         Route::get('learning-modules/{module}', [LearningModuleController::class, 'show']);
+        Route::put('learning-modules/{module}/content', [LearningModuleContentController::class, 'update']);
+        Route::get('learning-modules/{module}/images/{image}', [LearningModuleContentController::class, 'image'])->name('learning-modules.question-image');
         Route::get('materials/{material}', [MaterialController::class, 'show']);
         Route::get('materials/{material}/image', [MaterialController::class, 'image'])->name('materials.image');
         Route::get('materials/{material}/preview', [MaterialController::class, 'preview'])->name('materials.preview');

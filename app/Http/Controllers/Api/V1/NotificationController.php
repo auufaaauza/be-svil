@@ -28,6 +28,6 @@ class NotificationController extends Controller
             $q->whereIn('id', $data['ids']);
         }$q->update(['read_at' => now(), 'updated_at' => now()]);
 
-        return response()->json(['message' => 'Notifikasi ditandai sudah dibaca.']);
+        return response()->json(['message' => 'Notifikasi ditandai sudah dibaca.', 'unread_count' => DB::table('learning_notifications')->where('recipient_id', $r->user()->id)->whereNull('read_at')->count(), 'read_at' => now()->toIso8601String()]);
     }
 }

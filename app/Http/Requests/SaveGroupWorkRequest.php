@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Learning\LkpdPages;
 use App\Models\GroupWork;
 use App\Models\LearningModule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -17,12 +18,10 @@ class SaveGroupWorkRequest extends FormRequest
             return $this->moduleSchema;
         }
         $work = GroupWork::where('learning_group_id', $this->route('group')->id)->where('topic', (int) $this->route('topic'))->first();
-        if ($work?->schema_snapshot) {
-            return $this->moduleSchema = ['fields' => $work->schema_snapshot, 'version' => $work->module_version];
-        }
-        $module = LearningModule::publishedForTopic((int) $this->route('topic'));
+        $module = LearningModule::where('topic', (int) $this->route('topic'))->firstOrFail();
+        abort_if($module->status !== 'published' && ! $work?->schema_snapshot, 403);
 
-        return $this->moduleSchema = ['fields' => $module->fields, 'version' => $module->version];
+        return $this->moduleSchema = ['fields' => LkpdPages::fields($module, $work, $this->route('group')->classroom_id), 'version' => $work?->module_version ?? $module->version];
     }
 
     public function authorize(): bool
@@ -33,9 +32,11 @@ class SaveGroupWorkRequest extends FormRequest
     public function rules(): array
     {
         $fields = $this->moduleSchema()['fields'];
-        $rules = ['version' => ['required', 'integer', 'min:0'], 'status' => ['required', Rule::in(['draft', 'submitted'])], 'answers' => ['required', 'array:'.implode(',', array_column($fields, 'key'))]];
-        foreach ($fields as $field) {
-            $rules['answers.'.$field['key']] = [$this->input('status') === 'submitted' ? 'required' : 'nullable', 'string', 'max:8000'];
+        $keys = array_column($this->exists('page') ? array_slice($fields, $this->integer('page') * LkpdPages::SIZE, LkpdPages::SIZE) : $fields, 'key');
+        $rules = ['version' => ['required', 'integer', 'min:0'], 'status' => ['required', Rule::in(['draft', 'submitted'])], 'page' => ['sometimes', 'integer', 'min:0', 'max:'.max(0, (int) ceil(count($fields) / LkpdPages::SIZE) - 1)], 'answers' => ['required', 'array:'.implode(',', $keys)]];
+        foreach ($fields as $index => $field) {
+            $required = $this->input('status') === 'submitted' && (! $this->exists('page') || (int) floor($index / LkpdPages::SIZE) === $this->integer('page'));
+            $rules['answers.'.$field['key']] = [$required ? 'required' : 'nullable', 'string', 'max:8000'];
         }
 
         return $rules;

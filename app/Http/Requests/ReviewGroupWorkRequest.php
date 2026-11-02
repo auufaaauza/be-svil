@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Learning\LkpdPages;
 use App\Learning\LkpdSchema;
 use App\Role;
 use Illuminate\Foundation\Http\FormRequest;
@@ -16,7 +17,8 @@ class ReviewGroupWorkRequest extends FormRequest
 
     public function rules(): array
     {
-        $rules = ['version' => ['required', 'integer', 'min:1'], 'status' => ['required', Rule::in(['reviewed', 'needs_revision'])], 'feedback' => ['required', 'string', 'max:3000']];
+        $total = (int) ceil(count($this->route('work')->schema_snapshot ?? []) / LkpdPages::SIZE);
+        $rules = ['version' => ['required', 'integer', 'min:1'], 'page' => ['sometimes', 'integer', 'min:0', 'max:'.max(0, $total - 1)], 'status' => ['required', Rule::in(['reviewed', 'needs_revision'])], 'feedback' => ['required', 'string', 'max:3000']];
         foreach (LkpdSchema::rubrics() as $name => $aspects) {
             $key = $name.'_scores';
             $rules[$key] = ['nullable', Rule::prohibitedIf($this->route('work')->topic !== 3), 'array:'.implode(',', array_keys($aspects))];

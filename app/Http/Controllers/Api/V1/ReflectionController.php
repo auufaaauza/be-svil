@@ -48,19 +48,31 @@ class ReflectionController extends Controller
         foreach ($fields as $key => $label) {
             $rules['answers.'.$key] = ['required', 'string', 'max:4000'];
         }$data = $r->validate($rules);
-        $row = DB::transaction(function () use ($r, $base, $fields, $data) {
+        [$row, $changed] = DB::transaction(function () use ($r, $base, $fields, $data) {
             User::whereKey($r->user()->id)->lockForUpdate()->firstOrFail();
             $keys = ['classroom_id' => $base['classroom_id'], 'student_id' => $r->user()->id, 'topic' => $base['topic']];
             $old = DB::table('individual_reflections')->where($keys)->first();
             abort_if(($old?->version ?? 0) !== $base['version'], 409, 'Ceritamu sudah berubah. Muat ulang terlebih dahulu.');
+            if ($old && json_decode($old->answers, true) == $data['answers']) {
+                return [$old, false];
+            }
             DB::table('individual_reflections')->updateOrInsert($keys, ['answers' => json_encode($data['answers'], JSON_THROW_ON_ERROR), 'schema_snapshot' => json_encode($fields, JSON_THROW_ON_ERROR), 'version' => ($old?->version ?? 0) + 1, 'feedback' => null, 'reviewed_by' => null, 'reviewed_at' => null, 'created_at' => $old?->created_at ?? now(), 'updated_at' => now()]);
             $row = DB::table('individual_reflections')->where($keys)->first();
             $this->revision($row, $r->user()->id);
 
-            return $row;
+            return [$row, true];
         });
 
-        return response()->json(['data' => $row, 'message' => 'Ceritamu tersimpan. Terima kasih sudah menulis dengan jujur.']);
+        if ($changed) {
+            LearningNotifier::send(LearningNotifier::members($row->classroom_id, 'teacher'), 'reflection_submission', 'Refleksi pribadi murid masuk', $r->user()->name.' mengisi refleksi pertemuan '.($row->topic + 1).'.', '/siswa/cerita', 'reflection-submitted:'.$row->id.':'.$row->version, $row->classroom_id, '/guru/tinjauan/'.$row->student_id.'?pertemuan='.($row->topic + 1));
+        }
+
+        return response()->json(['data' => $this->present($row), 'message' => 'Ceritamu tersimpan. Terima kasih sudah menulis dengan jujur.']);
+    }
+
+    private function present(object $row): array
+    {
+        return [...(array) $row, 'answers' => json_decode($row->answers, true, flags: JSON_THROW_ON_ERROR), 'schema_snapshot' => json_decode($row->schema_snapshot, true, flags: JSON_THROW_ON_ERROR)];
     }
 
     private function revision(object $row, int $actor): void
@@ -86,6 +98,6 @@ class ReflectionController extends Controller
 
         LearningNotifier::send([$row->student_id], 'feedback', 'Gurumu membalas cerita pribadimu', 'Baca apresiasi dan dukungan dari gurumu.', '/siswa/cerita', 'reflection:'.$row->id.':'.$row->version, $row->classroom_id);
 
-        return response()->json(['data' => $row]);
+        return response()->json(['data' => $this->present($row)]);
     }
 }

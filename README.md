@@ -30,7 +30,7 @@ Perintah mencatat pengimpor dan hash sumber, melewati LKPD yang sudah ada, serta
 
 Login menerima JSON login (username atau email) dan password. Field email lama tetap diterima untuk kompatibilitas. Username/email dinormalisasi ke huruf kecil.
 
-Registrasi publik hanya membuat **siswa** dengan name, username, email, password, password_confirmation, class_code. Kode kelas 12 karakter diberikan guru/admin. Role dan sekolah dari input tidak dipercaya; sekolah serta keanggotaan diambil dari kelas tujuan. Guru/admin dibuat admin. Password pendaftaran minimal 8 karakter; akun yang dibuat admin minimal 12.
+Registrasi publik hanya membuat **siswa** dengan name, username, email, password, password_confirmation, class_code. Kode kelas 12 karakter diberikan guru/admin. Role dan sekolah dari input tidak dipercaya; sekolah serta keanggotaan diambil dari kelas tujuan. Guru/admin dibuat admin. Kata sandi baru sepanjang 6–12 karakter, termasuk pendaftaran, akun admin/guru/siswa, ganti dan reset password.
 
 Login, registrasi dan jawaban latihan dibatasi rate limit. Akun nonaktif ditolak. Guru hanya mendapat kelas penugasannya; siswa hanya data pribadi dan kelompok sendiri. Gambar disimpan privat serta diperiksa izin ketika diunduh.
 
@@ -171,10 +171,23 @@ Perintah berikut menggunakan executable MySQL di server. Jika tidak ada dalam PA
 
 Tanpa --apply, restore hanya memeriksa format/checksum. Pemulihan menimpa data tujuan: simpan backup tujuan terlebih dahulu. Arsip SQL dan berkas privat tersimpan di storage/app/private/backups, tanpa .env/APP_KEY; salin arsip ke penyimpanan privat terpisah. APP_KEY production disimpan terpisah. Uji restore ke database pengujian terpisah telah berhasil untuk backup aktual lokal. Untuk cPanel tanpa binary/CLI, gunakan backup MySQL dan berkas privat melalui panel/provider, lalu uji pemulihannya. Penjadwalan backup di hosting belum diaktifkan.
 
-### Paket rilis
+### Mengunggah pembaruan
 
-Jalankan PowerShell dari frontend:
+Pembaruan ini menggunakan source langsung, tanpa membuat ZIP baru. Unggah perubahan app/, routes/, dan database/migrations/ ke backend. Pertahankan .env, APP_KEY dan storage/app/private pada hosting. Tidak ada perubahan dependency untuk pembaruan ini.
 
-    ./scripts/package-release.ps1
+Dari Terminal cPanel:
 
-Paket di ../releases memuat backend beserta vendor production dan frontend source untuk Vercel, disertai SHA256SUMS.txt. Tidak memuat .env rahasia, data sekolah, berkas siswa, node_modules, test/cache lokal atau backup privat. Untuk menyiapkan source backend saja tersedia -SkipVendor, tetapi hosting kemudian wajib menjalankan Composer. Database kosong dan migrasi data lokal adalah dua jalur berbeda: instalasi kosong membuat admin/impor LKPD; pemindahan data memakai backup SQL + storage privat, kemudian migrate --force. Jangan menjalankan migrate:fresh pada data aktual.
+```bash
+cd /home/vggkxtkk/domains/be-svil
+php artisan migrate --force --no-interaction
+php artisan config:cache --no-interaction
+php artisan route:cache --no-interaction
+```
+
+Setelah backend aktif, redeploy frontend di Vercel. Endpoint /session-bootstrap, /class-board dan /reflection-workspace harus tersedia sebelum frontend baru dipakai. Jangan menjalankan migrate:fresh atau seeder ulang pada data aktual.
+
+Untuk instalasi kosong yang belum memiliki LKPD, jalankan dari folder yang sama:
+
+```bash
+php artisan svil:import-lkpd --by=admin@findmycareer.my.id --no-interaction
+```

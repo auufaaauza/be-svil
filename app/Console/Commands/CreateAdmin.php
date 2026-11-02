@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
+use App\PasswordPolicy;
 use App\Role;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
@@ -20,9 +21,9 @@ class CreateAdmin extends Command
 
             return self::FAILURE;
         }
-        $password = $this->secret('Kata sandi admin (minimal 12 karakter)');
+        $password = $this->secret('Kata sandi admin (6–12 karakter)');
         $values = ['name' => $this->option('name'), 'email' => $this->argument('email'), 'password' => $password];
-        $validator = Validator::make($values, ['name' => ['required', 'string', 'max:120'], 'email' => ['required', 'email', 'unique:users,email'], 'password' => ['required', 'string', 'min:12', 'max:72']]);
+        $validator = Validator::make($values, ['name' => ['required', 'string', 'max:120'], 'email' => ['required', 'email', 'unique:users,email'], 'password' => PasswordPolicy::rules()]);
         if ($validator->fails()) {
             $this->error($validator->errors()->first());
 

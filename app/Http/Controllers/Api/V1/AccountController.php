@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Learning\LearningNotifier;
 use App\Models\User;
+use App\PasswordPolicy;
 use App\Role;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class AccountController extends Controller
 {
     public function password(Request $r): JsonResponse
     {
-        $data = $r->validate(['current_password' => ['required', 'string', 'max:255'], 'password' => ['required', 'string', 'min:8', 'max:72', 'confirmed', 'different:current_password']]);
+        $data = $r->validate(['current_password' => ['required', 'string', 'max:255'], 'password' => [...PasswordPolicy::rules(), 'confirmed', 'different:current_password']]);
         DB::transaction(function () use ($r, $data): void {
             $u = User::whereKey($r->user()->id)->lockForUpdate()->firstOrFail();
             abort_unless(Hash::check($data['current_password'], $u->password), 422, 'Kata sandi saat ini sudah berubah.');
@@ -31,13 +32,13 @@ class AccountController extends Controller
             $r->session()->regenerate();
         }
 
-return response()->json(['message' => 'Kata sandi berhasil diganti. Sesi perangkat lain sudah diakhiri.']);
+        return response()->json(['message' => 'Kata sandi berhasil diganti. Sesi perangkat lain sudah diakhiri.']);
     }
 
     public function reset(Request $r, User $user): JsonResponse
     {
         abort_unless($r->user()->role === Role::Admin && $r->user()->id !== $user->id, 403);
-        $data = $r->validate(['password' => ['required', 'string', 'min:8', 'max:72', 'confirmed'], 'current_password' => ['required', 'string', 'max:255']]);
+        $data = $r->validate(['password' => [...PasswordPolicy::rules(), 'confirmed'], 'current_password' => ['required', 'string', 'max:255']]);
         abort_unless(Hash::check($data['current_password'], User::findOrFail($r->user()->id)->password), 422, 'Kata sandi admin tidak cocok.');
         DB::transaction(function () use ($r, $user, $data): void {
             $u = User::whereKey($user->id)->lockForUpdate()->firstOrFail();

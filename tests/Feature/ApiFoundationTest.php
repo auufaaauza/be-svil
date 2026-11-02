@@ -60,12 +60,12 @@ class ApiFoundationTest extends TestCase
     public function test_admin_bootstrap_creates_an_account_without_overwriting_existing_users(): void
     {
         $this->artisan('svil:create-admin', ['email' => 'bootstrap@svil.test', '--name' => 'Bootstrap Admin'])
-            ->expectsQuestion('Kata sandi admin (minimal 12 karakter)', 'AmanSekali!12345')
+            ->expectsQuestion('Kata sandi admin (6–12 karakter)', 'Aman12345678')
             ->assertExitCode(0);
         $this->assertSame(Role::Admin, User::where('email', 'bootstrap@svil.test')->firstOrFail()->role);
         $before = User::where('email', 'bootstrap@svil.test')->firstOrFail()->password;
         $this->artisan('svil:create-admin', ['email' => 'bootstrap@svil.test'])
-            ->expectsQuestion('Kata sandi admin (minimal 12 karakter)', 'BerbedaSekali!12345')
+            ->expectsQuestion('Kata sandi admin (6–12 karakter)', 'Berbeda12345')
             ->assertExitCode(1);
         $this->assertSame($before, User::where('email', 'bootstrap@svil.test')->firstOrFail()->password);
     }
@@ -203,7 +203,7 @@ class ApiFoundationTest extends TestCase
         $school = School::factory()->create();
         $this->actingAs($admin)->postJson('/api/v1/schools', ['code' => 'NEW-SCHOOL', 'name' => 'Madrasah Baru'])->assertCreated();
         $this->postJson('/api/v1/classrooms', ['school_id' => $school->id, 'name' => 'V A', 'academic_year' => '2026/2027'])->assertCreated();
-        $this->postJson('/api/v1/users', ['name' => 'Siswa baru', 'email' => 'new@svil.test', 'password' => 'AmanSekali!1234', 'role' => 'student', 'school_id' => $this->classroom->school_id, 'classroom_ids' => [$this->classroom->id]])->assertCreated()->assertJsonPath('data.role', 'student');
+        $this->postJson('/api/v1/users', ['name' => 'Siswa baru', 'email' => 'new@svil.test', 'password' => 'Aman12345678', 'role' => 'student', 'school_id' => $this->classroom->school_id, 'classroom_ids' => [$this->classroom->id]])->assertCreated()->assertJsonPath('data.role', 'student');
         $this->postJson('/api/v1/classrooms/'.$this->classroom->id.'/members', ['user_ids' => [User::factory()->create(['school_id' => $school->id])->id]])->assertUnprocessable();
         $this->patchJson('/api/v1/users/'.$admin->id.'/active', ['is_active' => false])->assertUnprocessable();
         $this->actingAs($this->teacher)->postJson('/api/v1/users', [])->assertForbidden();

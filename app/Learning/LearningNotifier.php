@@ -8,7 +8,6 @@ use App\Models\Assignment;
 use App\Models\AssignmentSubmission;
 use App\Models\CourseLesson;
 use App\Models\Discussion;
-use App\Models\GroupWork;
 use App\Models\LearningNote;
 use App\Models\Material;
 use App\Models\MaterialAttempt;
@@ -25,11 +24,11 @@ class LearningNotifier
         DB::table('learning_audits')->insert(['actor_id' => $actor, 'action' => $action, 'subject_type' => $type, 'subject_id' => (string) $id, 'data' => json_encode($data, JSON_THROW_ON_ERROR), 'created_at' => now()]);
     }
 
-    public static function send(array $ids, string $kind, string $title, string $body, string $studentPath, string $event, ?int $classroom = null): void
+    public static function send(array $ids, string $kind, string $title, string $body, string $studentPath, string $event, ?int $classroom = null, ?string $teacherPath = null): void
     {
         $rows = [];
         foreach (User::whereIn('id', array_unique($ids))->where('is_active', true)->get(['id', 'role']) as $user) {
-            $path = $user->role === Role::Student ? $studentPath : ($user->role === Role::Admin ? '/admin/laporan' : '/guru/tinjauan');
+            $path = $user->role === Role::Student ? $studentPath : ($user->role === Role::Admin ? '/admin/laporan' : ($teacherPath ?? '/guru/tinjauan'));
             if ($classroom) {
                 $path .= (str_contains($path, '?') ? '&' : '?').'kelas='.$classroom;
             }
@@ -67,9 +66,10 @@ class LearningNotifier
     {
         if (! Auth::id()) {
             return;
-        } $actor = Auth::id();
+        }
+        $actorName = Auth::user()->name;
         $classroom = $model->getAttribute('classroom_id') ?? match (true) {
-            $model instanceof AssignmentSubmission => $model->assignment->classroom_id,$model instanceof AssessmentAttempt => $model->assessment->classroom_id,$model instanceof CourseLesson => $model->course->classroom_id,$model instanceof GroupWork => $model->group->classroom_id,$model instanceof MaterialAttempt => $model->material->classroom_id,default => null
+            $model instanceof AssignmentSubmission => $model->assignment->classroom_id,$model instanceof AssessmentAttempt => $model->assessment->classroom_id,$model instanceof CourseLesson => $model->course->classroom_id,$model instanceof MaterialAttempt => $model->material->classroom_id,default => null
         };
         $kind = class_basename($model);
         $version = $model->version ?? $model->review_version ?? $model->updated_at?->format('Uu') ?? 1;
@@ -88,20 +88,21 @@ class LearningNotifier
             if (in_array($model->status, ['reviewed', 'needs_revision'], true)) {
                 self::send($model->member_ids, 'feedback', 'Pesan guru untuk tugasmu', $model->status === 'needs_revision' ? 'Ada bagian yang perlu kamu perbaiki.' : 'Hasil pekerjaanmu sudah ditinjau guru.', '/siswa/belajar?kegiatan=task', $event, $classroom);
             } elseif ($model->status === 'submitted') {
-                self::send(self::members($model->assignment->classroom_id, 'teacher'), 'submission', 'Pengumpulan tugas masuk', $model->assignment_snapshot['title'], '/siswa/belajar?kegiatan=task', $event, $classroom);
+                self::send(self::members($model->assignment->classroom_id, 'teacher'), 'submission', 'Pengumpulan tugas masuk', $actorName.' mengirim tugas: '.$model->assignment_snapshot['title'], '/siswa/belajar?kegiatan=task', $event, $classroom, '/guru/materi/tugas/'.$model->assignment_id);
             }
         } elseif ($model instanceof AssessmentAttempt && $model->status !== 'in_progress') {
             if ($model->reviewed_by) {
                 self::send([$model->student_id], 'feedback', 'Kuis sudah ditinjau guru', $model->assessment_snapshot['title'], '/siswa/belajar?kegiatan=assessment', $event, $classroom);
-            } elseif ($model->status === 'pending_review') {
-                self::send(self::members($model->assessment->classroom_id, 'teacher'), 'assessment_review', 'Uraian kuis perlu ditinjau', $model->assessment_snapshot['title'], '/siswa/belajar?kegiatan=assessment', $event, $classroom);
+            } elseif ($model->wasChanged('submitted_at') || $model->wasRecentlyCreated) {
+                $studentName = User::find($model->student_id)?->name ?? 'Murid';
+                self::send(self::members($model->assessment->classroom_id, 'teacher'), 'assessment_review', $model->status === 'pending_review' ? 'Uraian kuis perlu ditinjau' : 'Kuis murid sudah dikumpulkan', $studentName.' mengumpulkan kuis: '.$model->assessment_snapshot['title'], '/siswa/belajar?kegiatan=assessment', $event, $classroom, '/guru/materi/kuis/'.$model->assessment_id);
             }
         } elseif ($model instanceof LearningNote && $model->wasChanged('reviewed_at') && $model->reviewed_at) {
             self::send([$model->student_id], 'feedback', 'Guru membalas catatanmu', 'Baca apresiasi dan saran dari gurumu.', '/siswa/cerita', $event, $classroom);
+        } elseif ($model instanceof LearningNote && $model->wasRecentlyCreated && trim($model->content) !== '') {
+            self::send(self::members($model->classroom_id, 'teacher'), 'student_note', 'Catatan belajar murid masuk', $actorName.' mengisi catatan LKPD '.($model->topic + 1).', langkah '.($model->phase + 1).'.', '/siswa/cerita', $event, $classroom, '/guru/tinjauan/'.$model->student_id.'?pertemuan='.($model->topic + 1));
         } elseif ($model instanceof MaterialAttempt && $model->wasChanged('reviewed_at') && $model->reviewed_at) {
             self::send([$model->student_id], 'feedback', 'Guru meninjau latihanmu', 'Baca pesan guru untuk latihan yang sudah kamu kerjakan.', '/siswa/cerita', $event, $classroom);
-        } elseif ($model instanceof GroupWork && in_array($model->status, ['reviewed', 'needs_revision'], true)) {
-            self::send($model->member_ids ?? $model->group->users()->pluck('users.id')->all(), 'feedback', 'LKPD kelompokmu ditinjau', 'Baca pesan guru bersama teman kelompokmu.', '/siswa/kelompok', $event, $classroom);
         }
     }
 }

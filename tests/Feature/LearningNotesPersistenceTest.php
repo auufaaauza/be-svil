@@ -53,7 +53,7 @@ class LearningNotesPersistenceTest extends TestCase
     {
         $class = Classroom::factory()->create();
         $admin = User::factory()->create(['role' => Role::Admin]);
-        $payload = ['name' => 'Murid', 'username' => 'murid-baru', 'email' => 'murid-baru@svil.test', 'password' => 'AmanUntukBelajar123', 'role' => 'student', 'school_id' => $class->school_id];
+        $payload = ['name' => 'Murid', 'username' => 'murid-baru', 'email' => 'murid-baru@svil.test', 'password' => 'Aman12345678', 'role' => 'student', 'school_id' => $class->school_id];
         $this->actingAs($admin)->postJson('/api/v1/users', $payload)->assertUnprocessable()->assertJsonValidationErrors('classroom_ids');
         $this->postJson('/api/v1/users', [...$payload, 'classroom_ids' => []])->assertUnprocessable();
         $this->postJson('/api/v1/users', [...$payload, 'classroom_ids' => [$class->id]])->assertCreated();

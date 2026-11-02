@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Learning\QuestionMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -22,7 +23,17 @@ class LearningModule extends Model
     {
         $override = $classroom ? DB::table('module_class_media')->where('learning_module_id', $this->id)->where('classroom_id', $classroom)->first() : null;
 
-        return ['videoId' => $override ? $override->youtube_video_id : $this->youtube_video_id, 'videoCaption' => $override ? $override->video_caption : $this->video_caption, 'videoVersion' => $override?->version ?? 0, 'videoOverride' => (bool) $override];
+        $useOverride = $override && ($override->video_is_overridden ?? true);
+
+        return ['videoId' => $useOverride ? $override->youtube_video_id : $this->youtube_video_id, 'videoCaption' => $useOverride ? $override->video_caption : $this->video_caption, 'videoVersion' => $override?->version ?? 0, 'videoOverride' => (bool) $useOverride];
+    }
+
+    public function contentFor(?int $classroom): array
+    {
+        $row = $classroom ? DB::table('module_class_media')->where('learning_module_id', $this->id)->where('classroom_id', $classroom)->first() : null;
+        $content = $row?->content ? json_decode($row->content, true, flags: JSON_THROW_ON_ERROR) : [];
+
+        return ['title' => $content['title'] ?? $this->title, 'description' => $content['description'] ?? $this->description, 'instructions' => $content['instructions'] ?? $this->instructions, 'fields' => QuestionMedia::fields($content['fields'] ?? $this->fields, $this->id, $classroom), 'contentVersion' => $row?->content_version ?? 0, 'contentOverride' => ! empty($content)];
     }
 
     public function uploader(): BelongsTo

@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\PasswordPolicy;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
 class RegisterRequest extends FormRequest
 {
@@ -31,7 +31,7 @@ class RegisterRequest extends FormRequest
             'name' => ['required', 'string', 'max:120'],
             'username' => ['required', 'string', 'min:3', 'max:40', 'regex:/^[a-z0-9][a-z0-9._-]*$/', 'unique:users,username'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'string', 'confirmed', 'max:72', Password::min(8)],
+            'password' => [...PasswordPolicy::rules(), 'confirmed'],
             'class_code' => ['required', 'string', 'size:12', Rule::exists('classrooms', 'join_code')->whereNull('archived_at')],
         ];
     }

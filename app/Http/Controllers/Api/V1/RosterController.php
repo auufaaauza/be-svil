@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Classroom;
 use App\Models\User;
+use App\PasswordPolicy;
 use App\Role;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\JsonResponse;
@@ -45,7 +46,7 @@ class RosterController extends Controller
             $password = $row['password'] ?? '';
             $rules = ['name' => ['required', 'string', 'max:120'], 'username' => ['required', 'string', 'min:3', 'max:40', 'regex:/^[a-z0-9][a-z0-9._-]*$/', 'unique:users,username'], 'email' => ['required', 'email', 'max:255', 'unique:users,email']];
             if ($password !== '') {
-                $rules['password'] = ['string', 'min:8', 'max:72'];
+                $rules['password'] = PasswordPolicy::rules(false);
             }$validator = Validator::make($row, $rules);
             $errors = $validator->errors()->all();
             if (isset($seenNames[$row['username']]) || isset($seenEmails[$row['email']])) {
@@ -66,13 +67,13 @@ class RosterController extends Controller
                 Classroom::whereKey($classroom->id)->lockForUpdate()->firstOrFail();
                 $created = [];
                 foreach ($rows as $row) {
-                    $password = $row['password'] !== '' ? $row['password'] : Str::random(14);
+                    $password = $row['password'] !== '' ? $row['password'] : Str::random(PasswordPolicy::MAX_LENGTH);
                     $user = User::create(['name' => $row['name'], 'username' => $row['username'], 'email' => $row['email'], 'password' => $password, 'school_id' => $classroom->school_id, 'role' => Role::Student, 'is_active' => true]);
                     $classroom->users()->attach($user);
                     $created[] = ['id' => $user->id, 'name' => $user->name, 'username' => $user->username, 'email' => $user->email, 'initial_password' => $password];
                 }
 
-return $created;
+                return $created;
             });
         } catch (UniqueConstraintViolationException) {
             throw ValidationException::withMessages(['file' => ['Username atau email baru saja digunakan. Pratinjau ulang CSV.']]);

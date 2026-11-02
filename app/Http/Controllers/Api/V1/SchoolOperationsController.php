@@ -154,8 +154,8 @@ class SchoolOperationsController extends Controller
             $keys = ['learning_module_id' => $module->id, 'classroom_id' => $data['classroom_id']];
             $old = DB::table('module_class_media')->where($keys)->first();
             abort_if(($old?->version ?? 0) !== $data['version'], 409, 'Video LKPD berubah. Muat ulang.');
-            DB::table('module_class_media')->updateOrInsert($keys, ['youtube_video_id' => $video, 'video_caption' => $data['video_caption'] ?? null, 'updated_by' => $r->user()->id, 'version' => ($old?->version ?? 0) + 1, 'created_at' => $old?->created_at ?? now(), 'updated_at' => now()]);
-            LearningNotifier::audit($r->user()->id,'lkpd_video_updated','module',$module->id,['classroom_id' => $data['classroom_id'], 'youtube_video_id' => $video]);
+            DB::table('module_class_media')->updateOrInsert($keys, ['video_is_overridden' => true, 'youtube_video_id' => $video, 'video_caption' => $data['video_caption'] ?? null, 'updated_by' => $r->user()->id, 'version' => ($old?->version ?? 0) + 1, 'created_at' => $old?->created_at ?? now(), 'updated_at' => now()]);
+            LearningNotifier::audit($r->user()->id, 'lkpd_video_updated', 'module', $module->id, ['classroom_id' => $data['classroom_id'], 'youtube_video_id' => $video]);
 
             return DB::table('module_class_media')->where($keys)->first();
         });

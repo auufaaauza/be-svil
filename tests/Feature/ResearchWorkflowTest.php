@@ -113,15 +113,19 @@ class ResearchWorkflowTest extends TestCase
     {
         $fields = ReflectionController::fields(3);
         $payload = ['classroom_id' => $this->classroom->id, 'topic' => 3, 'version' => 0, 'answers' => array_fill_keys(array_keys($fields), 'Aku belajar saling membantu.')];
-        $this->actingAs($this->student)->putJson('/api/v1/reflections', $payload)->assertOk();
+        $this->actingAs($this->student)->putJson('/api/v1/reflections', $payload)->assertOk()->assertJsonPath('data.answers.gratitude', $payload['answers']['gratitude'])->assertJsonPath('data.schema_snapshot.gratitude', $fields['gratitude'])->assertJsonCount(count($fields), 'data.answers');
         $id = DB::table('individual_reflections')->value('id');
         $this->putJson('/api/v1/reflections', $payload)->assertConflict();
-        $this->actingAs($this->teacher)->putJson('/api/v1/reflections/'.$id.'/review', ['version' => 1, 'feedback' => 'Terima kasih sudah jujur.'])->assertOk()->assertJsonMissingPath('data.score');
+        $this->actingAs($this->teacher)->putJson('/api/v1/reflections/'.$id.'/review', ['version' => 1, 'feedback' => 'Terima kasih sudah jujur.'])->assertOk()->assertJsonMissingPath('data.score')->assertJsonPath('data.answers.gratitude', $payload['answers']['gratitude']);
         $this->actingAs($this->student)->getJson('/api/v1/reflections')->assertOk()->assertJsonPath('data.0.feedback', 'Terima kasih sudah jujur.');
-        $this->putJson('/api/v1/reflections', [...$payload, 'version' => 2])->assertOk();
+        $this->putJson('/api/v1/reflections', [...$payload, 'version' => 2])->assertOk()->assertJsonPath('data.feedback', 'Terima kasih sudah jujur.')->assertJsonPath('data.version', 2);
+        $this->assertDatabaseCount('reflection_revisions', 2);
+        $changed = $payload['answers'];
+        $changed[array_key_first($changed)] = 'Sekarang aku ingin membantu temanku.';
+        $this->putJson('/api/v1/reflections', [...$payload, 'version' => 2, 'answers' => $changed])->assertOk()->assertJsonPath('data.feedback', null)->assertJsonPath('data.version', 3);
         $this->assertDatabaseCount('reflection_revisions', 3);
         $other = User::factory()->create(['school_id' => $this->classroom->school_id]);
         $this->classroom->users()->attach($other);
-        $this->actingAs($other)->getJson('/api/v1/reflections')->assertOk()->assertJsonCount(0,'data');
+        $this->actingAs($other)->getJson('/api/v1/reflections')->assertOk()->assertJsonCount(0, 'data');
     }
 }
