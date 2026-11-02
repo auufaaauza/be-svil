@@ -28,7 +28,7 @@ class RosterController extends Controller
         rewind($file);
         $headers = fgetcsv($file, escape: '', separator: $delimiter);
         $headers = array_map(fn ($h) => strtolower(trim(preg_replace('/^\xEF\xBB\xBF/', '', $h))), $headers);
-        abort_unless(count(array_intersect(['name', 'username', 'email'], $headers)) === 3, 422, 'Header CSV harus memuat name,username,email; password opsional.');
+        abort_unless(count(array_intersect(['name', 'username'], $headers)) === 2, 422, 'Header CSV harus memuat name,username; email dan password opsional.');
         $rows = [];
         $seenNames = [];
         $seenEmails = [];
@@ -42,17 +42,17 @@ class RosterController extends Controller
             foreach ($headers as $i => $key) {
                 $row[$key] = trim($values[$i] ?? '');
             }$row['username'] = Str::lower($row['username']);
-            $row['email'] = Str::lower($row['email']);
+            $row['email'] = Str::lower($row['email'] ?? '') ?: null;
             $password = $row['password'] ?? '';
-            $rules = ['name' => ['required', 'string', 'max:120'], 'username' => ['required', 'string', 'min:3', 'max:40', 'regex:/^[a-z0-9][a-z0-9._-]*$/', 'unique:users,username'], 'email' => ['required', 'email', 'max:255', 'unique:users,email']];
+            $rules = ['name' => ['required', 'string', 'max:120'], 'username' => ['required', 'string', 'min:3', 'max:40', 'regex:/^[a-z0-9][a-z0-9._-]*$/', 'unique:users,username'], 'email' => ['nullable', 'email', 'max:255', 'unique:users,email']];
             if ($password !== '') {
                 $rules['password'] = PasswordPolicy::rules(false);
             }$validator = Validator::make($row, $rules);
             $errors = $validator->errors()->all();
-            if (isset($seenNames[$row['username']]) || isset($seenEmails[$row['email']])) {
+            if (isset($seenNames[$row['username']]) || ($row['email'] && isset($seenEmails[$row['email']]))) {
                 $errors[] = 'Username/email berulang dalam CSV.';
             }$seenNames[$row['username']] = true;
-            $seenEmails[$row['email']] = true;
+            if ($row['email']) { $seenEmails[$row['email']] = true; }
             $rows[] = ['line' => $number, 'name' => $row['name'], 'username' => $row['username'], 'email' => $row['email'], 'password' => $password, 'errors' => $errors];
         }
         fclose($file);

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Role;
+use App\StudentAccounts;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -29,8 +30,8 @@ class User extends Authenticatable
     {
         static::creating(function (User $user): void {
             if (! $user->username) {
-                $base = preg_replace('/[^a-z0-9._-]/', '', Str::lower(Str::before($user->email, '@')));
-                $base = strlen($base) >= 3 ? substr($base, 0, 30) : 'akun';
+                $base = preg_replace('/[^a-z0-9._-]/', '', Str::lower(Str::before($user->email ?? '', '@')));
+                $base = strlen($base) >= 3 ? substr($base, 0, 30) : StudentAccounts::usernameBase($user->name);
                 $candidate = $base;
                 while (static::where('username', $candidate)->exists()) {
                     $candidate = $base.'-'.Str::lower(Str::random(6));

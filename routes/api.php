@@ -28,6 +28,7 @@ use App\Http\Controllers\Api\V1\RosterController;
 use App\Http\Controllers\Api\V1\SchoolController;
 use App\Http\Controllers\Api\V1\SchoolOperationsController;
 use App\Http\Controllers\Api\V1\StudentReviewController;
+use App\Http\Controllers\Api\V1\StudentAccountController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Api\V1\WorkspaceDataController;
 use App\Learning\LkpdSchema;
@@ -117,6 +118,7 @@ Route::prefix('v1')->group(function () {
             Route::post('materials/{material}/attempts', [MaterialAttemptController::class, 'store'])->middleware('throttle:attempts');
         });
         Route::middleware('role:teacher,admin')->group(function () {
+            Route::post('roster/generate', [StudentAccountController::class, 'generate']);
             Route::put('groups/{group}', [SchoolOperationsController::class, 'group']);
             Route::put('learning-modules/{module}/video', [SchoolOperationsController::class, 'moduleVideo']);
             Route::get('student-reviews', [StudentReviewController::class, 'index']);

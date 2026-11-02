@@ -56,13 +56,13 @@ class AccountController extends Controller
         $user ??= $r->user();
         $self = $user->id === $r->user()->id;
         abort_unless($self || $r->user()->role === Role::Admin, 403);
-        $data = $r->validate(['version' => ['required', 'integer', 'min:1'], 'name' => ['required', 'string', 'max:120'], 'username' => ['required', 'string', 'min:3', 'max:40', 'regex:/^[a-z0-9][a-z0-9._-]*$/', Rule::unique('users')->ignore($user->id)], 'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)], 'current_password' => [$self ? 'required' : 'nullable', 'string', 'max:255']]);
+        $data = $r->validate(['version' => ['required', 'integer', 'min:1'], 'name' => ['required', 'string', 'max:120'], 'username' => ['required', 'string', 'min:3', 'max:40', 'regex:/^[a-z0-9][a-z0-9._-]*$/', Rule::unique('users')->ignore($user->id)], 'email' => [Rule::requiredIf($user->role !== Role::Student), 'nullable', 'email', 'max:255', Rule::unique('users')->ignore($user->id)], 'current_password' => [$self ? 'required' : 'nullable', 'string', 'max:255']]);
         $saved = DB::transaction(function () use ($r, $user, $data) {
             $u = User::whereKey($user->id)->lockForUpdate()->firstOrFail();
             if ($u->id === $r->user()->id) {
                 abort_unless(Hash::check($data['current_password'], $u->password), 422, 'Kata sandi tidak cocok.');
             }abort_if($u->profile_version !== $data['version'], 409, 'Profil sudah diperbarui. Muat ulang.');
-            $u->forceFill(['name' => $data['name'], 'username' => $data['username'], 'email' => Str::lower($data['email']), 'profile_version' => $u->profile_version + 1, 'email_verified_at' => $u->email !== $data['email'] ? null : $u->email_verified_at])->save();
+            $u->forceFill(['name' => $data['name'], 'username' => $data['username'], 'email' => isset($data['email']) ? Str::lower($data['email']) : null, 'profile_version' => $u->profile_version + 1, 'email_verified_at' => $u->email !== ($data['email'] ?? null) ? null : $u->email_verified_at])->save();
             LearningNotifier::audit($r->user()->id, 'profile_updated', 'user', $u->id);
 
             return $u;

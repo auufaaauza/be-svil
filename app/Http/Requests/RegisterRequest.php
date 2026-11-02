@@ -30,7 +30,7 @@ class RegisterRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:120'],
             'username' => ['required', 'string', 'min:3', 'max:40', 'regex:/^[a-z0-9][a-z0-9._-]*$/', 'unique:users,username'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'email' => ['nullable', 'email', 'max:255', 'unique:users,email'],
             'password' => [...PasswordPolicy::rules(), 'confirmed'],
             'class_code' => ['required', 'string', 'size:12', Rule::exists('classrooms', 'join_code')->whereNull('archived_at')],
         ];
