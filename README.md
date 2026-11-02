@@ -10,7 +10,13 @@ Laravel hanya melayani JSON API /api/v1 dan berkas privat. Next.js meneruskan /a
 
 Jalankan npm run dev di ../fe-svill, lalu buka http://127.0.0.1:3000. Database lokal svil_app dan pengujian svil_app_testing menggunakan pengguna MySQL terpisah. Kredensial ada pada .env/.env.testing yang diabaikan Git.
 
-Admin lokal: username **admin** atau email **admin@findmycareer.my.id**, password **svil123** sesuai permintaan. Data contoh siswa/guru, kelas dan materi sudah dibersihkan. DatabaseSeeder kosong. Seeder contoh sudah dihapus; tidak ada akun maupun jawaban contoh yang dibuat saat instalasi.
+Admin awal: username **admin** atau email **admin@findmycareer.my.id**, password **svil123** sesuai permintaan. DatabaseSeeder memanggil AdminSeeder untuk membuat admin pertama; tidak membuat siswa, guru, kelas, materi atau jawaban contoh. Jika admin sudah ada, password/profil/statusnya dipertahankan. Konflik username/email dengan akun non-admin menghentikan seeder tanpa mengubah akun tersebut.
+
+Untuk production yang belum memiliki admin, unggah database/seeders/AdminSeeder.php lalu jalankan dari folder backend:
+
+    php artisan db:seed --class=AdminSeeder --force --no-interaction
+
+Jika DatabaseSeeder.php juga telah diperbarui, php artisan db:seed --force --no-interaction melakukan bootstrap yang sama. Perintah tidak meminta konfirmasi interaktif, sehingga dapat digunakan ketika proc_open dibatasi hosting. Setelah masuk, kata sandi dapat diganti melalui pengaturan akun.
 
 ## Konten LKPD utama
 
@@ -106,7 +112,7 @@ Target sementara backend: **https://api2.findmycareer.my.id**. Frontend memakai 
 4. Buat .env dari template. Isi APP_URL, FRONTEND_URL, SANCTUM_STATEFUL_DOMAINS (host frontend tanpa https), DB_*, APP_ENV=production, APP_DEBUG=false, SESSION_SECURE_COOKIE=true. SESSION_DOMAIN=null dipertahankan karena browser menggunakan proxy frontend.
 5. File lokal .env.production sudah disiapkan dengan APP_KEY baru dan tidak masuk paket/Git. Isi kredensial hosting lalu unggah sebagai .env secara privat. Jika membuat environment baru dari template, buat key satu kali melalui php artisan key:generate. Pertahankan key production pada rilis dan migrasi berikutnya.
 6. Jalankan php artisan migrate --force, php artisan config:cache, php artisan route:cache. Pastikan storage dan bootstrap/cache dapat ditulis oleh PHP tanpa permission 777.
-7. Buat admin pertama melalui perintah interaktif php artisan svil:create-admin admin@findmycareer.my.id --name=Administrator. Username otomatis admin bila belum dipakai; password diminta tersembunyi. Akun lokal tidak otomatis ada di hosting. Lanjutkan dengan perintah impor LKPD di atas agar konten asli tersedia.
+7. Buat admin pertama dengan php artisan db:seed --class=AdminSeeder --force --no-interaction; akses awal admin / svil123. Seeder mempertahankan admin yang sudah ada. Untuk password khusus pada terminal yang mendukung prompt tersembunyi, tersedia php artisan svil:create-admin admin@findmycareer.my.id --name=Administrator. Lanjutkan dengan perintah impor LKPD di atas agar konten asli tersedia.
 8. Pada Vercel pilih Root Directory **fe-svill**, framework Next.js, lalu isi **API_BACKEND_URL=https://api2.findmycareer.my.id** pada environment production sebelum build. Jangan memakai prefix NEXT_PUBLIC_ dan jangan menambahkan /api/v1 pada URL backend.
 9. Deploy frontend. Isi URL Vercel final ke FRONTEND_URL dan host-nya ke SANCTUM_STATEFUL_DOMAINS backend, lalu jalankan ulang config:cache. Gunakan HTTPS pada dua layanan.
 10. Periksa /up di backend; dari frontend coba login, muat kelas, logout, lalu buat data aktual dan uji satu siklus siswa–guru–laporan. Backup MySQL dan storage/app/private, kemudian uji restore.

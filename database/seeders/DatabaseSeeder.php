@@ -8,6 +8,6 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Production intentionally starts without demo accounts or research results.
+        $this->call(AdminSeeder::class);
     }
 }
