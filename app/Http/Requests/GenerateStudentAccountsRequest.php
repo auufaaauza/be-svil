@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Role;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Role;
 use Illuminate\Support\Str;
 
 class GenerateStudentAccountsRequest extends FormRequest
@@ -44,6 +44,7 @@ class GenerateStudentAccountsRequest extends FormRequest
                 }
                 $name = $student['name'] ?? null;
                 $email = $student['email'] ?? null;
+
                 return [...$student, 'name' => is_string($name) ? Str::squish($name) : $name, 'email' => is_string($email) ? (Str::lower(trim($email)) ?: null) : $email];
             }, $this->input('students'))]);
         }

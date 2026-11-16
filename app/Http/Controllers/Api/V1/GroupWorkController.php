@@ -23,13 +23,15 @@ class GroupWorkController extends Controller
     {
         abort_unless($group->canView($request->user()) && $request->user()->canUseSvil(), 403);
         $work = GroupWork::where('learning_group_id', $group->id)->where('topic', $topic)->first();
+        abort_if($request->user()->role === Role::Student && $work?->member_ids && ! in_array($request->user()->id, $work->member_ids, true), 403);
 
         $module = LearningModule::where('topic', $topic)->firstOrFail();
         abort_if($request->user()->role === Role::Student && $module->status !== 'published' && ! $work, 403);
 
+        abort_unless($module->availableIn($group->classroom_id), 403);
         $content = $module->contentFor($group->classroom_id);
 
-        return response()->json(['data' => $work?->summary(), 'fields' => LkpdPages::fields($module, $work, $group->classroom_id), 'module' => [...$module->mediaFor($group->classroom_id), 'title' => $content['title'], 'instructions' => $content['instructions'], 'version' => $work?->module_version ?? $module->version], 'rubrics' => LkpdSchema::rubrics(), 'guidance' => LkpdSchema::guidance()]);
+        return response()->json(['data' => $work?->summary(), 'fields' => LkpdPages::fields($module, $work, $group->classroom_id), 'module' => [...$module->mediaFor($group->classroom_id), 'pageSize' => LkpdPages::size($work ?? $module), 'title' => $content['title'], 'instructions' => $content['instructions'], 'version' => $work?->module_version ?? $module->version], 'rubrics' => LkpdSchema::rubrics(), 'guidance' => LkpdSchema::guidance()]);
     }
 
     public function store(SaveGroupWorkRequest $request, LearningGroup $group, int $topic): JsonResponse
@@ -44,11 +46,15 @@ class GroupWorkController extends Controller
             $work ??= new GroupWork(['learning_group_id' => $group->id, 'topic' => $topic]);
             $pages = LkpdPages::entries($work);
             $fields = $request->moduleSchema()['fields'];
+            $size = $request->moduleSchema()['page_size'];
+            $work->page_size = $size;
             $before = $work->answers ?? [];
             $answers = array_replace($before, $request->validated('answers'));
             foreach ($fields as $index => $field) {
                 if (($before[$field['key']] ?? '') !== ($answers[$field['key']] ?? '')) {
-                    unset($pages[(int) floor($index / LkpdPages::SIZE)]);
+                    $existingPage = $pages[(int) floor($index / $size)] ?? null;
+                    abort_if($size === 1 && $existingPage && ($existingPage['review_status'] ?? '') !== 'needs_revision', 422, 'Section sudah dikirim. Tunggu guru membuka perbaikan sebelum mengubah jawaban.');
+                    unset($pages[(int) floor($index / $size)]);
                 }
             }
             if (! $request->exists('page') && $before !== $answers && $request->input('status') === 'draft') {
@@ -57,7 +63,7 @@ class GroupWorkController extends Controller
             if (! $work->schema_snapshot || ! count(LkpdPages::entries($work))) {
                 $work->fill(['schema_snapshot' => $fields, 'module_version' => $request->moduleSchema()['version']]);
             }
-            $total = (int) ceil(count($fields) / LkpdPages::SIZE);
+            $total = (int) ceil(count($fields) / $size);
             if ($request->input('status') === 'submitted') {
                 $indices = $request->exists('page') ? [$request->integer('page')] : range(0, $total - 1);
                 foreach ($indices as $index) {
@@ -68,7 +74,7 @@ class GroupWorkController extends Controller
                 return $work;
             }
             $work->member_ids ??= $group->users()->pluck('users.id')->all();
-            $work->fill(['answers' => $answers, 'page_submissions' => $pages, 'status' => LkpdPages::status($pages, $total), 'version' => $version, 'feedback' => null, 'product_scores' => null, 'presentation_scores' => null, 'reviewed_by' => null, 'reviewed_at' => null, 'submitted_at' => $request->input('status') === 'submitted' ? now() : ($pages ? $work->submitted_at : null)]);
+            $work->fill(['answers' => $answers, 'page_submissions' => $pages, 'status' => LkpdPages::status($pages, $total), 'version' => $version, 'feedback' => null, 'product_scores' => null, 'presentation_scores' => null, 'score' => null, 'reviewed_by' => null, 'reviewed_at' => null, 'submitted_at' => $request->input('status') === 'submitted' ? now() : ($pages ? $work->submitted_at : null)]);
             $work->save();
             $work->recordRevision($request->user());
 
@@ -90,7 +96,7 @@ class GroupWorkController extends Controller
             abort_if($target->version !== $request->integer('version'), 409, 'LKPD telah diperbarui. Muat ulang sebelum menilai.');
             abort_if($target->status === 'draft', 422, 'Kelompok belum mengirimkan LKPD ini.');
             $pages = LkpdPages::entries($target);
-            $total = (int) ceil(count($target->schema_snapshot ?? []) / LkpdPages::SIZE);
+            $total = (int) ceil(count($target->schema_snapshot ?? []) / LkpdPages::size($target));
             if ($request->exists('page')) {
                 $indices = [$request->integer('page')];
                 abort_unless(isset($pages[$indices[0]]), 422, 'Lembar ini belum dikirim murid.');
@@ -102,8 +108,9 @@ class GroupWorkController extends Controller
                 $pages[$index] = [...$pages[$index], 'feedback' => $request->validated('feedback'), 'review_status' => $request->validated('status'), 'reviewed_by' => $request->user()->id, 'reviewed_at' => now()->toIso8601String()];
             }
             $status = LkpdPages::status($pages, $total);
-            $scores = $request->safe()->only(['product_scores', 'presentation_scores']);
+            $scores = $request->safe()->only(['product_scores', 'presentation_scores', 'score']);
             abort_if(count($pages) < $total && array_filter($scores), 422, 'Rubrik akhir diisi setelah seluruh lembar dikirim.');
+            abort_if($request->filled('score') && ($status !== 'reviewed' || count($pages) < $total), 422, 'Nilai akhir diterbitkan setelah semua section selesai ditinjau.');
             $target->fill([...$scores, 'page_submissions' => $pages, 'status' => $status, 'feedback' => $request->exists('page') ? null : $request->validated('feedback'), 'reviewed_by' => $status === 'reviewed' ? $request->user()->id : null, 'reviewed_at' => $status === 'reviewed' ? now() : null, 'version' => $target->version + 1]);
             $target->save();
             $target->recordRevision($request->user());

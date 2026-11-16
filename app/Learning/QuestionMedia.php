@@ -2,6 +2,7 @@
 
 namespace App\Learning;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 final class QuestionMedia
@@ -29,6 +30,9 @@ final class QuestionMedia
         if (in_array($host, ['tiktok.com', 'www.tiktok.com', 'm.tiktok.com'], true) && preg_match('~/(?:@[^/]+/video|player/v1)/(\d{12,25})(?:/|$)~D', $path, $match)) {
             return ['provider' => 'tiktok', 'id' => $match[1], 'url' => 'https://www.tiktok.com'.$path];
         }
+        if (self::isTikTokShortLink($url)) {
+            return ['provider' => 'tiktok', 'url' => trim($url)];
+        }
         if (! str_contains($host, '.') || filter_var($host, FILTER_VALIDATE_IP)) {
             throw ValidationException::withMessages([$field => 'Gunakan tautan video dari situs publik.']);
         }
@@ -36,10 +40,25 @@ final class QuestionMedia
         return ['provider' => preg_match('/\.(mp4|webm)$/iD', $path) ? 'file' : 'link', 'url' => $url];
     }
 
+    public static function isTikTokShortLink(string $url): bool
+    {
+        $parts = parse_url($url);
+        if (! $parts || ($parts['scheme'] ?? '') !== 'https' || isset($parts['user']) || isset($parts['pass']) || isset($parts['port'])) {
+            return false;
+        }
+        $host = strtolower($parts['host'] ?? '');
+        $path = $parts['path'] ?? '';
+
+        return in_array($host, ['vt.tiktok.com', 'vm.tiktok.com'], true)
+            ? (bool) preg_match('~^/[a-zA-Z0-9_-]+/?$~D', $path)
+            : in_array($host, ['tiktok.com', 'www.tiktok.com', 'm.tiktok.com'], true) && (bool) preg_match('~^/t/[a-zA-Z0-9_-]+/?$~D', $path);
+    }
+
     public static function fields(array $fields, int $module, ?int $classroom): array
     {
         return array_map(function (array $field) use ($module, $classroom): array {
-            $field['image_url'] = $classroom && ! empty($field['image_id']) ? route('learning-modules.question-image', ['module' => $module, 'image' => $field['image_id'], 'classroom_id' => $classroom], false) : null;
+            $scope = $classroom && Storage::disk('local')->exists('lkpd/'.$module.'/'.$classroom.'/'.($field['image_id'] ?? '')) ? $classroom : 0;
+            $field['image_url'] = ! empty($field['image_id']) ? route('learning-modules.question-image', ['module' => $module, 'image' => $field['image_id'], 'classroom_id' => $scope], false) : null;
 
             return $field;
         }, $fields);

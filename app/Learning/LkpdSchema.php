@@ -7,9 +7,9 @@ class LkpdSchema
     public static function fields(int $topic): array
     {
         static $schemas;
-        $schemas ??= json_decode(file_get_contents(database_path('data/lkpd-fields.json')), true, flags: JSON_THROW_ON_ERROR);
+        $schemas ??= json_decode(file_get_contents(database_path('data/lkpd-update.json')), true, flags: JSON_THROW_ON_ERROR);
 
-        return $schemas[$topic];
+        return $schemas[$topic]['fields'];
     }
 
     public static function legacyFields(int $topic): array

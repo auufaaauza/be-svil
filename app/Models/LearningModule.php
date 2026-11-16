@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Learning\QuestionMedia;
+use App\Role;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,11 +14,27 @@ class LearningModule extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['topic', 'title', 'description', 'instructions', 'fields', 'source_text', 'source_document', 'source_hash', 'status', 'version', 'uploaded_by', 'updated_by', 'youtube_video_id', 'video_caption'];
+    protected $fillable = ['topic', 'title', 'description', 'instructions', 'fields', 'source_text', 'source_document', 'source_hash', 'status', 'version', 'uploaded_by', 'updated_by', 'youtube_video_id', 'video_caption', 'classroom_id', 'create_request_id', 'page_size'];
 
     protected function casts(): array
     {
-        return ['fields' => 'array', 'topic' => 'integer', 'version' => 'integer'];
+        return ['fields' => 'array', 'topic' => 'integer', 'version' => 'integer', 'classroom_id' => 'integer', 'page_size' => 'integer'];
+    }
+
+    public function scopeVisibleTo(Builder $query, User $user): void
+    {
+        $query->where(fn (Builder $q) => $q->whereNull('classroom_id')->orWhereIn('classroom_id', $user->accessibleClassrooms()->select('classrooms.id')));
+    }
+
+    public function availableIn(int $classroom): bool
+    {
+        return $this->classroom_id === null || $this->classroom_id === $classroom;
+    }
+
+    public function canView(User $user): bool
+    {
+        return ($this->classroom_id === null || $user->canAccessClassroom($this->classroom_id))
+            && ($user->role !== Role::Student || $user->canUseSvil() && $this->status === 'published');
     }
 
     public function mediaFor(?int $classroom): array

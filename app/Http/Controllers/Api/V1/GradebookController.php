@@ -11,6 +11,7 @@ use App\Models\GroupWork;
 use App\Models\LearningGroup;
 use App\Models\Observation;
 use App\Models\User;
+use App\Models\WordwallGrade;
 use App\Role;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -34,7 +35,9 @@ class GradebookController extends Controller
         $groups = LearningGroup::where('classroom_id', $class)->with('users:id')->get();
         $works = GroupWork::whereIn('learning_group_id', $groups->pluck('id'))->get();
         $observations = Observation::where('classroom_id', $class)->get();
-        $rows = $students->map(function ($student) use ($tasks, $assessments, $submissions, $attempts, $groups, $works, $observations) {
+        $wordwallGrades = WordwallGrade::where('classroom_id', $class)->with('teacher:id,name')->get();
+        $games = collect(json_decode(file_get_contents(database_path('data/lkpd-games.json')), true, flags: JSON_THROW_ON_ERROR));
+        $rows = $students->map(function ($student) use ($tasks, $assessments, $submissions, $attempts, $groups, $works, $observations, $wordwallGrades, $games, $course) {
             $taskRows = $tasks->map(function ($task) use ($student, $submissions) {
                 $s = $submissions->first(fn ($s) => $s->assignment_id === $task->id && in_array($student->id, $s->member_ids, true));
 
@@ -46,8 +49,13 @@ class GradebookController extends Controller
                 return ['id' => $a->id, 'title' => $a->title, 'status' => $s?->status ?? 'missing', 'raw_score' => $s?->raw_score, 'max_score' => $s?->max_score ?? $a->max_score, 'normalized_score' => $s?->raw_score !== null && $s ? round($s->raw_score / $s->max_score * 100, 2) : null, 'source' => $s?->source, 'feedback' => $s?->feedback, 'attempt_id' => $s?->id];
             });
             $studentGroups = $groups->filter(fn ($g) => $g->users->contains('id', $student->id))->pluck('id');
+            $wordwall = $course || ! $student->canUseSvil() ? collect() : $games->map(function ($game) use ($student, $wordwallGrades) {
+                $grade = $wordwallGrades->first(fn ($grade) => $grade->student_id === $student->id && $grade->game_id === $game['id']);
 
-            return ['student_id' => $student->id, 'participant_code' => 'P-'.$student->id, 'name' => $student->name, 'assignments' => $taskRows->values(), 'assessments' => $testRows->values(), 'group_work' => $works->filter(fn ($w) => $w->member_ids ? in_array($student->id, $w->member_ids, true) : $studentGroups->contains($w->learning_group_id))->map(fn ($w) => $w->summary())->values(), 'observations' => $observations->where('student_id', $student->id)->values(), 'progress' => ['tasks_assigned' => $taskRows->count(), 'tasks_submitted' => $taskRows->whereNotIn('status', ['missing', 'draft'])->count(), 'tasks_reviewed' => $taskRows->where('status', 'reviewed')->count(), 'assessments_assigned' => $testRows->count(), 'assessments_submitted' => $testRows->where('status', '!=', 'missing')->count(), 'assessments_graded' => $testRows->where('status', 'graded')->count()]];
+                return ['id' => $game['id'], 'title' => $grade?->game_title ?? $game['title'], 'topic' => $game['topic'], 'status' => $grade ? 'graded' : 'missing', 'raw_score' => $grade?->score, 'max_score' => 100, 'normalized_score' => $grade?->score, 'source' => $grade ? 'wordwall_manual' : null, 'feedback' => $grade?->feedback, 'teacher' => $grade?->teacher->name, 'updated_at' => $grade?->updated_at];
+            });
+
+            return ['student_id' => $student->id, 'participant_code' => 'P-'.$student->id, 'name' => $student->name, 'assignments' => $taskRows->values(), 'assessments' => $testRows->values(), 'wordwall' => $wordwall->values(), 'group_work' => $works->filter(fn ($w) => $w->member_ids ? in_array($student->id, $w->member_ids, true) : $studentGroups->contains($w->learning_group_id))->map(fn ($w) => $w->summary())->values(), 'observations' => $observations->where('student_id', $student->id)->values(), 'progress' => ['tasks_assigned' => $taskRows->count(), 'tasks_submitted' => $taskRows->whereNotIn('status', ['missing', 'draft'])->count(), 'tasks_reviewed' => $taskRows->where('status', 'reviewed')->count(), 'assessments_assigned' => $testRows->count(), 'assessments_submitted' => $testRows->where('status', '!=', 'missing')->count(), 'assessments_graded' => $testRows->where('status', 'graded')->count()]];
         });
 
         return ['classroom_id' => $class, 'course_id' => $course ?: null, 'policy' => 'Tugas dan asesmen dilaporkan terpisah. Asesmen memakai percobaan terakhir yang sudah dikirim. Progres menunjukkan bukti pengumpulan/tinjauan, bukan kesimpulan efektivitas atau karakter.', 'students' => $rows->values()];
@@ -67,7 +75,7 @@ class GradebookController extends Controller
             fwrite($out, "\xEF\xBB\xBF");
             fputcsv($out, ['peserta', 'kelas_id', 'jenis', 'kegiatan_id', 'judul', 'status', 'skor_mentah', 'maksimum', 'nilai_100', 'sumber'], escape: '');
             foreach ($data['students'] as $student) {
-                foreach (['assignments' => 'TUGAS', 'assessments' => 'ASESMEN'] as $key => $kind) {
+                foreach (['assignments' => 'TUGAS', 'assessments' => 'ASESMEN', 'wordwall' => 'KUIS_WORDWALL'] as $key => $kind) {
                     foreach ($student[$key] as $row) {
                         $title = preg_match('/^\s*[=+\-@]|^[\t\r]/u', $row['title']) ? "'".$row['title'] : $row['title'];
                         fputcsv($out, [$student['participant_code'], $data['classroom_id'], $kind, $row['id'], $title, $row['status'], $row['score'] ?? $row['raw_score'] ?? null, $row['max_score'], $row['normalized_score'], $row['source']], escape: '');

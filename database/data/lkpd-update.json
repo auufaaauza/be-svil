@@ -1,0 +1,517 @@
+[
+  {
+    "title": "Peta dan Laut sebagai Penghubung",
+    "description": "Mengenali peta dan manfaat laut serta menjaga lingkungan.",
+    "instructions": "Tujuan kegiatan: mengenali pulau, laut, selat, samudra, benua dan arah mata angin pada peta Indonesia; menjelaskan manfaat laut sebagai penghubung; mengidentifikasi pencemaran akibat aktivitas kapal; memilih solusi peduli lingkungan; menunjukkan syukur, kerja sama, tanggung jawab dan cinta tanah air.\nAwali dengan berdoa dan bersyukur. Amati peta dengan teliti, diskusikan setiap pertanyaan, dengarkan teman, bagi tugas secara adil, tuliskan hasil pengamatan dengan jujur dan jaga kebersihan.\nPeta: https://canva.link/nnyctm1ob3ah8fy\nBacaan kasus Kapal yang Menghubungkan Pulau Kita\nDi Indonesia, banyak masyarakat tinggal di pulau yang berbeda-beda. Kapal laut dan kapal feri membantu mereka bepergian, mengunjungi keluarga, bersekolah, dan mengirimkan berbagai kebutuhan sehari-hari. Para petani, pedagang, dan nelayan juga memanfaatkan transportasi laut untuk mengirimkan hasil kerja mereka ke pulau lain. Karena itulah, laut menjadi penghubung penting bagi kehidupan masyarakat Indonesia.\nNamun, kegiatan pelayaran juga dapat menimbulkan masalah lingkungan. Kebocoran bahan bakar solar dari kapal dapat mencemari air laut. Sampah plastik yang dibuang sembarangan oleh penumpang dapat membahayakan ikan, penyu, dan makhluk laut lainnya. Jika laut tercemar, kehidupan nelayan dan masyarakat pesisir juga bisa terganggu. Kita membutuhkan transportasi laut, tetapi kita juga harus menjaga kebersihan dan kelestarian laut Indonesia.\nRefleksi Hati ditulis masing-masing siswa melalui bagian Refleksi Hati saya, terpisah dari keputusan kelompok.\nKuis: https://wordwall.net/id/resource/123874171?wwmethod=link",
+    "fields": [
+      {
+        "key": "peta_pulau",
+        "label": "Temukan empat pulau pada peta Indonesia.",
+        "hint": "Tuliskan nama objek dan bukti atau sumber penemuan untuk masing-masing objek.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "peta_laut",
+        "label": "Temukan dua laut atau selat pada peta Indonesia.",
+        "hint": "Tuliskan nama objek dan bukti atau sumber penemuan untuk masing-masing objek.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "peta_samudra",
+        "label": "Temukan dua samudra pada peta Indonesia.",
+        "hint": "Tuliskan nama objek dan bukti atau sumber penemuan untuk masing-masing objek.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "peta_benua",
+        "label": "Temukan dua benua pada peta Indonesia.",
+        "hint": "Tuliskan nama objek dan bukti atau sumber penemuan untuk masing-masing objek.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "peta_arah",
+        "label": "Tuliskan empat arah mata angin pada peta Indonesia.",
+        "hint": "Tuliskan nama objek dan bukti atau sumber penemuan untuk masing-masing objek.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "pikir_1",
+        "label": "Mengapa Indonesia disebut sebagai negara kepulauan?",
+        "hint": "Jelaskan dengan hasil pengamatan dan diskusi kelompok.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "pikir_2",
+        "label": "Menurut kelompokmu, apakah laut memisahkan atau menghubungkan pulau-pulau di Indonesia? Jelaskan alasan kalian!",
+        "hint": "Jelaskan dengan hasil pengamatan dan diskusi kelompok.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "pikir_3",
+        "label": "Apa yang membuat kelompokmu merasa bangga terhadap wilayah Indonesia?",
+        "hint": "Jelaskan dengan hasil pengamatan dan diskusi kelompok.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "manfaat",
+        "label": "Tuliskan dua manfaat transportasi laut antarpulau.",
+        "hint": "Manfaat 1:\nManfaat 2:",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "risiko",
+        "label": "Tuliskan dua risiko lingkungan akibat aktivitas kapal.",
+        "hint": "Risiko 1:\nRisiko 2:",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "solusi",
+        "label": "Usulkan dua solusi kreatif dan ramah lingkungan agar transportasi laut tetap berjalan tanpa merusak lingkungan.",
+        "hint": "Solusi 1:\nSolusi 2:",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "tantangan",
+        "label": "Sebagai pengelola kapal feri, apa tindakan kalian agar penumpang tetap nyaman dan laut tetap bersih?",
+        "hint": "Beberapa penumpang membuang sampah plastik ke laut. Pertimbangkan kebutuhan manusia dan lingkungan.",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "keputusan_1",
+        "label": "Solusi utama apa yang kelompok kalian pilih?",
+        "hint": "Diskusikan bersama sebelum membuat keputusan.",
+        "phase": 3,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "keputusan_2",
+        "label": "Apa alasan kelompok kalian memilih solusi tersebut?",
+        "hint": "Diskusikan bersama sebelum membuat keputusan.",
+        "phase": 3,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "keputusan_3",
+        "label": "Nilai Cinta Tanah Air atau Cinta Lingkungan apa yang terkait dengan keputusan kalian?",
+        "hint": "Diskusikan bersama sebelum membuat keputusan.",
+        "phase": 3,
+        "source": "LKPD UPDATE"
+      }
+    ],
+    "source_text": "PETA DAN LAUT SEBAGAI PENGHUBUNG\n--- HALAMAN 1 ---\nEKSPLORASI &\nKEGIATAN\nIDENTITAS &\nTUJUAN\nPETUNJUK &\nPESAN CINTA \nPECAHKAN\nMASALAH\nKEPUTUSAN\nKELOMPOK \nEKSPLORASI &\nSTUDI KASUS\nBERANDA\n--- HALAMAN 2 ---\nPETA DAN LAUT\nSEBAGAIPENGHUBUNG \n(LKPD)\nNama Kelompok\nMata Pelajaran: IPAS\nFase/Kelas: C/V\nSemester: Genap\nKelas/Semester: V/Genap\nTanggal\nAnggota Kelompok (5 orang)\nBab: Di Mana Indonesia Berada?\n1.\n2.\n3.\n4\n.\n5.\nMateri: Daratan dan Lautan di Indonesia\nTema Nilai: Cinta Tanah Air dan Cinta Lingkungan\nSetelah menyelesaikan LKPD ini, peserta didik diharapkan mampu:\n1. Menemukan dan menuliskan pulau, laut, selat, samudra, benua, serta arah mata angin pada peta Indonesia.\n2. Menjelaskan manfaat laut sebagai penghubung antarpulau.\n3. Mengidentifikasi risiko pencemaran laut akibat aktivitas transportasi kapal.\n4. Menentukan solusi yang menunjukkan kepedulian terhadap lingkungan laut.\n5. Menunjukkan rasa syukur, kerja sama, tanggung jawab, dan cinta tanah air.\nB. TUJUAN KEGIATAN\nA. IDENTITAS KELOMPOK\nBERANDA\n--- HALAMAN 3 ---\nDengarkan pendapat teman dengan sabar dan penuh\nkasih sayang.\nBagilah tugas secara adil agar semua anggota dapat\nberpartisipasi.\nTuliskan jawaban berdasarkan hasil pengamatan dan\ndiskusi, bukan sekadar menebak.\nJagalah kebersihan meja dan lingkungan selama\nkegiatan berlangsung.\nC. PETUNJUK KERJA DAN ATURAN BERKESADARAN\n Ayo belajar dengan hati yang senang dan penuh kepedulian!\nPetunjuk:\n1. \n2.\n3.\n4.\n5.\n6.\nAwali kegiatan dengan berdoa dan bersyukur kepada\nAllah SWT atas keindahan dan kekayaan alam Indonesia.\nAmati peta Indonesia dengan teliti.\n Diskusikan setiap pertanyaan bersama anggota kelompok.\nPESAN CINTA\nAku bersyukur tinggal di Indonesia\nyang kaya akan pulaudan lautan. Aku\ningin ikut menjaga laut agar tetap\nbersih dan bermanfaat bagi semua\nmakhluk hidup.\n \nBERANDA\n--- HALAMAN 4 ---\n3\nD. BAGIAN 1 — EKSPLORASI PETA INDONESIA\nFase 1 dan 2: Orientasi Nilai serta Eksplorasi dan Inkuiri Nilai.\nPETA \nContoh \nAyo, Jadi Penjelajah Nusantara!\n Indonesia terdiriatas banyak pulau yang dihubungkan\noleh lautan. Dengan menggunakan peta, kita dapat\nmengenali wilayah Indonesia dan memahami\npentingnya laut bagi kehidupan.\nKategori\nPulau \nPulau \nPulau \nPulau \nLaut/Selat \nLaut/Selat\nSamudra 1\n1\n2\n3\n4\n1\n2\nBenua 1\nBenua 2\nArah Mata Angin 1\nArah Mata Angin 2\nArah Mata Angin 3\nArah Mata Angin 4\nNama Objek pada Peta Bukti/Sumber Penemuan\n1La.Snigakpakhankepgeitaat aInnd:onesia, atlas, atau peta digital\nyang disediakan\nguru. Amati warna, simbol, arah mata angin, dan nama tempat\npada peta. Temukan objek geografis sesuai kategori dalam tabel.\nTuliskan nama objek dan bukti penemuannya berdasarkan peta.\nTerletak di bagian utara peta\nsesuai petunjuk arah mata angin\nBERANDA\n--- HALAMAN 5 ---\n4\n \nKapal yang Menghubungkan Pulau Kita\n \nD. BAGIAN 1 – EKSPLORASI PETA INDONESIA\nAYO BERPIKIR!\n \nMenurut kelompokmu, apakah laut memisahkan atau menghubungkan\npulau-pulau di Indonesia? Jelaskan alasan kalian!\nApa yang membuat kelompokmu merasa bangga terhadap wilayah Indonesia?\nE. BAGIAN 2 – STUDI KASUS TRANSPORTASI ANTARPULAU\nFase 3: Analisis dan Pertimbangan Nilai.\nDiIndonesia,banyakmasyarakattinggaldipulauyang berbeda-beda.Kapal laut dan kapal feri\nmembantu mereka bepergian, mengunjungi keluarga, bersekolah, dan mengirimkan berbagai\nkebutuhan sehari-hari. Para petani, pedagang, dan nelayan juga memanfaatkan transportasi laut\nuntuk mengirimkan hasil kerja mereka ke pulau lain. Karena itulah, laut menjadi penghubung penting\nbagi kehidupan masyarakat Indonesia.\n Namun,kegiatan pelayaranjugadapatmenimbulkanmasalah lingkungan.Kebocoranbahan bakar\nsolar dari kapal dapat mencemari air laut. Sampah plastik yang dibuang sembarangan oleh\npenumpang dapat membahayakan ikan, penyu, dan mahhluk laut lainnya. Jika laut tercemar,\nkehidupan nelayan dan masyarakat pesisir juga bisa terganggu. Kita membutuhkan transportasi laut,\ntetapi kita juga harus menjaga kebersihan dan kelestarian laut Indonesia.\nMengapaIndonesiadisebutsebagainegara kepulauan?1.\n2.\n3.\nBERANDA\n--- HALAMAN 6 ---\nAYO, PECAHKAN MASALAHNYA!\n3.\nSolusi 1:\nSolusi 2:\nRisiko 2:\nManfaat 2:\n4.Pertanyaan Tantangan\n \n1.Tuliskan DUA manfaat transportasi laut antarpulau.\n Manfaat 1:\n2.Tuliskan DUA risiko lingkungan akibat aktivitas kapal.\nRisiko 1:\n \nApa tindakan yang akan kalian lakukan agar penumpang tetap\nnyaman dan laut tetap bersih?\nUsulkan DUA solusi kreatif dan ramah lingkungan agar transportasi\nlaut tetap berjalan tanpa merusak lingkungan.\nBayangkankalian menjadi pengelola kapal feri. Penumpang\nmembutuhkan perjalanan yang nyaman, tetapi beberapa penumpang\nmsaemmpbauhapnlagstik ke laut.\nPAPAN STRATEGI\nHEMAT ENERGI\nKURANGI SAMPAH\nTRANSPORTASI\nRAMAH LINGKUNGAN\nBERANDA\n--- HALAMAN 7 ---\nF.KEPUTUSAN KELOMPOK\nDAN NILAI \n Fase 4: Klarifikasi dan RefleksiNilai.\nBerdasarkan hasil diskusi kelompok kami:\n1. Solusi utama yang kami pilih adalah:\n3. Mulai sekarang, tindakan sederhana yang ingin aku lakukan untuk\nmenjaga lingkungan adalah .............\nLengkapilah kalimat berikut dengan jujur:\n1. Hari ini, aku merasa ............. ketika mengetahui bahwa laut Indonesia\nsangat bermanfaat bagi kehidupan.\nAyo, Bermusyawarah\ndengan Penuh Kasih Sayang!\n Diskusikan solusi terbaik bersamakelompok.\nDengarkan semua pendapat sebelum membuat\nkeputusan. Pilihlah solusi yang paling\nbermanfaat bagi manusia dan lingkungan laut.\n2. Alasan kami memilih solusi tersebut adalah:\n3. Nilai Cinta Tanah Air/Cinta Lingkungan yang terkait dengan keputusan kami adalah:\nREFLEKSI HATI\n2. Aku bersyukur atas kekayaan alam Indonesia karena .............\n6\nBERANDA\n--- HALAMAN 8 ---\nG. KUIS \nhttps://wordwall.net/id/resour\nce/123874171?wwmethod=link\nBERANDA",
+    "source_document": "LKPD UPDATE/LKPD Peta dan Laut sebagai Penghubung.pdf",
+    "source_pdf_sha256": "8e63f2e88e2b0653c844d28d9cb5a04328ae3cb815e2b1ec18619d1d6b76e2e2",
+    "status": "published"
+  },
+  {
+    "title": "Zamrud Khatulistiwa",
+    "description": "Menyelidiki kondisi alam dan mempertimbangkan kelestarian hutan.",
+    "instructions": "Awali dengan berdoa dan bersyukur. Baca petunjuk, amati sumber, bagilah tugas secara adil, dan diskusikan dengan saling menghargai. Simpan draf sebelum meninggalkan kegiatan.\nKasus: warga di dekat hutan tropis ingin membuka lahan untuk penghasilan, tetapi hewan dapat kehilangan habitat dan risiko erosi serta banjir meningkat. Pertimbangkan manusia dan makhluk hidup lain.\nKuis latihan: https://wordwall.net/id/resource/123874298?wwmethod=link\nTujuan: mengidentifikasi kondisi alam dan iklim, menghubungkannya dengan mata pencaharian, menganalisis manfaat serta risiko pemanfaatan hutan, memilih solusi bertanggung jawab dan menunjukkan rasa syukur serta kepedulian melalui tindakan.\nBacaan kasus Hutan untuk Kehidupan Haruskah Ditebang\nDi sebuah desa yang berada dekat hutan tropis, sebagian warga ingin membuka lahan untuk kebun, pertanian, dan meningkatkan penghasilan keluarga. Namun, hutan tersebut juga menjadi tempat hidup berbagai hewan, seperti orangutan di Kalimantan atau harimau Sumatra. Jika terlalu banyak pohon ditebang, hewan dapat kehilangan tempat tinggal, tanah mengalami erosi, dan risiko banjir meningkat. Masyarakat harus mencari cara agar lahan dapat dimanfaatkan tanpa merusak hutan, demi kebutuhan saat ini dan masa depan.\nAwali dengan berdoa dan bersyukur, amati sumber dengan saksama, bagi tugas secara adil, hargai pendapat teman dan tuliskan jawaban dengan jujur.",
+    "fields": [
+      {
+        "key": "penyelidikan_1",
+        "label": "Daerah atau kasus apa yang kelompok kalian teliti?",
+        "hint": "Gunakan buku, peta atau sumber yang diberikan guru.",
+        "phase": 1,
+        "source": "LKPD UPDATE",
+        "video_url": "https://vt.tiktok.com/ZSpr8kKpx/"
+      },
+      {
+        "key": "penyelidikan_2",
+        "label": "Bagaimana kondisi alam wilayah tersebut?",
+        "hint": "Gunakan buku, peta atau sumber yang diberikan guru.",
+        "phase": 1,
+        "source": "LKPD UPDATE",
+        "video_url": "https://vt.tiktok.com/ZSpJE5QSS/"
+      },
+      {
+        "key": "penyelidikan_3",
+        "label": "Bagaimana iklim dan ciri karakteristiknya?",
+        "hint": "Gunakan buku, peta atau sumber yang diberikan guru.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "penyelidikan_4",
+        "label": "Apa contoh mata pencaharian masyarakat di sekitarnya?",
+        "hint": "Gunakan buku, peta atau sumber yang diberikan guru.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "penyelidikan_5",
+        "label": "Fakta menarik apa yang kalian temukan dari buku, peta atau artikel?",
+        "hint": "Gunakan buku, peta atau sumber yang diberikan guru.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "penyelidikan_6",
+        "label": "Sumber informasi apa yang kalian gunakan?",
+        "hint": "Gunakan buku, peta atau sumber yang diberikan guru.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "pikir_1",
+        "label": "Mengapa Indonesia disebut sebagai Zamrud Khatulistiwa?",
+        "hint": "Jelaskan hasil diskusi kalian.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "pikir_2",
+        "label": "Bagaimana kondisi alam di daerah yang kalian teliti memengaruhi pekerjaan masyarakat?",
+        "hint": "Jelaskan hasil diskusi kalian.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "pikir_3",
+        "label": "Apa yang akan terjadi jika hutan di daerah tersebut rusak atau berkurang?",
+        "hint": "Jelaskan hasil diskusi kalian.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "analisis_1",
+        "label": "Apa manfaat pengolahan lahan atau hutan bagi ekonomi dan kebutuhan manusia?",
+        "hint": "Kasus: warga ingin membuka lahan untuk meningkatkan penghasilan, tetapi hutan menjadi habitat hewan; penebangan dapat menyebabkan erosi dan banjir.",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "analisis_2",
+        "label": "Apa risiko kerusakan lingkungan bagi tanah, air, hutan dan bencana?",
+        "hint": "Kasus: warga ingin membuka lahan untuk meningkatkan penghasilan, tetapi hutan menjadi habitat hewan; penebangan dapat menyebabkan erosi dan banjir.",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "analisis_3",
+        "label": "Siapa atau makhluk hidup apa yang terdampak?",
+        "hint": "Kasus: warga ingin membuka lahan untuk meningkatkan penghasilan, tetapi hutan menjadi habitat hewan; penebangan dapat menyebabkan erosi dan banjir.",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "analisis_4",
+        "label": "Pilihan pemanfaatan apa yang paling bertanggung jawab?",
+        "hint": "Kasus: warga ingin membuka lahan untuk meningkatkan penghasilan, tetapi hutan menjadi habitat hewan; penebangan dapat menyebabkan erosi dan banjir.",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "analisis_5",
+        "label": "Jika kalian menjadi pemimpin desa, keputusan apa yang akan kalian ambil agar kebutuhan warga terpenuhi dan hutan tetap lestari?",
+        "hint": "Kasus: warga ingin membuka lahan untuk meningkatkan penghasilan, tetapi hutan menjadi habitat hewan; penebangan dapat menyebabkan erosi dan banjir.",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "analisis_6",
+        "label": "Apa alasan keputusan kelompok kalian?",
+        "hint": "Kasus: warga ingin membuka lahan untuk meningkatkan penghasilan, tetapi hutan menjadi habitat hewan; penebangan dapat menyebabkan erosi dan banjir.",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "syukur_1",
+        "label": "Satu hal yang paling kami syukuri atas karunia alam Indonesia sebagai Zamrud Khatulistiwa adalah ...",
+        "hint": "Lengkapi melalui diskusi kelompok.",
+        "phase": 3,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "syukur_2",
+        "label": "Kami bersyukur karena kekayaan alam tersebut bermanfaat untuk ...",
+        "hint": "Lengkapi melalui diskusi kelompok.",
+        "phase": 3,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "aksi_1",
+        "label": "Apa yang akan kami lakukan untuk menunjukkan kepedulian terhadap hutan atau lingkungan?",
+        "hint": "Tuliskan rencana aksi kelompok kalian.",
+        "phase": 4,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "aksi_2",
+        "label": "Kapan akan kami lakukan?",
+        "hint": "Tuliskan rencana aksi kelompok kalian.",
+        "phase": 4,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "aksi_3",
+        "label": "Di mana kami akan melakukannya?",
+        "hint": "Tuliskan rencana aksi kelompok kalian.",
+        "phase": 4,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "aksi_4",
+        "label": "Siapa yang ikut melaksanakan?",
+        "hint": "Tuliskan rencana aksi kelompok kalian.",
+        "phase": 4,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "aksi_5",
+        "label": "Bagaimana mengetahui aksi sudah terlaksana?",
+        "hint": "Tuliskan rencana aksi kelompok kalian.",
+        "phase": 4,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "aksi_6",
+        "label": "Sebagai Sahabat Hutan Indonesia, kami berjanji akan ...",
+        "hint": "Tuliskan rencana aksi kelompok kalian.",
+        "phase": 4,
+        "source": "LKPD UPDATE"
+      }
+    ],
+    "source_text": "ZAMRUD KHATULISTIWA\n--- HALAMAN 1 ---\nBab: Di Mana Indonesia Berada?Bab: Di Mana Indonesia Berada?Bab: Di Mana Indonesia Berada?\nSubbab: B. Indonesia, Zamrud di KhatulistiwaSubbab: B. Indonesia, Zamrud di KhatulistiwaSubbab: B. Indonesia, Zamrud di Khatulistiwa\nNilai Utama: Cinta Tanah Air dan Cinta LingkunganNilai Utama: Cinta Tanah Air dan Cinta LingkunganNilai Utama: Cinta Tanah Air dan Cinta Lingkungan\nMata Pelajaran: Ilmu Pengetahuan Alam dan Sosial (IPAS)Mata Pelajaran: Ilmu Pengetahuan Alam dan Sosial (IPAS)Mata Pelajaran: Ilmu Pengetahuan Alam dan Sosial (IPAS)\nSemester: GenapSemester: GenapSemester: Genap\nFase/Kelas: C/VFase/Kelas: C/VFase/Kelas: C/V\nZZAAMMRRUUDDZAMRUD\nKKHHAATTUULLIISSTTIIWWAAKHATULISTIWA\nMMeennjjeellaajjaahhii  KKeekkaayyaaaann  AAllaamm  ddaann  MMeennjjaaggaa  HHuuttaann  IInnddoonneessiiaaMenjelajahi Kekayaan Alam dan Menjaga Hutan Indonesia\nBERANDA\n--- HALAMAN 2 ---\nIDENTITAS &\nTUJUAN \nPETUNJUK &\nPESAN CINTA \nEKSPLORASI &\nPENYELIDIKAN\nANALISIS &\nDISKUSI\nREFLEKSI & \nAKSI NYATA\nCATATAN & \nPESAN CINTA\nBERANDA\n\n--- HALAMAN 3 ---\nA. IDENTITAS KELOMPOKA. IDENTITAS KELOMPOKA. IDENTITAS KELOMPOK\nAnggota Kelompok:\nKelas/Semester: V/Genap\nB. TUJUAN PEMBELAJARANB. TUJUAN PEMBELAJARAN  B. TUJUAN PEMBELAJARAN \nSetelah mengikuti kegiatan ini, peserta didik diharapkan mampu:\nMengidentifikasi kondisi alam, iklim, dan ciri wilayah tropis Indonesia.\nMenjelaskan hubungan kondisi geografis dengan māz\npenaaharian masyarakat.\nMenganalisis manfaat dan risiko pemanfaatan hutan bagi kehidupan.\nMenentukan solusi yang bertanggung jawab untuk\nmenjaga kelestarian hutan.\nMenunjukkan rasa syukur, kepedulian, dan cinta tanah air\nmelalui tindakan sederhana.\nNama Kelompok:  .................................................\nTanggal:  ............................................................\n5.\n2.\n3.\n4.\n4.\n5.\n1.\n3.\n2.\n1.\nBERANDA\n--- HALAMAN 4 ---\nC. PETUNJUK KERJA DANC. PETUNJUK KERJA DAN\nATURAN BERKESADARANATURAN BERKESADARAN\nC. PETUNJUK KERJA DAN\nATURAN BERKESADARAN\nAyo, Menjadi SahabatAyo, Menjadi Sahabat\nHutan Nusantara!Hutan Nusantara!\nAyo, Menjadi Sahabat\nHutan Nusantara!\n1.Awali kegiatan dengan berdoa dan bersyukur kepada\nAllah SWT atas karunia alam Indonesia.\n2. Amati gambar, peta, atau bacaan tentang hutan hujan\ntropis dengan saksama.\n3. Bekerjalah bersama kelompok, berbagi tugas secara\nadil, dan saling menghargai.\n4. Dengarkan pendapat teman tanpa mengejek atau\nmemotong pembicaraan.\n5. Bayangkan perasaan manusia dan hewan yang\nkehilangan tempat tinggal akibat kerusakan hutan.\n6. Tuliskan jawaban dengan jujur berdasarkan informasi\nyang ditemukan.\n7. Pilihlah satu aksi sederhana yang benar-benar dapat\ndilakukan untuk merawat lingkungan.\nPESAN CINTAPESAN CINTAPESAN CINTA\n“Hutan Indonesia adalah karunia yang\nsangat berharga. Kita boleh memanfaatkan\nhasil alam, tetapi harus menjaganya agar\ntetap lestari bagi semua makhluk hidup.”\nBERANDA\n--- HALAMAN 5 ---\nD. BAGIAN 1 — EKSPLORASI GEOGRAFI DAN KASUS LINGKUNGAN\nSintaks Value Inquiry: Fase 1 dan 2 — Orientasi Nilai serta Eksplorasi dan Inkuiri Nilai\nKegiatan: Detektif Zamrud KhatulistiwaKegiatan: Detektif Zamrud KhatulistiwaKegiatan: Detektif Zamrud Khatulistiwa\nIndonesia disebut Zamrud Khatulistiwa karena memiliki\nwilayah tropis yang hijau dan kaya tumbuhan/hiwan; sinar\nmatahari dan curah hujan cukup mendukung tumbuhan.\nVIDEO PEMBELAJARAN: KEINDAHANVIDEO PEMBELAJARAN: KEINDAHAN\nHUTAN DAN KEKAYAAN ALAMHUTAN DAN KEKAYAAN ALAM\nVIDEO PEMBELAJARAN: KEINDAHAN\nHUTAN DAN KEKAYAAN ALAM\n\"Amatilah keindahan hutan dan berbagai makhluk\nhidup di dalamnya. Mari kita belajar mengapa alam\nperlu dijaga dan dilestarikan.\"\nTONTON VIDEO\nLangkah Kegiatan:Langkah Kegiatan:Langkah Kegiatan:\nKondisi Alam (contoh: hutan,\npegunungan, dataran rendah, sungai)\nIklim dan Ciri Karakteristiknya\n(contoh: suhu, curah hujan, musim)\nContoh Mata Pencaharian\nMasyarakat Sekitar\nAYO BERPIKIR\nAmati peta Indonesia dan gambar hutan hujan tropis yang ditunjukkan guru.Amati peta Indonesia dan gambar hutan hujan tropis yang ditunjukkan guru.Amati peta Indonesia dan gambar hutan hujan tropis yang ditunjukkan guru.\nBagaimana kondisi alam di daerah yang kalian teliti memengaruhi pekerjaan masyarakat?\nDiskusikan hubungan antara kondisi alam dan kehidupan masyarakat.Diskusikan hubungan antara kondisi alam dan kehidupan masyarakat.Diskusikan hubungan antara kondisi alam dan kehidupan masyarakat.\nBacalah informasi dari buku IPAS, atas, atau artikel yang diberikan.Bacalah informasi dari buku IPAS, atas, atau artikel yang diberikan.Bacalah informasi dari buku IPAS, atas, atau artikel yang diberikan.\nApa yang akan terjadi jika hutan di daerah tersebut rusak atau berkurang?\nLengkapi tabel hasil penyelidikan berdasarkan sumber informasi.Lengkapi tabel hasil penyelidikan berdasarkan sumber informasi.Lengkapi tabel hasil penyelidikan berdasarkan sumber informasi.\nSekarang, mari kita menyelidiki salah satu daerah di Indonesia!\nFakta Menarik dari Sumber\n(buku/peta/artikel)\nTabel Hasil Penyelidikan KelompokTabel Hasil Penyelidikan KelompokTabel Hasil Penyelidikan Kelompok\nPilih satu wilayah atau kasus lingkungan untuk diteliti.Pilih satu wilayah atau kasus lingkungan untuk diteliti.Pilih satu wilayah atau kasus lingkungan untuk diteliti.\nMengapa Indonesia disebut sebagai Zamrud Khatulistiwa?\nTAMBAHAN VIDEO PEMBELAJARANTAMBAHAN VIDEO PEMBELAJARANTAMBAHAN VIDEO PEMBELAJARAN\nSumber Informasi yang Digunakan\nDaerah/Kasus yang Diteleti\nHal yang DiamatiHal yang DiamatiHal yang Diamati\n2.\n3.\n5.\n3.\n4.\n5.\n6.\nBERANDA\n--- HALAMAN 6 ---\nE. BAGIAN 2 – ANALISIS DILEMA PEMANFAATAN LAHAN DAN HUTAN\nE. BAGIAN 2 – ANALISIS DILEMA PEMANFAATAN LAHAN DAN HUTAN\nSintaks Value Inquiry: Fase 3 — Analisis dan Pertimbangan Nilai\nJudul Kasus: Hutan untuk Kehidupan, Haruskah Ditebang?\nDi sebuah desa yang berada dekat hutan tropis, sebagian warga ingin\nmembuka lahan untuk kebun, pertanian, dan meningkatkan penghasilan\nkeluarga. Namun, hutan tersebut juga menjadi tempat hidup berbagai\nhewan, seperti orangutan di Kalimantan atau harimau Sumatra.\nJika terlalu banyak pohon ditebang, hewan dapat kehilangan tempat\ntinggal, tanah mengalami erosi, dan risiko banjir meningkat.\nMasyarakat harus mencari cara agar lahan dapat bimanfaatkan tanpa\nmerusak hutan, demi kebutuhan saat ini dan masa depan.\nAyo, Menimbang Pilihan dengan Bijaksana!\nDiskusikan bersama kelompok dan lengkapi tabel berikut.\nKolom 2: Hasil Diskusi Kelompok\nManfaat Pengolahan Lahan/Hutan\n(manfaat ekonomi dan kebutuhan\nmanusia)\nRisiko Kerusakan Lingkungan\n(dampak bagi tanah, air, hutan,\ndan bencana)\nPihak/Makhluk Hidup yang Terdampak\n(masyarakat, tumbuhan, hewan, dan\ngenerasi mendatang)\nPilihan Pemanfaatan Paling\nBertanggung Jawab (solusi yang\nbermanfaat dan ramah lingkungan)\nPERTANYAAN TANTANGAN: JIKA AKU MENJADI PEMIMPIN DESA\nBayangkan kalian menjadi pemimpin desa tersebut. Warga membubuhkan pekerjaan,\ntetapi hutan juga harus dilindungi.\nKeputusan apa yang akan kalian ambil agar kebutuhan warga terpeeuhi dan\nhutan tetap lestari? Jelaskan alasannya!\nKeputusan kelompok kami:\nAlasan kami:\nPESAN PENTING\n“Keputusan yang bijak mempertimbangkan kebutuhan manusia sekaligus\nkeselamatan alam dan makhluk hidup lainnya.”\nKolom 1: Komponen Analisis\n4.\n2.\n3.\n1.\nBERANDA\n--- HALAMAN 7 ---\nF. REFLEKSI BERKESADARAN DAN AKSI NYATA KEPEDULIANF. REFLEKSI BERKESADARAN DAN AKSI NYATA KEPEDULIANF. REFLEKSI BERKESADARAN DAN AKSI NYATA KEPEDULIAN\nSintaks Value Inquiry: Fase 4 dan 5 — Klarifikasi, Refleksi, Penerapan, dan Internalisasi NilaiSintaks Value Inquiry: Fase 4 dan 5 — Klarifikasi, Refleksi, Penerapan, dan Internalisasi NilaiSintaks Value Inquiry: Fase 4 dan 5 — Klarifikasi, Refleksi, Penerapan, dan Internalisasi Nilai\nKegiatan: Dari Rasa Syukur Menjadi Tindakan\nSekarang, berhentilah sejenak dan renungkan apa yang telah kalian\npelajari. Bayangkan hutan yang hijau, udara yang segar, burung-burung\nyang berkicau, dan hewan-hewan yang hidup dengan aman. Semua itu\nmerupakan karunia alam yang patut kita syukuri dan lindungi.\nREFLEKSI RASA SYUKURREFLEKSI RASA SYUKURREFLEKSI RASA SYUKUR\nLengkapi melalui diskusi kelompok:\n“Satu hal yang paling kami syukuri atas karunia alam Indonesia\nsebagai ‘Zamrud Khatulistiwa’ adalah:”\nKami bersyukur karena kekayaan alam tersebut bermanfaat untuk:\nAKSI NYATA CINTA LINGKUNGANAKSI NYATA CINTA LINGKUNGANAKSI NYATA CINTA LINGKUNGAN\nCara nyata kelompok kami untuk menunjukkan kepedulian terhadap kelestarian\nhutan/lingkungan mulai hari ini adalah:\nTuliskan rencana aksi kelompok kalian!\n1. Apa yang akan kami lakukan?1. Apa yang akan kami lakukan?1. Apa yang akan kami lakukan?\n2. Kapan akan kami lakukan?2. Kapan akan kami lakukan?2. Kapan akan kami lakukan?\n3. Di mana kami akan melakukannya?3. Di mana kami akan melakukannya?3. Di mana kami akan melakukannya?\n4. Siapa yang ikut melaksanakan?4. Siapa yang ikut melaksanakan?4. Siapa yang ikut melaksanakan?\n5. Bagaimana mengetahui aksi sudah terlaksana?5. Bagaimana mengetahui aksi sudah terlaksana?5. Bagaimana mengetahui aksi sudah terlaksana?\nJANJI SAHABAT HUTAN INDONESIAJANJI SAHABAT HUTAN INDONESIAJANJI SAHABAT HUTAN INDONESIA\n“Kami, Kelompok ....................................., berjanji akan:“Kami, Kelompok ....................................., berjanji akan:“Kami, Kelompok ....................................., berjanji akan:\n“Sebagai wujud rasa syukur, Cinta Tanah Air, dan Cinta Lingkungan.”“Sebagai wujud rasa syukur, Cinta Tanah Air, dan Cinta Lingkungan.”“Sebagai wujud rasa syukur, Cinta Tanah Air, dan Cinta Lingkungan.”\nKolom 2: Jawaban KelompokKolom 2: Jawaban KelompokKolom 2: Jawaban Kelompok\nKolom 1: PertanyaanKolom 1: PertanyaanKolom 1: Pertanyaan\n3.3.3.\n2.2.2.\n1.1.1.\nBERANDA\n--- HALAMAN 8 ---\nG. CATATAN APRESIASI DAN PARAF GURUG. CATATAN APRESIASI DAN PARAF GURUG. CATATAN APRESIASI DAN PARAF GURU\nHal baik yang sudah dilakukan kelompok:Hal baik yang sudah dilakukan kelompok:Hal baik yang sudah dilakukan kelompok:\nPesan dan apresiasi guru:Pesan dan apresiasi guru:Pesan dan apresiasi guru:\nParaf Guru: ....................................Paraf Guru: ....................................Paraf Guru: ....................................\nPESAN CINTA UNTUK NUSANTARA\n“Hutan yang hijau adalah anugerah bagi“Hutan yang hijau adalah anugerah bagi\nkehidupan. Dengan menjaga pohon, tanah, air,kehidupan. Dengan menjaga pohon, tanah, air,\nserta seluruh makhluk hidup, kita sedangserta seluruh makhluk hidup, kita sedang\nmenjaga masa depan Indonesia.”menjaga masa depan Indonesia.”\n“Hutan yang hijau adalah anugerah bagi\nkehidupan. Dengan menjaga pohon, tanah, air,\nserta seluruh makhluk hidup, kita sedang\nmenjaga masa depan Indonesia.”\nSLOGAN PENUTUPSLOGAN PENUTUPSLOGAN PENUTUP\nAKU CINTA INDONESIA —AKU CINTA INDONESIA —\nAKU SAHABAT HUTAN NUSANTARA!AKU SAHABAT HUTAN NUSANTARA!\nAKU CINTA INDONESIA —\nAKU SAHABAT HUTAN NUSANTARA!\nTanggal Pemeriksaan:Tanggal Pemeriksaan:    ........................................................................Tanggal Pemeriksaan:  ....................................\nHal yang perlu ditingkatkan:Hal yang perlu ditingkatkan:Hal yang perlu ditingkatkan:\nNilai LKPD:Nilai LKPD:    ................ / 100................ / 100Nilai LKPD:  ................ / 100\nBERANDA\n--- HALAMAN 9 ---\nKuis \nBERANDA\nhttps://wordwall.net/id/resource/123\n874298?wwmethod=link",
+    "source_document": "LKPD UPDATE/LKPD Zamrud Khatulistiwa.pdf",
+    "source_pdf_sha256": "a79f4cc286c3879846e26cabd08b56909f4d182b0cb5ea8512297bd3cedc49d6",
+    "status": "published"
+  },
+  {
+    "title": "Maritim Agraris dan Dilema",
+    "description": "Perlu review isi: tabel perbandingan dan kegiatan dilema belum ada dalam PDF sumber.",
+    "instructions": "Awali dengan berdoa dan bersyukur. Baca petunjuk, amati sumber, bagilah tugas secara adil, dan diskusikan dengan saling menghargai. Simpan draf sebelum meninggalkan kegiatan.\nSumber belum memuat tabel perbandingan dan lembar kegiatan dilema yang dirujuk. Lengkapi isi melalui editor sebelum menerbitkan.\nKuis latihan: https://wordwall.net/id/resource/123877007?wwmethod=link",
+    "fields": [
+      {
+        "key": "perbandingan",
+        "label": "Diskusikan perbedaan karakteristik wilayah maritim dan agraris.",
+        "hint": "Amati petani dan nelayan, baca materi, lalu diskusikan. Guru perlu melengkapi tabel perbandingan dan kegiatan dilema sebelum menerbitkan LKPD ini.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      }
+    ],
+    "source_text": "MARITIM AGRARIS DAN DILEMA\n--- HALAMAN 1 ---\nBERANDA\nIDENTITAS\n&TUJUAN\nPETUNJUK &\nPESAN CINTA\nPERBANDINGAN\n&KUIS \nPROFIL\n--- HALAMAN 2 ---\nBERANDA\n--- HALAMAN 3 ---\nSetelah menyelesaikan kegiatan ini, kalian diharapkan mampu:\nSetelah menyelesaikan kegiatan ini, kalian diharapkan mampu:\nMenentukan solusi yang adil serta menunjukkan rasa\nsyukur, empati, dan cinta tanah air.\nA.A.    IDENTITAS KELOMPOKIDENTITAS KELOMPOKA.  IDENTITAS KELOMPOK\nB.B.    TUJUAN PEMBELAJARANTUJUAN PEMBELAJARANB.  TUJUAN PEMBELAJARAN\nMengidentifikasi ciri-ciri wilayah maritim dan agraris di Indonesia.\nMengidentifikasi ciri-ciri wilayah maritim dan agraris di Indonesia.\nMembandingkan pekerjaan dan hasil sumber daya alam\ndari wilayah maritim dan agraris.\nMembandingkan pekerjaan dan hasil sumber daya alam\ndari wilayah maritim dan agraris.\nMengumpulkan informasi dari bacaan, video,\natau wawancara sederhana.\nMengumpulkan informasi dari bacaan, video,\natau wawancara sederhana.\nMenganalisis manfaat dan risiko pembangunan pariwisata\nterhadap kehidupan petani dan nelayan.\nNama Kelompok\nNama Kelompok\n............................................................\n1.\n2.\n............................................................\n3.\n............................................................\n4.\n............................................................\nAnggota Kelompok\nAnggota Kelompok\nKelas / Semester\nKelas / Semester\nTanggal\nTanggal\nV / Genap\nV / Genap\nIdentitasIdentitasIdentitas\n............................................................\nIsianIsianIsian\n............................................................\n............................................................\n444\n333\n555\n222\n111\n5.\nBERANDA\n--- HALAMAN 4 ---\nBERANDA\n--- HALAMAN 5 ---\nIndonesia memiliki wilayah laut yang luas dan daratan yang dapat\ndimanfaatkan untuk berbagai kegiatan pertanian. Kondisi geografis tersebut\nmemengaruhi pekerjaan masyarakat dan hasil alam yang dihasilkan.\nAmati gambar kegiatan petani dan nelayan yang ditunjukkan guru.\nBacalah materi tentang negara maritim dan agraris.\nDiskusikan perbedaan karakteristik kedua wilayah.\nLengkapi tabel berdasarkan hasil pengamatan dan bacaan.\nD. PERBANDINGAN MARITIM DAN AGRARIS\nSintaks Value Inquiry: Fase 1 dan 2 — Orientasi Nilai serta Eksplorasi dan Inkuri Nilai\nKegiatan: Ayo, Kenali Kekayaan Darat dan Laut Indonesia!\nLangkah Kegiatan:\n1.\n2.\n3.\n4.\nKUIS\nBERANDA\nhttps://wordwall.net/id/resource/123877007?wwmethod=link",
+    "source_document": "LKPD UPDATE/MARITIM AGRARIS & DILEMA .pdf",
+    "source_pdf_sha256": "23fdeb62450cc9dad2c7caee7262dda129369d56d4b9f3cea3842f1dff95852f",
+    "status": "draft"
+  },
+  {
+    "title": "Rencana Aksi Cinta Indonesia",
+    "description": "Menyusun rencana, melaksanakan dan mencatat aksi cinta Indonesia.",
+    "instructions": "Awali dengan berdoa dan bersyukur. Baca petunjuk, amati sumber, bagilah tugas secara adil, dan diskusikan dengan saling menghargai. Simpan draf sebelum meninggalkan kegiatan.\nRancang aksi yang aman dan dapat dilakukan. Setelah kegiatan benar-benar dilaksanakan, isi Jurnal pelaksanaan pada akhir LKPD. Bukti dapat berupa teks, gambar atau checklist; foto tidak wajib dan memerlukan izin guru serta orang yang terlibat.",
+    "fields": [
+      {
+        "key": "topik",
+        "label": "Topik aksi apa yang kelompok kalian pilih?",
+        "hint": "Pilih topik yang dekat dengan kehidupan sehari-hari.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "fakta_1",
+        "label": "Tuliskan fakta geografis 1 beserta sumber atau buktinya.",
+        "hint": "Gunakan buku IPAS, peta atau sumber tepercaya. Cantumkan judul dan halaman atau nama sumber.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "fakta_2",
+        "label": "Tuliskan fakta geografis 2 beserta sumber atau buktinya.",
+        "hint": "Gunakan buku IPAS, peta atau sumber tepercaya. Cantumkan judul dan halaman atau nama sumber.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "fakta_3",
+        "label": "Tuliskan fakta geografis 3 beserta sumber atau buktinya.",
+        "hint": "Gunakan buku IPAS, peta atau sumber tepercaya. Cantumkan judul dan halaman atau nama sumber.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "hubungan",
+        "label": "Mengapa topik yang kalian pilih penting untuk menjaga kekayaan Indonesia?",
+        "hint": "Hubungkan fakta dengan Cinta Tanah Air dan Cinta Lingkungan.",
+        "phase": 1,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "masalah_1",
+        "label": "Masalah lingkungan atau budaya apa yang kalian temukan?",
+        "hint": "Amati masalah nyata di sekitar sekolah atau rumah yang berkaitan dengan topik.",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "masalah_2",
+        "label": "Di mana lokasi masalah tersebut?",
+        "hint": "Amati masalah nyata di sekitar sekolah atau rumah yang berkaitan dengan topik.",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "masalah_3",
+        "label": "Siapa atau apa yang terdampak oleh masalah tersebut?",
+        "hint": "Amati masalah nyata di sekitar sekolah atau rumah yang berkaitan dengan topik.",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "pilihan_a",
+        "label": "Apa pilihan aksi A dan manfaat yang diharapkan?",
+        "hint": "Pikirkan dua tindakan yang dapat membantu menyelesaikan masalah.",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "pilihan_b",
+        "label": "Apa pilihan aksi B dan manfaat yang diharapkan?",
+        "hint": "Pikirkan dua tindakan yang dapat membantu menyelesaikan masalah.",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "banding_1",
+        "label": "Bandingkan Aksi A dan Aksi B: aman dilakukan oleh anak kelas V",
+        "hint": "Tuliskan A, B, keduanya, atau belum sesuai. Pertimbangkan hasil diskusi kelompok.",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "banding_2",
+        "label": "Bandingkan Aksi A dan Aksi B: mudah dilaksanakan",
+        "hint": "Tuliskan A, B, keduanya, atau belum sesuai. Pertimbangkan hasil diskusi kelompok.",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "banding_3",
+        "label": "Bandingkan Aksi A dan Aksi B: tidak membutuhkan biaya besar",
+        "hint": "Tuliskan A, B, keduanya, atau belum sesuai. Pertimbangkan hasil diskusi kelompok.",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "banding_4",
+        "label": "Bandingkan Aksi A dan Aksi B: bermanfaat bagi lingkungan atau masyarakat",
+        "hint": "Tuliskan A, B, keduanya, atau belum sesuai. Pertimbangkan hasil diskusi kelompok.",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "banding_5",
+        "label": "Bandingkan Aksi A dan Aksi B: dapat dilakukan bersama kelompok",
+        "hint": "Tuliskan A, B, keduanya, atau belum sesuai. Pertimbangkan hasil diskusi kelompok.",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "banding_6",
+        "label": "Bandingkan Aksi A dan Aksi B: hasilnya dapat diamati atau dicatat",
+        "hint": "Tuliskan A, B, keduanya, atau belum sesuai. Pertimbangkan hasil diskusi kelompok.",
+        "phase": 2,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "keputusan_1",
+        "label": "Aksi terbaik apa yang kalian pilih?",
+        "hint": "Hubungkan dengan kepedulian, syukur, gotong royong, tanggung jawab dan penghargaan terhadap sesama.",
+        "phase": 3,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "keputusan_2",
+        "label": "Apa alasan kalian memilih aksi tersebut?",
+        "hint": "Hubungkan dengan kepedulian, syukur, gotong royong, tanggung jawab dan penghargaan terhadap sesama.",
+        "phase": 3,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "keputusan_3",
+        "label": "Nilai cinta apa yang ingin kalian wujudkan melalui aksi tersebut?",
+        "hint": "Hubungkan dengan kepedulian, syukur, gotong royong, tanggung jawab dan penghargaan terhadap sesama.",
+        "phase": 3,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "rencana_1",
+        "label": "Apa nama aksi terpilih?",
+        "hint": "Susun rencana yang jelas, aman dan dapat dilaksanakan.",
+        "phase": 4,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "rencana_2",
+        "label": "Kapan tanggal pelaksanaan atau waktu mulai?",
+        "hint": "Susun rencana yang jelas, aman dan dapat dilaksanakan.",
+        "phase": 4,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "rencana_3",
+        "label": "Di mana lokasi pelaksanaan?",
+        "hint": "Susun rencana yang jelas, aman dan dapat dilaksanakan.",
+        "phase": 4,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "rencana_4",
+        "label": "Siapa penanggung jawab kegiatan dan bagaimana pembagian tugasnya?",
+        "hint": "Susun rencana yang jelas, aman dan dapat dilaksanakan.",
+        "phase": 4,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "rencana_5",
+        "label": "Apa alat dan bahan yang dibutuhkan?",
+        "hint": "Susun rencana yang jelas, aman dan dapat dilaksanakan.",
+        "phase": 4,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "rencana_6",
+        "label": "Apa langkah-langkah pelaksanaannya?",
+        "hint": "Susun rencana yang jelas, aman dan dapat dilaksanakan.",
+        "phase": 4,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "rencana_7",
+        "label": "Apa indikator keberhasilan atau tanda aksi berhasil?",
+        "hint": "Susun rencana yang jelas, aman dan dapat dilaksanakan.",
+        "phase": 4,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "rencana_8",
+        "label": "Bagaimana cara mencatat atau merekam bukti?",
+        "hint": "Susun rencana yang jelas, aman dan dapat dilaksanakan.",
+        "phase": 4,
+        "source": "LKPD UPDATE"
+      },
+      {
+        "key": "rencana_9",
+        "label": "Siapa pihak yang akan terbantu?",
+        "hint": "Susun rencana yang jelas, aman dan dapat dilaksanakan.",
+        "phase": 4,
+        "source": "LKPD UPDATE"
+      }
+    ],
+    "source_text": "RENCANA AKSI CINTA INDONESIA\n--- HALAMAN 1 ---\nBERANDA\nIDENTITAS \nPROFIL\nRENCANA AKSICINTAINDONESIA\nDari Rasa Syukur Menjadi Tindakan Nyata untuk Nusantara\nPETUNJUK &\nATURAN TOPIK & FAKTA\nANALISIS  & PILIHAN\nAKSI\nMATRIKS RENCANA\nAKSI\n--- HALAMAN 2 ---\nLEMBAR KERJA PESERTA DIDIK\nRENCANA AKSICINTAINDONESIA\nDari Rasa Syukur Menjadi Tindakan Nyata untuk Nusantara \nMata Pelajaran: Ilmu Pengetahuan Alam dan Sosial (IPAS)\nFase / Kelas: C/V\nSemester: Genap\nBab / Tema: Di Mana Indonesia Berada? (Indonesiaku Kaya Raya)\nFokus Pembelajaran: Penerapan dan Internalisasi Nilai (Value Action)\nNilai Utama: Cinta Tanah Air, Cinta Lingkungan,\nTanggung Jawab, dan Gotong Royong\nPETUALANGAN DIMULAI DARI AKSI KECIL!\nBERANDA\n--- HALAMAN 3 ---\nIdentitas Isian\nKelas / Semester\nTanggal\nNama Kelompok / Individu\nAnggota Kelompok: 1.\n2.\n3.\n4.\n5.\nV / Genap\nSetelah menyelesaikan kegiatan ini, kalian diharapkan mampu:\nANGGOTAEKSPEDISI\nB. TUJUAN KEGIATAN\n1.\n4.\n2.\n5. 6.\n3.\nMenentukan topik\naksi berdasarkan\npengetahuan\ntentang kekayaan\ngeografis Indonesia.\nMembandingkan\ndua pilihan aksi\ndan menentukan\nsolusi yang paling\ntepat.\nMenuliskan tiga\nmelakukan tiga\nyang dapat\ndiperiksa melalui\nsumber tepercaya.\nMengidentifikasi\nmasalah\nlingkungan atau\nbudaya yang\nberkaitan dengan\ntopik.\nMerancang dan\nmelaksanakan aksi\nsederhana serta\nmencatat bukti\npelaksanaannya.\nMerefleksikan rasa\nsyukur, kepedulian,\ndan tanggung jawab\nsebagai wujud cinta\nIndonesia.\nBERANDA\n--- HALAMAN 4 ---\nC. PETUNJUK KERJA DAN\nATURAN BERKESADARAN\nPESAN CINTA\n \nATURAN BELAJAR BERKESADARAN:\nAyo, Buktikan Cintamu kepada Indonesia!\n Indonesiamemilikiribuan pulau,lautan luas,hutan tropis,sawah,\ndan berbagai kekayaan alam. Semua itu merupakan karunia Allah\nSWT yang patut kita syukuri.\nNamun, mencintai Indonesia tidak cukup hanya dengan mengucapkan\n“Aku Cinta Indonesia”. Rasa cinta perlu diwujudkan melalui perbuatan\nbaik yang dapat dirasakan manfaatnya oleh orang lain dan lingkungan.\n“Cinta tanahair bukan hanya diucapkan,\nmelainkan dibuktikan melalui tindakan kecil\nyang dilakukan dengan tulus dan penuh\ntanggung jawab.”\nMulailah dari tindakan kecil. Menjaga kebersihan, menghemat kertas,\ntidak membuang makanan, merawat tanaman, dan menghargai hasil\nkerja petani serta nelayan adalah contoh tindakan sederhana yang bermakna.\n1\n2\n3\n4\n5\n6\n7\n8\nAwali kegiatan dengan berdoa dan bersyukur atas\nkekyaan Indonesia.\nPikirkan masalah nyata yang kalian temukan\ndi lingkungan sekitar.\nDengarkan ide semua anggota kelompok\ndengan sabar dan saling menghargai.\nPilih aksi yang aman, mudah dilaksanakan,\ndan sesuai kemampuan.\nBagilah tugas secara adil agar setiap\nanggota ikut berkontribusi.\nGunakan bahan dan alat secara hemat,\nbersih, dan bertanggung jawab.\nCatat hasil tindakan dengan jujur, termasuk\napabila belum berhasil.\nRenungkan manfaat aksi bagi diri sendiri,\norang lain, dan lingkungan.\nBERANDA\n--- HALAMAN 5 ---\nD. TOPIK DAN\nFAKTA GEOGRAFI TERVERIFIKASI\nTopik kelompok kami:\nTuliskan bukti atau sumber yang mendukung setiap fakta.\nDiskusikan hubungan topik tersebut dengan nilai Cinta Tanah Air\ndan Cinta Lingkungan.\nKegiatan: Dari Pengetahuan Menjadi Kepedulian\nTahap Pembelajaran: Memahami dan Mengeksplorasi Fakta\nSebelum memilih suatu aksi, kalian perlu memahami alasan\ntindakan tersebut penting dilakukan. Gunakan pengetahuan dari\npembelajaran sebelumnya tentang daratan, lautan, hutan tropis,\nserta kehidupan masyarakat maritim dan agraris.\nIngat kembali materi yang telah dipelajari pada LKPD 1, 2, dan 3.\nPilih satu topik yang menarik dan dekat dengan kehidupan sehari-hari.\nTemukan tiga fakta geografis dari buku IPAS, peta, atau sumber tepercaya.\nMengapa topik yang kalian pilih penting untuk menjaga kekayaan Indonesia?\nFakta harus dapat\ndiperiksa kembali.\nTuliskan judul bacaan\ndan halaman, nama\npeta, atau sumber\ninformasi yang kalian\ngunakan.\nLANGKAH KEGIATAN:\nTOPIK AKSI YANG DIPILIH\nTIGA FAKTA GEOGRAFIS YANG DAPAT DIVERIFIKASI\nHUBUNGAN FAKTA DENGAN CINTA INDONESIA\nINGAT!\n1.\n1\n.\n2\n.\n3\n.\n4\n.\n5\n.\n1.\nNo.\n1.\n2\n.\n3\n.\n3.\nFakta Geografis yang Ditemukan\n_\n_\n_\nSumber / Bukti\nContoh pilihan topik: Menjaga kebersihan air dan sungai, mengurangi\nsampah plastik, merawat tanaman, menghemat penggunaan kertas,\nmenghargai pangan lokal, atau melestarikan lingkungan sekolah.\n..................................\n..\n..................................\n..\n....................................\nKARTU FAKTA\n....................................................................\n....................................................................\n....................................................................\nBERANDA\n--- HALAMAN 6 ---\nE. ANALISIS ISU DAN PILIHAN AKSI NYATA\nKEPUTUSAN KELOMPOK\n \nMASALAH YANG INGIN DIATASI\nMEMBANDINGKAN KEDUA PILIHAN\nBerikan tanda centang (v) sesuai hasil diskusi kelompok. \nDUA PILIHAN AKSI SOLUTIF\nPILIHAN AKSI A:\nSintaks Value Inquiry: Analisis dan Pertimbangan Nilai (Value Analysis & Judgment)\n4\n3\n1\nB\n2\nA\nKegiatan: Detektif Masalah dan Pencari Solusi\n Cinta Tanah Air\nCinta Lingkungan\nRasa Syukur kepada Allah SWT\nGotong Royong\nTanggung Jawab\nMenghargai Sesama dan\nPahlawan Pangan\nKalian telah mengenali kekayaan geografis Indonesia. Sekarang, perhatikan masalah\nnyata di sekitar sekolah atau rumah yang berkaitan dengan topik tersebut.\nBayangkan dampaknya jika masalah itu dibiarkan. Kemudian, pikirkan dua\ntindakan yang dapat membantu menyelesaikannya.\nLokasi masalah tersebut:\nAksiterbaikyangkamipilih adalah:\nSiapa atau apa yang terdampak oleh masalah tersebut?\nAlasan kami memilih aksi tersebut adalah:\nManfaat yang diharapkan:\nNilai cinta yang ingin kami wujudkan melalui aksi tersebut adalah:\nBERANDA\n--- HALAMAN 7 ---\nMISI 3\nMISSION\nPLANNER F. MATRIKS RENCANA AKSI TERPILIH\nSintaks Value Inquiry: Fase 5 — Penerapan dan Internalisasi Nilai (Value Action)\n1.\n...........\n2.\n...........\n3.\n...........\nKegiatan: Saatnya Menjadi Pelopor Kebaikan!\n \nCATATAN PENTING:\nRencanayangbaik harusjelasdandapat dilaksanakan. Lengkapilah matriks\nberikut agar setiap anggota mengetahui apa yang perlu dikerjakan.\n1.\n2.\n3.\n4.\n5.\n6.\n7.\n8.\nMATRIKS RENCANA AKSI CINTA INDONESIA\nKomponen Perencanaan Rencana Kelompok\nNama / Aksi Terpilih\nLokasi Pelaksanaan\nPenanggung Jawab Kegiatan\nAlat dan Bahan yang Dibutuhkan\nLangkah-Langkah Pelaksanaan\nIndikator Keberhasilan (tanda bahwa aksi berhasil)\nTanggal Pelaksanaan / Waktu Mulai\n* 1. ....................................................................\n* 2. ....................................................................\n* 3. ....................................................................\nCara Mencatat / Merekam Bukti\n(foto, jurnal, tabel centang, atau\nkomitmen tertulis)\n9.Pihak yang Akan Terbantu\nTanggal\nCEK PELAKSANAAN KELOMPOK\nKegiatan yang Sudah Dilakukan\nJURNAL PELAKSANAAN AKSI\nHasil / Bukti\nIsi setelah kegiatan benar-benar dilaksanakan.\nAksi telah direncanakan bersama.\nSemua anggota mendapatkan tugas.\nKegiatan sudah dilaksanakan dengan aman,\nBukti kegiatan sudah dicatat.\nHasil kegiatan sudah dibahas bersama.\nKelompok siap menyampaikan\nhasil kepada guru.\nFoto kegiatan hanya\ndiambil dengan izin guru\ndan orang yang terlibat.\nJika tidak menggunakan\nfoto, kalian dapat membuat\ngambar, jurnal, atau daftar\ncentang sebagai bukti.\n............................................\n............................................\n............................................\n............................................\n............................................\n............................................\nBERANDA",
+    "source_document": "LKPD UPDATE/Rencana aksi cinta Indonesia  2.pdf",
+    "source_pdf_sha256": "e6a9fc1e7798ce3def8771935ee93e1fbe06538d0c40f5f063b751843b3beea7",
+    "status": "published"
+  }
+]

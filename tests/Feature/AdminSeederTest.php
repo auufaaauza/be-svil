@@ -21,11 +21,11 @@ class AdminSeederTest extends TestCase
         $this->seed(DatabaseSeeder::class);
         $admin = User::where('username', 'admin')->firstOrFail();
         $this->assertSame(Role::Admin, $admin->role);
-        $this->assertSame('admin@findmycareer.my.id', $admin->email);
+        $this->assertSame('admin@gmail.com', $admin->email);
         $this->assertTrue($admin->is_active);
         $this->assertNull($admin->school_id);
-        $this->assertTrue(Hash::check('svil123', $admin->getRawOriginal('password')));
-        $this->assertNotSame('svil123', $admin->getRawOriginal('password'));
+        $this->assertTrue(Hash::check('admin123', $admin->getRawOriginal('password')));
+        $this->assertNotSame('admin123', $admin->getRawOriginal('password'));
         $passwordHash = $admin->getRawOriginal('password');
         $this->seed(DatabaseSeeder::class);
         $this->assertDatabaseCount('users', 1);
@@ -33,9 +33,9 @@ class AdminSeederTest extends TestCase
         foreach (['schools', 'classrooms', 'materials', 'learning_groups', 'research_studies'] as $table) {
             $this->assertSame(0, DB::table($table)->count());
         }
-        foreach (['admin', 'admin@findmycareer.my.id'] as $login) {
+        foreach (['admin', 'admin@gmail.com'] as $login) {
             $this->withHeaders(['Origin' => 'http://127.0.0.1:3000'])
-                ->postJson('/api/v1/auth/login', ['login' => $login, 'password' => 'svil123'])
+                ->postJson('/api/v1/auth/login', ['login' => $login, 'password' => 'admin123'])
                 ->assertOk()->assertJsonPath('data.role', 'admin')->assertJsonPath('data.id', $admin->id);
             $this->postJson('/api/v1/auth/logout')->assertOk();
         }
@@ -46,7 +46,7 @@ class AdminSeederTest extends TestCase
         $admin = User::factory()->create([
             'name' => 'Admin Sekolah',
             'username' => 'admin',
-            'email' => 'admin@findmycareer.my.id',
+            'email' => 'admin@gmail.com',
             'password' => 'PasswordYangSudahDiganti',
             'role' => Role::Admin,
             'is_active' => false,

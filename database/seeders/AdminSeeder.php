@@ -13,11 +13,11 @@ class AdminSeeder extends Seeder
     {
         $existing = User::query()
             ->where('username', 'admin')
-            ->orWhere('email', 'admin@findmycareer.my.id')
+            ->orWhere('email', 'admin@gmail.com')
             ->get();
 
         if ($existing->contains(fn (User $user): bool => $user->role !== Role::Admin)) {
-            throw new RuntimeException('Username admin atau email admin@findmycareer.my.id sudah dipakai akun non-admin. Akun tersebut tidak diubah.');
+            throw new RuntimeException('Username admin atau email admin@gmail.com sudah dipakai akun non-admin. Akun tersebut tidak diubah.');
         }
 
         if ($existing->isNotEmpty() || User::where('role', Role::Admin)->exists()) {
@@ -29,13 +29,13 @@ class AdminSeeder extends Seeder
         User::create([
             'name' => 'Administrator SVIL',
             'username' => 'admin',
-            'email' => 'admin@findmycareer.my.id',
-            'password' => 'svil123',
+            'email' => 'admin@gmail.com',
+            'password' => 'admin123',
             'role' => Role::Admin,
             'school_id' => null,
             'is_active' => true,
         ]);
 
-        $this->command?->info('Admin pertama berhasil dibuat: admin / admin@findmycareer.my.id.');
+        $this->command?->info('Admin pertama berhasil dibuat: admin / admin@gmail.com.');
     }
 }

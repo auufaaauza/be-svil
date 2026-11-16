@@ -27,9 +27,10 @@ use App\Http\Controllers\Api\V1\ResearchController;
 use App\Http\Controllers\Api\V1\RosterController;
 use App\Http\Controllers\Api\V1\SchoolController;
 use App\Http\Controllers\Api\V1\SchoolOperationsController;
-use App\Http\Controllers\Api\V1\StudentReviewController;
 use App\Http\Controllers\Api\V1\StudentAccountController;
+use App\Http\Controllers\Api\V1\StudentReviewController;
 use App\Http\Controllers\Api\V1\UserController;
+use App\Http\Controllers\Api\V1\WordwallGradeController;
 use App\Http\Controllers\Api\V1\WorkspaceDataController;
 use App\Learning\LkpdSchema;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,10 @@ Route::prefix('v1')->group(function () {
     Route::post('auth/register', [AuthController::class, 'register'])->middleware('throttle:registration');
     Route::middleware(['auth:sanctum', 'active', 'throttle:api', 'classroom.writable'])->group(function () {
         Route::get('session-bootstrap', [WorkspaceDataController::class, 'session']);
+        Route::get('learning-games', [LearningModuleController::class, 'games']);
+        Route::get('wordwall-grades', [WordwallGradeController::class, 'index']);
+        Route::put('wordwall-grades', [WordwallGradeController::class, 'store']);
+        Route::get('learning-videos/resolve', [LearningModuleController::class, 'resolveVideo'])->middleware('throttle:30,1');
         Route::get('class-board', [WorkspaceDataController::class, 'classroom']);
         Route::get('reflection-workspace', [WorkspaceDataController::class, 'reflection']);
         Route::put('account/password', [AccountController::class, 'password'])->middleware('throttle:credentials');
@@ -83,11 +88,12 @@ Route::prefix('v1')->group(function () {
         Route::post('auth/logout', [AuthController::class, 'logout'])->withoutMiddleware('active');
         Route::get('classrooms', [ClassroomController::class, 'index']);
         Route::get('groups', [LearningGroupController::class, 'index']);
-        Route::get('groups/{group}/work/{topic}', [GroupWorkController::class, 'show'])->where('topic', '[0-3]');
+        Route::get('groups/{group}/work/{topic}', [GroupWorkController::class, 'show'])->whereNumber('topic');
         Route::get('groups/{group}/action', [ActionPlanController::class, 'show']);
         Route::get('materials', [MaterialController::class, 'index']);
-        Route::get('learning-modules/videos/{topic}', [LearningModuleController::class, 'videoInfo'])->where('topic', '[0-3]');
+        Route::get('learning-modules/videos/{topic}', [LearningModuleController::class, 'videoInfo'])->whereNumber('topic');
         Route::get('learning-modules', [LearningModuleController::class, 'index']);
+        Route::get('lkpd-progress', [LearningModuleController::class, 'progress']);
         Route::get('learning-modules/{module}', [LearningModuleController::class, 'show']);
         Route::put('learning-modules/{module}/content', [LearningModuleContentController::class, 'update']);
         Route::get('learning-modules/{module}/images/{image}', [LearningModuleContentController::class, 'image'])->name('learning-modules.question-image');
@@ -112,12 +118,14 @@ Route::prefix('v1')->group(function () {
             Route::put('assessment-attempts/{attempt}/draft', [AssessmentController::class, 'draft']);
             Route::post('assessment-attempts/{attempt}/submit', [AssessmentController::class, 'submit']);
             Route::put('notes', [LearningNoteController::class, 'store']);
-            Route::put('groups/{group}/work/{topic}', [GroupWorkController::class, 'store'])->where('topic', '[0-3]');
+            Route::put('groups/{group}/work/{topic}', [GroupWorkController::class, 'store'])->whereNumber('topic');
             Route::put('groups/{group}/action', [ActionPlanController::class, 'store']);
             Route::post('actions/{plan}/journals', [ActionPlanController::class, 'journal']);
             Route::post('materials/{material}/attempts', [MaterialAttemptController::class, 'store'])->middleware('throttle:attempts');
         });
         Route::middleware('role:teacher,admin')->group(function () {
+            Route::post('learning-modules', [LearningModuleController::class, 'store']);
+            Route::put('learning-modules/{module}/activate', [LearningModuleController::class, 'activate']);
             Route::post('roster/generate', [StudentAccountController::class, 'generate']);
             Route::put('groups/{group}', [SchoolOperationsController::class, 'group']);
             Route::put('learning-modules/{module}/video', [SchoolOperationsController::class, 'moduleVideo']);

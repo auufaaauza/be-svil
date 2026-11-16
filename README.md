@@ -10,7 +10,7 @@ Laravel hanya melayani JSON API /api/v1 dan berkas privat. Next.js meneruskan /a
 
 Jalankan npm run dev di ../fe-svill, lalu buka http://127.0.0.1:3000. Database lokal svil_app dan pengujian svil_app_testing menggunakan pengguna MySQL terpisah. Kredensial ada pada .env/.env.testing yang diabaikan Git.
 
-Admin awal: username **admin** atau email **admin@findmycareer.my.id**, password **svil123** sesuai permintaan. DatabaseSeeder memanggil AdminSeeder untuk membuat admin pertama; tidak membuat siswa, guru, kelas, materi atau jawaban contoh. Jika admin sudah ada, password/profil/statusnya dipertahankan. Konflik username/email dengan akun non-admin menghentikan seeder tanpa mengubah akun tersebut.
+Admin awal: username **admin** atau email **admin@gmail.com**, password **admin123** sesuai permintaan. DatabaseSeeder memanggil AdminSeeder untuk membuat admin pertama; tidak membuat siswa, guru, kelas, materi atau jawaban contoh. Jika admin sudah ada, password/profil/statusnya dipertahankan. Konflik username/email dengan akun non-admin menghentikan seeder tanpa mengubah akun tersebut.
 
 Untuk production yang belum memiliki admin, unggah database/seeders/AdminSeeder.php lalu jalankan dari folder backend:
 
@@ -18,19 +18,31 @@ Untuk production yang belum memiliki admin, unggah database/seeders/AdminSeeder.
 
 Jika DatabaseSeeder.php juga telah diperbarui, php artisan db:seed --force --no-interaction melakukan bootstrap yang sama. Perintah tidak meminta konfirmasi interaktif, sehingga dapat digunakan ketika proc_open dibatasi hosting. Setelah masuk, kata sandi dapat diganti melalui pengaturan akun.
 
+## Data pengujian lengkap
+
+Jalankan `php artisan db:seed --class=TestingSeeder --no-interaction` untuk kelas demo berkode `SVILTEST2026`, dua kelompok, empat LKPD UPDATE, materi, tugas, absen dan contoh nilai 85 untuk siswa4–siswa5. Akun: `admin@gmail.com` / `admin` / `admin123`; `guru@gmail.com` / `guru1` / `guru123`; `siswa1@gmail.com` sampai `siswa5@gmail.com` / `siswa1` sampai `siswa5` / `siswa123`. Siswa1–siswa3 belum mempunyai jawaban awal sehingga bisa mencoba alur pengisian.
+
+Seeder ini mengembalikan kredensial akun demo ketika dijalankan ulang, tetapi tidak menimpa kiriman, nilai, atau data pengguna lain. Transaksi dibatalkan jika identitas bertabrakan dengan akun lain. Data contoh diberi label pengujian dan bukan hasil penelitian. Gunakan seeder ini pada instalasi pengujian; instalasi production tetap dapat memakai AdminSeeder saja. Reset password siswa pada UI admin terisi `siswa123` sebagai nilai awal.
+
 ## Konten LKPD utama
 
-Empat dokumen LKPD asli tersedia di database/data/lkpd.json, bersumber dari DOCX dalam ZIP Dokumen Pendukung. Setelah admin dibuat, impor dengan:
+Empat LKPD terbaru dari PDF dalam `Dokumen Pendukung/LKPD UPDATE` dikemas sebagai konten digital editable di `database/data/lkpd-update.json`. Impor instalasi baru dengan:
 
-    php artisan svil:import-lkpd --by=admin@findmycareer.my.id --no-interaction
+    php artisan svil:import-lkpd --by=admin@gmail.com --no-interaction
 
 Perintah mencatat pengimpor dan hash sumber, melewati LKPD yang sudah ada, serta tidak membuat akun/kelas/hasil contoh. GET /learning-modules dan /learning-modules/{id} menyediakan metadata dan teks lengkap. PUT /learning-modules/{id} hanya admin, dengan version dan riwayat. group_works menyimpan module_version dan schema_snapshot agar pertanyaan lama tetap dapat ditelusuri.
+
+Untuk instalasi yang sudah memiliki LKPD lama, jalankan `php artisan svil:import-lkpd --by=admin@gmail.com --updated --no-interaction`. Konten sumber menjadi versi baru; jawaban, media snapshot dan penyesuaian khusus kelas dipertahankan. LKPD 3 disimpan sebagai draf karena tabel perbandingan dan kegiatan dilema belum lengkap pada sumber. Perintah tidak menghapus jawaban atau membuat data siswa contoh.
+
+Pembaruan 16 November 2026 menambahkan pembuatan LKPD di luar empat konten awal, section pertanyaan dengan gambar dan video opsional, LKPD aktif per kelas, serta nilai umum 0 sampai 100 oleh guru. Unggah source terbaru, jalankan migrasi `2026_11_16_125354_add_lkpd_authoring_and_section_progress.php`, impor LKPD UPDATE, lalu redeploy frontend. Siswa langsung masuk ruang LKPD; Nilai dan Absen tersedia melalui Ringkasan. Guru menyunting pada kelas penugasannya; admin menyunting template dan memantau hasil.
+
+Untuk hosting PHP gunakan `composer install --no-dev --optimize-autoloader --no-interaction`. Jangan unggah folder vendor development lokal, tests, node_modules, .next, tmp, Dokumen Pendukung, output, atau backup privat ke document root. Pertahankan database, `.env`, APP_KEY dan berkas siswa privat. Frontend Vercel memakai root `fe-svill`; `.vercelignore` membatasi file unggahan.
 
 ## Identitas dan batas akses
 
 Login menerima JSON login (username atau email) dan password. Field email lama tetap diterima untuk kompatibilitas. Username/email dinormalisasi ke huruf kecil.
 
-Registrasi publik hanya membuat **siswa** dengan name, username, email, password, password_confirmation, class_code. Kode kelas 12 karakter diberikan guru/admin. Role dan sekolah dari input tidak dipercaya; sekolah serta keanggotaan diambil dari kelas tujuan. Guru/admin dibuat admin. Kata sandi baru sepanjang 6–12 karakter, termasuk pendaftaran, akun admin/guru/siswa, ganti dan reset password.
+Registrasi publik hanya membuat **siswa** dengan name, username, password, password_confirmation, class_code dan email opsional. Email siswa boleh null pada registrasi, pembuatan akun, profil dan impor CSV; email guru/admin tetap wajib. Kode kelas 12 karakter diberikan guru/admin. Role dan sekolah dari input tidak dipercaya; sekolah serta keanggotaan diambil dari kelas tujuan. Guru/admin dibuat admin. Kata sandi baru sepanjang 6–12 karakter, termasuk pendaftaran, akun admin/guru/siswa, ganti dan reset password.
 
 Login, registrasi dan jawaban latihan dibatasi rate limit. Akun nonaktif ditolak. Guru hanya mendapat kelas penugasannya; siswa hanya data pribadi dan kelompok sendiri. Gambar disimpan privat serta diperiksa izin ketika diunduh.
 
@@ -50,7 +62,7 @@ Daftar aktual:
 | Latihan | POST /materials/{id}/attempts, GET /attempts | Nilai server, request_id UUID, snapshot soal, siswa hanya sendiri |
 | Tinjauan latihan | PUT /attempts/{id}/review | Guru kelas/admin, review version dan riwayat; kunci otomatis tidak dapat ditimpa |
 | Catatan | GET/PUT /notes, PUT /notes/{id}/review | Catatan individu per kelas/topik/fase dan umpan balik |
-| LKPD | GET/PUT /groups/{id}/work/{topic} | Topic 0–3; draf/kirim, anggota saja untuk menulis |
+| LKPD | GET/PUT /groups/{id}/work/{topic} | Topic dinamis; draf/kirim per section, anggota saja untuk menulis |
 | Tinjauan LKPD | PUT /group-work/{id}/review | Perbaikan/ditinjau, rubrik produk/presentasi terpisah pada LKPD 4 |
 | Aksi | GET/PUT /groups/{id}/action | Rencana kelompok berversi |
 | Jurnal | POST /actions/{id}/journals | Request UUID, tanggal aktual, teks/checklist, snapshot rencana |
@@ -58,6 +70,7 @@ Daftar aktual:
 | Observasi | GET/POST /observations | Guru mencatat 4 skor 1–4, bukti/feedback, dua kesempatan per topik; siswa membaca sendiri |
 | Laporan | GET /reports/summary, /reports/notes.csv, /reports/learning.csv | Guru/admin, scope kelas; formula spreadsheet dinetralkan |
 | Referensi admin | GET/POST /schools, POST /classrooms, POST /classrooms/{id}/members, GET/POST /users, PATCH /users/{id}/active | Admin |
+| Generator siswa | POST /roster/generate | Guru kelas/admin; pratinjau dan konfirmasi 1–500 akun ke kelas aktif |
 
 List memakai pagination. Validasi 422; sesi belum login 401; akses 403; konflik versi 409; sesi/CSRF 419; rate limit 429.
 
@@ -98,7 +111,7 @@ Rubrik produk maksimum 16, presentasi 8, observasi 16; masing-masing dinormalisa
 
 Pengujian fitur menggunakan MySQL, termasuk scope lintas siswa/kelompok/kelas, registrasi, sesi, upload privat, kunci, idempotensi, konflik revisi, rubrik, verifikasi bukti, observasi dan laporan. Tidak ada data pengujian dimasukkan ke database aplikasi.
 
-Verifikasi terakhir: 72 tes / 708 assertion berhasil. Backup aktual SQL dan storage privat juga telah diverifikasi dan SQL berhasil dipulihkan ke database pengujian terpisah.
+Verifikasi terakhir: 95 tes / 965 assertion berhasil, termasuk generator akun, scope kelas, login siswa tanpa email dan retry batch tanpa duplikasi. Backup aktual SQL dan storage privat juga telah diverifikasi dan SQL berhasil dipulihkan ke database pengujian terpisah.
 
 ## Shared hosting cPanel + Vercel
 
@@ -112,7 +125,7 @@ Target sementara backend: **https://api2.findmycareer.my.id**. Frontend memakai 
 4. Buat .env dari template. Isi APP_URL, FRONTEND_URL, SANCTUM_STATEFUL_DOMAINS (host frontend tanpa https), DB_*, APP_ENV=production, APP_DEBUG=false, SESSION_SECURE_COOKIE=true. SESSION_DOMAIN=null dipertahankan karena browser menggunakan proxy frontend.
 5. File lokal .env.production sudah disiapkan dengan APP_KEY baru dan tidak masuk paket/Git. Isi kredensial hosting lalu unggah sebagai .env secara privat. Jika membuat environment baru dari template, buat key satu kali melalui php artisan key:generate. Pertahankan key production pada rilis dan migrasi berikutnya.
 6. Jalankan php artisan migrate --force, php artisan config:cache, php artisan route:cache. Pastikan storage dan bootstrap/cache dapat ditulis oleh PHP tanpa permission 777.
-7. Buat admin pertama dengan php artisan db:seed --class=AdminSeeder --force --no-interaction; akses awal admin / svil123. Seeder mempertahankan admin yang sudah ada. Untuk password khusus pada terminal yang mendukung prompt tersembunyi, tersedia php artisan svil:create-admin admin@findmycareer.my.id --name=Administrator. Lanjutkan dengan perintah impor LKPD di atas agar konten asli tersedia.
+7. Buat admin pertama dengan php artisan db:seed --class=AdminSeeder --force --no-interaction; akses awal admin / admin123. Seeder mempertahankan admin yang sudah ada. Untuk password khusus pada terminal yang mendukung prompt tersembunyi, tersedia php artisan svil:create-admin admin@gmail.com --name=Administrator. Lanjutkan dengan perintah impor LKPD di atas agar konten asli tersedia.
 8. Pada Vercel pilih Root Directory **fe-svill**, framework Next.js, lalu isi **API_BACKEND_URL=https://api2.findmycareer.my.id** pada environment production sebelum build. Jangan memakai prefix NEXT_PUBLIC_ dan jangan menambahkan /api/v1 pada URL backend.
 9. Deploy frontend. Isi URL Vercel final ke FRONTEND_URL dan host-nya ke SANCTUM_STATEFUL_DOMAINS backend, lalu jalankan ulang config:cache. Gunakan HTTPS pada dua layanan.
 10. Periksa /up di backend; dari frontend coba login, muat kelas, logout, lalu buat data aktual dan uji satu siklus siswa–guru–laporan. Backup MySQL dan storage/app/private, kemudian uji restore.
@@ -184,10 +197,26 @@ php artisan config:cache --no-interaction
 php artisan route:cache --no-interaction
 ```
 
-Setelah backend aktif, redeploy frontend di Vercel. Endpoint /session-bootstrap, /class-board dan /reflection-workspace harus tersedia sebelum frontend baru dipakai. Jangan menjalankan migrate:fresh atau seeder ulang pada data aktual.
+Setelah backend aktif, redeploy frontend di Vercel. Endpoint /session-bootstrap, /class-board, /reflection-workspace dan /roster/generate harus tersedia sebelum frontend baru dipakai. Jangan menjalankan migrate:fresh atau seeder ulang pada data aktual.
 
 Untuk instalasi kosong yang belum memiliki LKPD, jalankan dari folder yang sama:
 
 ```bash
-php artisan svil:import-lkpd --by=admin@findmycareer.my.id --no-interaction
+php artisan svil:import-lkpd --by=admin@gmail.com --no-interaction
 ```
+
+### Generator akun siswa per kelas
+
+Guru membuka Kelasku, admin membuka Madrasah, lalu memilih Buat akun massal. Pilih kelas aktif dan tempel satu nama lengkap per baris; email dapat diisi per siswa atau dikosongkan. Server mengambil kata pertama nama, menormalkan aksen dan menambahkan angka mulai 2 jika username sudah dipakai. Nama depan kurang dari tiga karakter dilengkapi 01, misalnya Ai menjadi ai01. Seluruh akun dibuat sebagai siswa pada sekolah dan kelas tujuan dengan password awal **siswa123**. Hasil dapat diunduh sebagai CSV akses awal. Guru hanya dapat membuat akun untuk kelas aktif penugasannya; admin dapat memilih seluruh kelas aktif.
+
+POST /roster/generate menerima classroom_id, request_id UUID dan students (1–500 objek name/email). Tanpa commit, endpoint hanya mengembalikan pratinjau serta preview_token terenkripsi yang berlaku 15 menit. Kirim payload yang sama, commit=true dan token tersebut untuk membuat akun. Perubahan daftar, kelas atau konflik username/email meminta pratinjau baru; pembuatan memakai transaksi sehingga tidak menyisakan akun parsial. Retry request_id yang sudah berhasil mengembalikan hasil yang sama (200; pembuatan pertama 201). Password disimpan dalam bentuk hash; catatan batch/audit tidak menyimpan password mentah.
+
+Migrasi **2026_11_02_200810_allow_optional_student_email_and_create_account_batches.php** membuat email users nullable serta tabel catatan batch. Sepuluh baseline kini diikuti tiga migrasi lanjutan. Unggah seluruh source backend yang berubah, jalankan migrate --force --no-interaction dan bangun ulang cache konfigurasi/rute sebelum redeploy frontend. Migrasi tidak mengubah password atau keanggotaan akun lama dan tidak memerlukan seeder. Rollback ditolak selama masih ada email kosong agar data siswa tetap dipertahankan.
+
+Impor CSV lama tetap menerima name dan username, dengan email/password opsional. Jika password CSV kosong, server membuat password acak 12 karakter; password seragam siswa123 tersedia melalui generator.
+
+## Nilai kuis Wordwall
+
+Guru membuka Konten kelas → Kuis, lalu Input nilai siswa pada game yang sesuai. Pilih siswa, isi nilai 0–100 serta pesan opsional. Nilai manual tersimpan di tabel wordwall_grades, tampil pada buku nilai dan Ringkasan → Nilai siswa, serta disertai nama guru dan waktu pembaruan. Nilai nol berbeda dari belum dinilai. Admin dapat memantau; siswa hanya melihat nilainya sendiri. Perubahan bersamaan ditolak dengan konflik versi; audit menyimpan nilai sebelum/sesudah.
+
+Jalankan migrasi `2026_11_16_145625_create_wordwall_grades_table.php` sebelum frontend baru dipakai. `GET /api/v1/wordwall-grades?classroom_id=...` membaca hasil sesuai izin; `PUT /api/v1/wordwall-grades` hanya guru kelas. Ekspor buku nilai menyertakan baris KUIS_WORDWALL dengan sumber wordwall_manual. TestingSeeder menyediakan contoh nilai Wordwall 80 untuk siswa4; hasil lama tidak ditimpa.

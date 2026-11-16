@@ -27,9 +27,9 @@ final class StudentAccounts
             foreach ($bases as $base) {
                 $query->orWhere('username', 'like', $base.'%');
             }
-        })->pluck('username')->flip()->all();
+        })->pluck('username')->map(fn (string $username): string => Str::lower($username))->flip()->all();
         $emails = array_values(array_filter(array_column($students, 'email')));
-        $usedEmails = User::whereIn('email', $emails)->pluck('email')->flip()->all();
+        $usedEmails = User::whereIn('email', $emails)->pluck('email')->map(fn (string $email): string => Str::lower($email))->flip()->all();
         $rows = [];
         foreach ($students as $index => $student) {
             if ($student['email'] && isset($usedEmails[$student['email']])) {

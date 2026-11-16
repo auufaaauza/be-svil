@@ -19,9 +19,10 @@ class SaveGroupWorkRequest extends FormRequest
         }
         $work = GroupWork::where('learning_group_id', $this->route('group')->id)->where('topic', (int) $this->route('topic'))->first();
         $module = LearningModule::where('topic', (int) $this->route('topic'))->firstOrFail();
+        abort_unless($module->availableIn($this->route('group')->classroom_id), 403);
         abort_if($module->status !== 'published' && ! $work?->schema_snapshot, 403);
 
-        return $this->moduleSchema = ['fields' => LkpdPages::fields($module, $work, $this->route('group')->classroom_id), 'version' => $work?->module_version ?? $module->version];
+        return $this->moduleSchema = ['fields' => LkpdPages::fields($module, $work, $this->route('group')->classroom_id), 'version' => $work?->module_version ?? $module->version, 'page_size' => LkpdPages::size($work ?? $module)];
     }
 
     public function authorize(): bool
@@ -32,10 +33,11 @@ class SaveGroupWorkRequest extends FormRequest
     public function rules(): array
     {
         $fields = $this->moduleSchema()['fields'];
-        $keys = array_column($this->exists('page') ? array_slice($fields, $this->integer('page') * LkpdPages::SIZE, LkpdPages::SIZE) : $fields, 'key');
-        $rules = ['version' => ['required', 'integer', 'min:0'], 'status' => ['required', Rule::in(['draft', 'submitted'])], 'page' => ['sometimes', 'integer', 'min:0', 'max:'.max(0, (int) ceil(count($fields) / LkpdPages::SIZE) - 1)], 'answers' => ['required', 'array:'.implode(',', $keys)]];
+        $size = $this->moduleSchema()['page_size'];
+        $keys = array_column($this->exists('page') ? array_slice($fields, $this->integer('page') * $size, $size) : $fields, 'key');
+        $rules = ['version' => ['required', 'integer', 'min:0'], 'status' => ['required', Rule::in(['draft', 'submitted'])], 'page' => ['sometimes', 'integer', 'min:0', 'max:'.max(0, (int) ceil(count($fields) / $size) - 1)], 'answers' => ['required', 'array:'.implode(',', $keys)]];
         foreach ($fields as $index => $field) {
-            $required = $this->input('status') === 'submitted' && (! $this->exists('page') || (int) floor($index / LkpdPages::SIZE) === $this->integer('page'));
+            $required = $this->input('status') === 'submitted' && (! $this->exists('page') || (int) floor($index / $size) === $this->integer('page'));
             $rules['answers.'.$field['key']] = [$required ? 'required' : 'nullable', 'string', 'max:8000'];
         }
 

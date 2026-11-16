@@ -148,6 +148,7 @@ class SchoolOperationsController extends Controller
     public function moduleVideo(Request $r, LearningModule $module): JsonResponse
     {
         $data = $r->validate(['classroom_id' => ['required', 'integer', Rule::in($r->user()->accessibleClassrooms()->pluck('id')->all())], 'version' => ['required', 'integer', 'min:0'], 'youtube_url' => ['nullable', 'string', 'max:2048'], 'video_caption' => ['nullable', 'string', 'max:3000']]);
+        abort_unless($module->availableIn((int) $data['classroom_id']), 403);
         $video = YouTubeVideo::id($data['youtube_url'] ?? null);
         $row = DB::transaction(function () use ($r, $module, $data, $video) {
             Classroom::whereKey($data['classroom_id'])->lockForUpdate()->firstOrFail();

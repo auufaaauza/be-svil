@@ -40,6 +40,7 @@ class StudentAccountController extends Controller
                 $batch = DB::table('student_account_batches')->where('id', $data['request_id'])->first();
                 if ($batch) {
                     abort_if($batch->actor_id !== $request->user()->id || $batch->classroom_id !== $classroom->id || ! hash_equals($batch->payload_hash, $hash), 409, 'Daftar permintaan berbeda. Siapkan pratinjau baru.');
+
                     return [json_decode($batch->accounts, true, flags: JSON_THROW_ON_ERROR), true];
                 }
                 try {
