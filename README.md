@@ -20,6 +20,18 @@ Jika DatabaseSeeder.php juga telah diperbarui, php artisan db:seed --force --no-
 
 ## Data pengujian lengkap
 
+Untuk menambahkan **hanya lima akun siswa** pada hosting yang sudah memiliki admin/guru, gunakan seeder terpisah:
+
+```bash
+git pull origin main
+composer dump-autoload --optimize --no-interaction
+php artisan db:seed --class=StudentSeeder --force --no-interaction
+```
+
+StudentSeeder membuat `siswa1@gmail.com` sampai `siswa5@gmail.com`, username `siswa1` sampai `siswa5`, dengan password awal `siswa123`. Akun masuk ke **Kelas V Demo**, tahun ajaran 2026/2027, dengan kode awal **SVILTEST2026**. Siswa1–siswa3 berada di Kelompok Demo 1, siswa4–siswa5 di Kelompok Demo 2. Jika guru `guru1` atau `guru@gmail.com` tersedia, kelas demo memakai sekolah guru tersebut dan guru ditambahkan sebagai pengajar tanpa mengubah akun atau penugasan kelas lamanya. Jika belum ada guru, sekolah demo dibuat terlebih dahulu. LKPD global topik pertama yang sudah terbit dipilih sebagai LKPD aktif jika kelas belum memilikinya; impor LKPD tetap dijalankan terpisah melalui perintah di bawah.
+
+Seeder siswa tidak mengatur ulang password, profil, status akun, keanggotaan nonaktif, jawaban, atau nilai yang sudah ada. Kode kelas yang sudah tersedia dipertahankan dan dicetak pada terminal. Konflik identitas, sekolah, kode kelas, atau kelas/kelompok demo yang sudah diarsipkan membatalkan seluruh transaksi. `DatabaseSeeder` tetap hanya melakukan bootstrap admin; penambahan siswa dilakukan secara eksplisit dengan perintah di atas.
+
 Jalankan `php artisan db:seed --class=TestingSeeder --no-interaction` untuk kelas demo berkode `SVILTEST2026`, dua kelompok, empat LKPD UPDATE, materi, tugas, absen dan contoh nilai 85 untuk siswa4–siswa5. Akun: `admin@gmail.com` / `admin` / `admin123`; `guru@gmail.com` / `guru1` / `guru123`; `siswa1@gmail.com` sampai `siswa5@gmail.com` / `siswa1` sampai `siswa5` / `siswa123`. Siswa1–siswa3 belum mempunyai jawaban awal sehingga bisa mencoba alur pengisian.
 
 Seeder ini mengembalikan kredensial akun demo ketika dijalankan ulang, tetapi tidak menimpa kiriman, nilai, atau data pengguna lain. Transaksi dibatalkan jika identitas bertabrakan dengan akun lain. Data contoh diberi label pengujian dan bukan hasil penelitian. Gunakan seeder ini pada instalasi pengujian; instalasi production tetap dapat memakai AdminSeeder saja. Reset password siswa pada UI admin terisi `siswa123` sebagai nilai awal.
